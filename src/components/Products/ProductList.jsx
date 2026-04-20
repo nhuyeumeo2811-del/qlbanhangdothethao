@@ -1,14 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import ProductCard from './ProductCard';
-import './ProductList.css'; // Fixed typo in filename
+import './ProductList.css'; 
 import sp1Image from '../../img/Lsp1/sp1.jpg';
 import sp2Image from '../../img/Lsp1/sp2.jpg';
 import sp3Image from '../../img/Lsp1/sp3.jpg';
+import sp1Image from '../../img/Lsp1/sp4.jpg';
+import sp2Image from '../../img/Lsp1/sp5.jpg';
+import sp3Image from '../../img/Lsp1/sp6.jpg';
 
 const imageMap = {
     sp1: sp1Image,
     sp2: sp2Image,
-    sp3: sp3Image
+    sp3: sp3Image,
+    sp4: sp1Image,
+    sp5: sp2Image,
+    sp6: sp3Image
 };
 
 const ProductList = () => { 
