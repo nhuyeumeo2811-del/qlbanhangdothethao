@@ -1,65 +1,64 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './ProductCard.css';
+
+const productsUrl = `${import.meta.env.BASE_URL}products.json`;
 
 const ProductCard = ({ product }) => {
   const navigate = useNavigate();
-  
-  const imageUrl = product.image || 
-    new URL(`../../img/Lsp${product.categoryId}/${product.imageKey}.jpg`, import.meta.url).href;
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useSState(null);
 
-  const handleCardClick = () => {
-    navigate(`/product/${product.id}`, { state: { product } });
+  const handleBuy = async () => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const response = await fetch(productsUrl);
+      if (!response.ok) {
+        throw new Error('Không thể tải thông tin sản phẩm');
+      }
+
+      const data = await response.json();
+      const matchedProduct = data.find((item) => item.id === product.id);
+      if (!matchedProduct) {
+        throw new Error('Sản phẩm không tồn tại');
+      }
+      navigate(`/product/${product.id}`, {
+        state: { product: { ...matchedProduct, Image: product.image } }
+      });
+    } catch (err) {
+      setError(err.message);
+    }finally{
+      setIsLoading(false);
+    }
   };
-
   return (
-    <div 
-      className="product-card" 
-      onClick={handleCardClick}
-      style={{ cursor: 'pointer', marginBottom: '20px', border: '1px solid #eee', padding: '10px' }}
-    >
-      <div className="product-image" style={{ position: 'relative' }}>
+    <div className="product-card">
+      <div className="product-image-container">
         <img 
-          src={imageUrl} 
+          src={product.image || 'https://via.placeholder.com/300x200'}
           alt={product.name}
-          style={{ width: '100%', height: 'auto', display: 'block' }}
-          onError={(e) => { 
-            e.target.onerror = null; // Prevents infinite loop if placeholder fails
-            e.target.src = 'https://via.placeholder.com/150?text=No+Image'; 
-          }}
+          className="product-image"
         />
-        {product.discount && (
-          <span className="discount-badge" style={{ 
-            position: 'absolute', top: '5px', left: '5px', backgroundColor: 'rgba(255,255,255,0.8)', color: 'red', padding: '2px 5px', fontSize: '12px' 
-          }}>
-            {product.discount}
-          </span>
-        )}
       </div>
-      
-      <div className="product-info">
-        <h3 className="product-name" style={{ margin: '10px 0', fontSize: '16px' }}>{product.name}</h3>
-        
-        <div className="product-sizes" style={{ fontSize: '12px', color: '#666', marginBottom: '5px' }}>
-          {/* Fixed typo: product.sizesS -> product.sizeS */}
-          {product.sizeS && <span style={{ marginRight: '8px' }}>{product.sizeS}</span>}
-          {product.sizeM && <span style={{ marginRight: '8px' }}>{product.sizeM}</span>}
-          {product.sizeL && <span style={{ marginRight: '8px' }}>{product.sizeL}</span>}
-        </div>
-
-        <div className="product-price">
-          <span className="current-price" style={{ fontWeight: 'bold', color: '#e41e3f' }}>{product.currentPrice}</span>
-          {product.originalPrice && (
-             <span className="original-price" style={{ textDecoration: 'line-through', marginLeft: '10px', color: '#999' }}>
-               {product.originalPrice}
-             </span>
-          )}
-        </div>
-
-        <div className="product-meta" style={{ marginTop: '5px', fontSize: '13px' }}>
-          <span className="rating">⭐ {product.rating}</span>
-          <span className="sold" style={{ marginLeft: '10px' }}>Đã bán {product.sold}</span>
-        </div>
+      <h3 className="product-name">{product.name}</h3>
+      <div className="product-ram-ssd">
+        <button className="ram-ssd-tag">{product.sizeS}</button>
+        <button className="ram-ssd-tag">{product.sizeM}</button>
+        <button className="ram-ssd-tag">{product.sizeL}</button>
       </div>
+      <div className="product-pricing">
+          <div className="current-price">{product.currentPrice}</div>
+          <div className="original-price-section">
+            <span className='original-price'>{product.originalPrice}</span>
+            {product.discount && <span className="discount">{product.discount}</span>}
+          </div>
+      </div>
+
+      <button className="compare-button" onClick={handleBuy} disabled={isLoading}>
+        {isLoading ? 'Đang mở...' : 'Mua'}
+      </button>
+      {error && <div className="error-text">{error}</div>}
     </div>
   );
 };
