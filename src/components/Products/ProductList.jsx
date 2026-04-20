@@ -12,9 +12,9 @@ const imageMap = {
     sp1: sp1Image,
     sp2: sp2Image,
     sp3: sp3Image,
-    sp4: sp1Image,
-    sp5: sp2Image,
-    sp6: sp3Image
+    sp4: sp4Image,
+    sp5: sp5Image,
+    sp6: sp6Image
 };
 
 const ProductList = () => { 
