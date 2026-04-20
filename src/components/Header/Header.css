@@ -1,0 +1,135 @@
+.lalashop-header {
+    width: 100%;
+    background-color: white;
+    border-bottom: 1px solid #ddd;
+    font-family: Arial, sans-serif;
+}
+
+.header-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+}
+
+.header-logo img {
+    height: 60px;
+    cursor: pointer;
+    display: block;
+}
+
+.header-search-center {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    padding: 0 40px;
+}
+
+.search-input-group {
+    position: relative;
+    width: 100%;
+    max-width: 360px;
+}
+
+.search-input-group input {
+    width: 100%;
+    padding: 8px 15px 8px 45px;
+    border: 1.5px solid #444;
+    border-radius: 25px; 
+    outline: none;
+    font-size: 15px;
+}
+
+.search-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #333;
+    font-size: 18px;
+}
+
+.header-icons-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.header-info-block {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #003366; 
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.header-info-block i {
+    font-size: 20px;
+}
+
+.cart-icon {
+    position: relative;
+}
+
+.cart-badge-count {
+    background: #003366;
+    color: white;
+    font-size: 10px;
+    min-width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: -10px;
+    right: -8px;
+}
+
+.header-user-avatar i {
+    font-size: 38px; 
+    color: #003366;
+    cursor: pointer;
+}
+
+.header-bottom-nav {
+    border-top: 1px solid #eee;
+    padding: 10px 0;
+}
+
+.nav-container {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-around;
+}
+
+.nav-container a {
+    text-decoration: none;
+    color: #333;
+    font-size: 13px;
+    font-weight: bold;
+    transition: color 0.2s;
+}
+
+.nav-container a:hover {
+    color: #003366;
+    text-decoration: underline;
+}
+
+@media (max-width: 1024px) {
+    .header-container {
+        flex-wrap: wrap;
+    }
+    .header-search-center {
+        order: 3;
+        width: 100%;
+        margin-top: 10px;
+        padding: 0;
+    }
+}

@@ -1,0 +1,43 @@
+[
+  {
+    "id": 1,
+    "name": "AoBaLoNam",
+    "imageKey": "sp1",
+    "sizeS": "S",
+    "sizeM": "M",
+    "sizeL": "L",
+    "currentPrice": "69.000₫",
+    "originalPrice": "80.000₫",
+    "discount": "-13,75%",
+    "rating": "5",
+    "categoryId": 1,
+    "sold": "5,9k" 
+  },
+  {
+    "id": 2,
+    "name": "AoBoLoNu",
+    "imageKey": "sp2",
+    "sizeS": "S",
+    "sizeM": "M",
+    "sizeL": "L",
+    "currentPrice": "69.000₫",
+    "originalPrice": "80.000₫",
+    "discount": "-8%",
+    "rating": "5",
+    "categoryId": 1,
+    "sold": "117"
+  },
+  {
+    "id": 3,
+    "name": "AoChongNangNam",
+    "imageKey": "sp3",
+    "sizeS": "S",
+    "sizeM": "M",
+    "sizeL": "L",
+    "currentPrice": "69.000₫",
+    "originalPrice": "80.000₫",
+    "rating": "4.9",
+    "categoryId": 1,
+    "sold": "27k"
+  }
+]
