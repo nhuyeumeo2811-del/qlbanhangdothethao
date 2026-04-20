@@ -4,7 +4,7 @@ const imageModules = import.meta.glob('../img/*.{png,jpg,jpeg,webp,gì,svg}',{
 
 const baseName = (path) => {
     const name = path.split('/').pop() || '';
-    return name.replace (/\.[^.]+$/, '');
+    return name.replace (/\.[^.]+$/ , '');
 };
 
 export const imageMap = Object.fromEntries(
