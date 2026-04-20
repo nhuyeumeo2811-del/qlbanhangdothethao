@@ -11,7 +11,7 @@ const imageMap = {
     sp3: sp3Image
 };
 
-const ProductList = () => { // Fixed typo in Component Name
+const ProductList = () => { 
     const [products, setProducts] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -19,7 +19,7 @@ const ProductList = () => { // Fixed typo in Component Name
     useEffect(() => {
         const loadProducts = async () => {
             try {
-                // Ensure products.json is in the /public folder
+                
                 const response = await fetch('./products.json');
                 
                 if (!response.ok) {
@@ -30,7 +30,7 @@ const ProductList = () => { // Fixed typo in Component Name
                 
                 const mappedProducts = data.map((item) => ({
                     ...item,
-                    // Fallback to item.image if imageKey doesn't match
+
                     image: imageMap[item.imageKey] || item.image 
                 }));
 
@@ -50,7 +50,7 @@ const ProductList = () => { // Fixed typo in Component Name
     }
 
     if (error) {
-        // Fixed the typo 'eror' to 'error'
+        
         return <div className="product-list-container">Lỗi: {error}</div>; 
     }
 

@@ -16,13 +16,13 @@ const DetailProduct = () => {
     const navigate = useNavigate();
     const location = useLocation();
     
-    // Initialize state from location if available
+
     const [product, setProduct] = useState(location.state?.product || null);
     const [isLoading, setIsLoading] = useState(!location.state?.product);
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        // If product already exists (passed via state), don't fetch
+
         if (product && String(product.id) === String(id)) {
             setIsLoading(false);
             return;
@@ -55,7 +55,7 @@ const DetailProduct = () => {
         };
 
         fetchProduct();
-        // Remove 'product' from dependency array to prevent loops
+
     }, [id]); 
 
     const handleBuyNow = useCallback(() => {
@@ -73,7 +73,7 @@ const DetailProduct = () => {
 
         localStorage.setItem('cart', JSON.stringify(cart));
         
-        // Use a consistent event name for your Navbar/Cart icon to listen to
+        
         window.dispatchEvent(new Event('cartUpdated')); 
         navigate('/cart');
     }, [product, navigate]);
