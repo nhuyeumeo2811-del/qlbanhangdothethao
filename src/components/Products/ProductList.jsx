@@ -4,9 +4,9 @@ import './ProductList.css';
 import sp1Image from '../../img/Lsp1/sp1.jpg';
 import sp2Image from '../../img/Lsp1/sp2.jpg';
 import sp3Image from '../../img/Lsp1/sp3.jpg';
-import sp1Image from '../../img/Lsp1/sp4.jpg';
-import sp2Image from '../../img/Lsp1/sp5.jpg';
-import sp3Image from '../../img/Lsp1/sp6.jpg';
+import sp4Image from '../../img/Lsp1/sp4.jpg';
+import sp5Image from '../../img/Lsp1/sp5.jpg';
+import sp6Image from '../../img/Lsp1/sp6.jpg';
 
 const imageMap = {
     sp1: sp1Image,
