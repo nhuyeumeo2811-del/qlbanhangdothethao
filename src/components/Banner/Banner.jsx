@@ -12,7 +12,7 @@ import banner9 from '../../img/Banner10.jpg';
 
 const Banner = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
-    const banners = [banner1, banner2, banner3, banner4, banner5, banner6, banner9];
+    const banners = [banner1, banner2, banner3, banner4, banner5, banner6, banner7, banner8, banner9, banner10];
 
     useEffect(() => {
         const interval = setInterval(() => {
