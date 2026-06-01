@@ -1,0 +1,45 @@
+[
+    {
+        "id": 1,
+        "name": "Trang phục thể thao"
+    },
+    
+    {
+        "id": 2,
+        "name": "Giày thể thao"
+    },
+    
+    {
+        "id": 3,
+        "name": "Thiết bị hỗ trợ luyện tập"
+    },
+
+    {
+        "id": 4,
+        "name": "Mũ Nón"
+    },
+    {
+        "id": 5,
+        "name": "Túi xách & Balo"
+    },
+
+    {
+        "id": 6,
+        "name": "Thiết bị bảo hộ"
+    },
+
+    {
+        "id": 7,
+        "name": "Thực phẩm bổ xung"
+    },
+
+    {
+        "id": 8,
+        "name": "Kính mắt thể thao"
+    },
+
+    {
+        "id": 9,
+        "name": "Thiết bị đeo thông minh"
+    }
+]

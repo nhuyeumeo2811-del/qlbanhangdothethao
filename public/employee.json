@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "role": "manager",
+    "name": "Phạm Quốc Bảo",
+    "gender": "Nam",
+    "birthdate": "1990-01-01",
+    "phone": "0908888888"
+  },
+  {
+    "id": 2,
+    "role": "staff",
+    "name": "Đỗ Thị Mai",
+    "gender": "Nữ",
+    "birthdate": "1995-05-05",
+    "phone": "0911111111"
+  }
+]
