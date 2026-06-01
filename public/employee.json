@@ -2,17 +2,17 @@
   {
     "id": 1,
     "role": "manager",
-    "name": "Phạm Quốc Bảo",
+    "name": "Đàm Tuyết Nhi",
     "gender": "Nam",
     "birthdate": "1990-01-01",
-    "phone": "0908888888"
+    "phone": "0908056800"
   },
   {
     "id": 2,
     "role": "staff",
-    "name": "Đỗ Thị Mai",
+    "name": "Nguyễn Lê Ngân",
     "gender": "Nữ",
     "birthdate": "1995-05-05",
-    "phone": "0911111111"
+    "phone": "0809457666"
   }
 ]
