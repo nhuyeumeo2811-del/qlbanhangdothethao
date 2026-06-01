@@ -7,8 +7,10 @@ import banner3 from '../../img/Banner3.jpg';
 import banner4 from '../../img/Banner4.jpg';
 import banner5 from '../../img/Banner5.jpg';
 import banner6 from '../../img/Banner6.jpg';
+import banner7 from '../../img/Banner7.jpg';
+import banner8 from '../../img/Banner8.jpg';
 import banner9 from '../../img/Banner9.jpg';
-import banner9 from '../../img/Banner10.jpg';
+import banner10 from '../../img/Banner10.jpg';
 
 const Banner = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
