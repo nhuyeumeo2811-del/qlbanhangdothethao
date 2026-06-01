@@ -9,6 +9,7 @@ import Cart from "./components/Pages/Cart";
 import Login from "./components/Pages/Login";
 import Profile from "./components/Pages/Profile";
 import Signup from "./components/Pages/Signup";
+import Banner from './components/Banner/Banner';
 import Admin from "./components/Pages/Admin"
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
           path="/"
           element={
             <>
+              <Banner/>
               <ProductList />
             </>
           }
