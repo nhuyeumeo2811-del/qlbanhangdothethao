@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import './Banner.css';
 
-import banner1 from '../../img/Banner1.ipg';
-import banner2 from '../../img/Banner2.ipg';
-import banner3 from '../../img/Banner3.ipg'
-import banner4 from '../../img/Banner4.ipg'
-import banner5 from '../../img/Banner5.ipg'
-import banner6 from '../../img/Banner6.ipg'
-import banner9 from '../../img/Banner9.ipg'
-import banner9 from '../../img/Banner10.ipg'
+import banner1 from '../../img/Banner1.jpg';
+import banner2 from '../../img/Banner2.jpg';
+import banner3 from '../../img/Banner3.jpg'
+import banner4 from '../../img/Banner4.jpg'
+import banner5 from '../../img/Banner5.jpg'
+import banner6 from '../../img/Banner6.jpg'
+import banner9 from '../../img/Banner9.jpg'
+import banner9 from '../../img/Banner10.jpg'
 
 const Banner = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
