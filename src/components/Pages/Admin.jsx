@@ -511,7 +511,7 @@ const vipCustomers = useMemo(() => {
             <i className="fa-solid fa-layer-group" />
           </span>
 
-          <span>GalaxyCafe</span>
+          <span>LaLaShop</span>
         </div>
 
         <hr className="ruang-sidebar__divider" />
