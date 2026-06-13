@@ -19,5 +19,54 @@
     "pass": "password",
     "name": "Trần Thị B",
     "role": "customer"
+  },
+  {
+    "id": 4,
+    "user": "quanly2@gmail.com",
+    "pass": "abc456",
+    "name": "Nguyễn Thị Lan",
+    "role": "manager"
+  },
+  {
+    "id": 5,
+    "user": "khachhang3@gmail.com",
+    "pass": "abc789",
+    "name": "Phan Minh Tuấn",
+    "role": "customer"
+  },
+  {
+    "id": 6,
+    "user": "khachhang4@gmail.com",
+    "pass": "abc012",
+    "name": "Hoàng Thu Thảo",
+    "role": "customer"
+  },
+  {
+    "id": 7,
+    "user": "staff2@gmail.com",
+    "pass": "staff789",
+    "name": "Đặng Quốc Anh",
+    "role": "staff"
+  },
+  {
+    "id": 8,
+    "user": "customer5@gmail.com",
+    "pass": "cust111",
+    "name": "Bùi Văn Nam",
+    "role": "customer"
+  },
+  {
+    "id": 9,
+    "user": "staff3@gmail.com",
+    "pass": "staff222",
+    "name": "Vũ Thị Ngọc",
+    "role": "staff"
+  },
+  {
+    "id": 10,
+    "user": "customer6@gmail.com",
+    "pass": "cust333",
+    "name": "Lương Hải Yến",
+    "role": "customer"
   }
 ]
