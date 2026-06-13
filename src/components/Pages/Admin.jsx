@@ -637,4 +637,200 @@ const vipCustomers = useMemo(() => {
         <main className="ruang-main" style={{ padding: '24px', background: '#f5f5f5', minHeight: 'calc(100vh - 120px)' }}>
 
           {loadError && (
-            <div className="admin-msg admin-msg--
+            <div className="admin-msg admin-msg--error">
+              {loadError}
+            </div>
+          )}
+
+          {loading ? (
+            <div className="ruang-loading">
+              Đang tải...
+            </div>
+          ) : (
+            <>
+              {adminSection ===
+                'products' && (
+                  <AdminProduct embedded />
+                )}
+
+              {adminSection ===
+                'category' && (
+                  <AdminCategory embedded />
+                )}
+
+              {adminSection ===
+                'customer' && (
+                  <AdminCustomer embedded />
+                )}
+
+              {adminSection ===
+                'employee' && (
+                  <AdminEmployee embedded />
+                )}
+
+              {adminSection ===
+                'bill' && (
+                  <AdminBill embedded />
+                )}
+
+              {adminSection ===
+                'invoiceDetails' && (
+                  <AdminInvoiceDetails embedded />
+                )}
+
+              {adminSection ===
+                'dashboard' && (
+                  <div className="dashboard">
+                    <h2 style={{ fontSize: '24px', fontWeight: 'bold', color: '#333', marginBottom: '20px', paddingBottom: '8px', borderBottom: '2px solid #ccc' }}>
+                      Dashboard
+                    </h2> 
+
+                    {/* CSS Inline Grid để phân chia 4 khu vực y hệt hình */}
+                    <div className="stats-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(45%, 1flex))', gap: '24px' }}>
+
+                      {/* KHU VỰC 1: THỐNG KÊ DOANH THU */}
+                      <div className="stat-card" style={{ background: '#fff', border: '1px solid #ccc', padding: '16px', borderRadius: '4px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #eee', paddingBottom: '8px', fontSize: '12px', fontWeight: 'bold', color: '#555' }}>
+                          <span>[o] Tổng doanh thu</span>
+                          <span>THỐNG KÊ DOANH THU</span>
+                        </div>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', margin: '20px 0' }}>
+                          <span style={{ fontSize: '32px', fontWeight: '900', color: '#111' }}>
+                            {stats.revenue >= 1000000 ? `${Math.round(stats.revenue / 1000000)}TR` : fmtCurrency(stats.revenue)}
+                          </span>
+                          {/* Giả lập đường Line/Bar biểu đồ thu nhỏ */}
+                          <div style={{ display: 'flex', alignItems: 'flex-end', gap: '6px', height: '60px' }}>
+                            <div style={{ width: '12px', height: '20px', background: '#ccc', border: '1px solid #999' }}></div>
+                            <div style={{ width: '12px', height: '35px', background: '#ccc', border: '1px solid #999' }}></div>
+                            <div style={{ width: '12px', height: '55px', background: '#888', border: '1px solid #555' }}></div>
+                            <div style={{ width: '12px', height: '40px', background: '#ccc', border: '1px solid #999' }}></div>
+                          </div>
+                        </div>
+                        <div style={{ fontSize: '12px', color: 'green', fontWeight: 'bold' }}>
+                          ✓ Tăng trưởng tháng: +15%
+                        </div>
+                      </div>
+
+                      {/* KHU VỰC 2: THỐNG KÊ ĐƠN HÀNG */}
+                      <div className="stat-card" style={{ background: '#fff', border: '1px solid #ccc', padding: '16px', borderRadius: '4px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #eee', paddingBottom: '8px', fontSize: '12px', fontWeight: 'bold', color: '#555' }}>
+                          <span>[icon] Tổng đơn hàng</span>
+                          <span>THỐNG KÊ ĐƠN HÀNG</span>
+                        </div>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', margin: '15px 0' }}>
+                          <span style={{ fontSize: '36px', fontWeight: '900', color: '#111' }}>
+                            {bills.length}
+                          </span>
+                          <div style={{ fontSize: '12px', textAlign: 'left', lineHeight: '1.8' }}>
+                            <div>✓ Đơn hàng thành công: <strong style={{ float: 'right', marginLeft: '10px' }}>{stats.successBills || bills.length}</strong></div>
+                            <div>- Đơn hàng đang xử lý: <strong style={{ float: 'right', marginLeft: '10px' }}>{stats.processingBills || 0}</strong></div>
+                            <div>x Đơn hàng bị hủy: <strong style={{ float: 'right', marginLeft: '10px' }}>{stats.canceledBills || 0}</strong></div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* KHU VỰC 3: DANH SÁCH KHÁCH HÀNG */}
+                      <div className="stat-card" style={{ background: '#fff', border: '1px solid #ccc', padding: '16px', borderRadius: '4px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #eee', paddingBottom: '8px', fontSize: '12px', fontWeight: 'bold', color: '#555' }}>
+                          <span>[o] Khách hàng</span>
+                          <span>Danh sách khách hàng</span>
+                        </div>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', margin: '20px 0' }}>
+                          <span style={{ fontSize: '36px', fontWeight: '900', color: '#111' }}>
+                            {customers.length}
+                          </span>
+                          <div style={{ fontSize: '12px', textAlign: 'right', color: '#666', lineHeight: '1.8' }}>
+                            <div>Đơn hàng thành công</div>
+                            <div>Đơn hàng đang xử lý</div>
+                            <div>Đơn hàng bị hủy</div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* KHU VỰC 4: LIỆT KÊ SẢN PHẨM */}
+                      <div className="stat-card" style={{ background: '#fff', border: '1px solid #ccc', padding: '16px', borderRadius: '4px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #eee', paddingBottom: '8px', fontSize: '12px', fontWeight: 'bold', color: '#555' }}>
+                          <span>[box] Số sản phẩm</span>
+                          <span>Liệt kê sản phẩm</span>
+                        </div>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', margin: '20px 0' }}>
+                          <span style={{ fontSize: '36px', fontWeight: '900', color: '#111' }}>
+                            {products.length}
+                          </span>
+                          <div style={{ fontSize: '12px', textAlign: 'right', lineHeight: '1.8' }}>
+                            <div style={{ border: '1px solid brown', padding: '2px 6px', background: '#fdf5e6', fontWeight: 'bold', color: 'brown', borderRadius: '2px' }}>
+                              Đơn hàng thành công
+                            </div>
+                            <div style={{ color: '#666' }}>Đơn hàng đang xử lý</div>
+                            <div style={{ color: '#666' }}>Đơn hàng bị hủy</div>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                )}
+            </>
+          )}
+        </main>
+
+        <footer className="ruang-footer">
+          Copyright © LaLaShop
+        </footer>
+      </div>
+
+      {logoutModalOpen && (
+        <div className="ruang-modal-backdrop">
+
+          <div className="ruang-modal">
+
+            <div className="ruang-modal__header">
+              <h5>
+                Đăng xuất
+              </h5>
+
+              <button
+                type="button"
+                onClick={() =>
+                  setLogoutModalOpen(
+                    false
+                  )
+                }
+              >
+                ×
+              </button>
+            </div>
+
+            <div className="ruang-modal__body">
+              Bạn có chắc muốn đăng xuất?
+            </div>
+
+            <div className="ruang-modal__footer">
+
+              <button
+                type="button"
+                onClick={() =>
+                  setLogoutModalOpen(
+                    false
+                  )
+                }
+              >
+                Hủy
+              </button>
+
+              <button
+                type="button"
+                onClick={logout}
+              >
+                Đăng xuất
+              </button>
+
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default Admin;
