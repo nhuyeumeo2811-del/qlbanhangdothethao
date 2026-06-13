@@ -266,7 +266,7 @@ const Admin = () => {
         </ul>
       </aside>
       
-      <div className="ruang-shell">
+     <div className="ruang-shell">
 
         <header className="ruang-topbar" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 24px', height: '70px', background: '#fff', borderBottom: '1px solid #ccc' }}>
 
@@ -281,11 +281,13 @@ const Admin = () => {
           >
             <i className="fa-solid fa-bars" />
           </button>
-      <div className="ruang-topbar__right">
+
+          <div className="ruang-topbar__right">
 
             <div
               className="ruang-user"
               ref={userMenuRef}
+              style={{ border: '1px solid #ccc', padding: '6px 12px', borderRadius: '4px', background: '#f9f9f9' }}
             >
               <button
                 type="button"
@@ -295,9 +297,10 @@ const Admin = () => {
                     (v) => !v
                   )
                 }
+                style={{ display: 'flex', alignItems: 'center', gap: '10px', background: 'none', border: 'none', cursor: 'pointer' }}
               >
                 <span className="ruang-user__avatar" style={{ width: '36px', height: '36px', background: '#ccc', borderRadius: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', fontWeight: 'bold', border: '1px solid #999' }}>
-                  {staffInitials}
+                  Hình
                 </span>
 
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
