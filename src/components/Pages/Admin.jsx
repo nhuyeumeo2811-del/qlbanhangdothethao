@@ -266,28 +266,67 @@ const Admin = () => {
         </ul>
       </aside>
 
-      <div className="ruang-shell" style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-        
-        <header className="ruang-topbar" style={{ height: '90px', borderBottom: '1px solid #b7b7b7', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', padding: '0 30px', background: '#fff' }}>
+      <div className="ruang-shell">
+
+        <header className="ruang-topbar">
+
+          <button
+            type="button"
+            className="ruang-topbar__toggle"
+            onClick={() =>
+              setMobileSidebarOpen(
+                (v) => !v
+              )
+            }
+          >
+            <i className="fa-solid fa-bars" />
+          </button>
+
           <div className="ruang-topbar__right">
-            <div className="ruang-user" ref={userMenuRef} style={{ border: '1px solid #b7b7b7', padding: '6px 14px', background: '#fff', display: 'inline-block', position: 'relative' }}>
-              <button type="button" className="ruang-user__toggle" onClick={() => setUserMenuOpen((v) => !v)} style={{ display: 'flex', alignItems: 'center', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
-                <div style={{ width: '45px', height: '45px', border: '1px solid #b7b7b7', marginRight: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', position: 'relative' }}>
-                  <div style={{ position: 'absolute', width: '100%', height: '100%', top: 0, left: 0 }}><svg width="100%" height="100%"><line x1="0" y1="0" x2="100%" y2="100%" stroke="#e0e0e0" strokeWidth="1"/><line x1="100%" y1="0" x2="0" y2="100%" stroke="#e0e0e0" strokeWidth="1"/></svg></div>
-                  <span style={{ position: 'relative', background: '#fff', padding: '1px 3px' }}>Hình</span>
-                </div>
-                <div style={{ textAlign: 'left' }}>
-                  <span className="ruang-user__name" style={{ display: 'block', fontWeight: 'bold', fontSize: '15px' }}>
-                    {staffDisplayName}
-                  </span>
-                  <span style={{ fontSize: '12px', color: '#555' }}>Quản trị viên ˅</span>
-                </div>
+
+            <div
+              className="ruang-user"
+              ref={userMenuRef}
+            >
+              <button
+                type="button"
+                className="ruang-user__toggle"
+                onClick={() =>
+                  setUserMenuOpen(
+                    (v) => !v
+                  )
+                }
+              >
+                <span className="ruang-user__avatar">
+                  {staffInitials}
+                </span>
+
+                <span className="ruang-user__name">
+                  {staffDisplayName}
+                </span>
               </button>
 
               {userMenuOpen && (
-                <div className="ruang-user__menu" style={{ position: 'absolute', right: '-1px', top: '56px', background: '#fff', border: '1px solid #b7b7b7', boxShadow: '0 4px 6px rgba(0,0,0,0.05)', minWidth: '130px', zIndex: 100 }}>
-                  <button type="button" onClick={goHome} style={{ display: 'block', width: '100%', padding: '10px', border: 'none', background: 'none', textAlign: 'left', cursor: 'pointer' }}>Trang chủ</button>
-                  <button type="button" onClick={() => setLogoutModalOpen(true)} style={{ display: 'block', width: '100%', padding: '10px', borderTop: '1px solid #f0f0f0', background: 'none', textAlign: 'left', cursor: 'pointer' }}>Đăng xuất</button>
+                <div className="ruang-user__menu">
+
+                  <button
+                    type="button"
+                    onClick={goHome}
+                  >
+                    Trang chủ
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setLogoutModalOpen(
+                        true
+                      );
+                    }}
+                  >
+                    Đăng xuất
+                  </button>
+
                 </div>
               )}
             </div>
