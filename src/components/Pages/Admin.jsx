@@ -359,7 +359,7 @@ Number(p.id) === id);
           name: product?.name || `Sản phẩm #${id}`,
         };
       })
-      .sort((a, b) => b.sold - a.sold)
+      .sort((a, b) => b.sort - a.sold)
       .slice(0, 5)
       .map((p) => {
         const sold = Number(p.sold || 0);
@@ -659,93 +659,82 @@ const vipCustomers = useMemo(() => {
               {adminSection ===
                 'dashboard' && (
                   <div className="dashboard">
-                    <h2>
-                      Dashboard
-                    </h2>
+                    <h2>Dashboard</h2>
 
                     <div className="stats-grid">
-
-                      {/* KHỐI 1: THỐNG KÊ DOANH THU */}
+                      {/* Thống kê doanh thu */}
                       <div className="stat-card">
                         <div className="stat-card__header">
-                          <h4>THỐNG KÊ DOANH THU</h4>
+                          <span className="stat-card__title">THỐNG KÊ DOANH THU</span>
                         </div>
-                        <div className="stat-card__body-layout">
+                        <div className="stat-card__body">
                           <div className="stat-card__left">
-                            <span className="stat-card__sub-label"><i className="fa-solid fa-circle-info" /> Tổng danh thu</span>
-                            <p className="stat-card__value">12TR</p>
+                            <span className="stat-card__icon">💵 Tổng danh thu</span>
+                            <span className="stat-card__number">12TR</span>
                           </div>
                           <div className="stat-card__right">
-                            {/* Khu vực vẽ biểu đồ đường/cột - Bạn có thể giữ nguyên cấu trúc class css cũ hoặc thêm thẻ img/svg biểu đồ vào đây */}
-                            <div className="stat-chart-mock">[Biểu đồ doanh thu]</div>
-                            <span className="stat-card__growth-text"><i className="fa-solid fa-circle-check" /> Tăng trưởng tháng: <span className="growth-green">+15%</span></span>
+                            {/* Chèn hình ảnh/biểu đồ cột hoặc line ở đây */}
+                            <div className="stat-card__chart-placeholder">[Biểu đồ doanh thu]</div>
+                            <span className="stat-card__trend text-success">✔ Tăng trưởng tháng: +15%</span>
                           </div>
                         </div>
                       </div>
 
-                      {/* KHỐI 2: THỐNG KÊ ĐƠN HÀNG */}
+                      {/* Thống kê đơn hàng */}
                       <div className="stat-card">
                         <div className="stat-card__header">
-                          <h4>THỐNG KÊ ĐƠN HÀNG</h4>
+                          <span className="stat-card__title">THỐNG KÊ ĐƠN HÀNG</span>
                         </div>
-                        <div className="stat-card__body-layout">
+                        <div className="stat-card__body">
                           <div className="stat-card__left">
-                            <span className="stat-card__sub-label"><i className="fa-solid fa-cart-shopping" /> Tổng đơn hàng</span>
-                            <p className="stat-card__value">115</p>
+                            <span className="stat-card__icon">🛒 Tổng đơn hàng</span>
+                            <span className="stat-card__number">115</span>
                           </div>
                           <div className="stat-card__right">
-                            <ul className="stat-list-details">
-                              <li><i className="fa-solid fa-circle-check" /> Đơn hàng thành công: 98</li>
-                              <li><i className="fa-solid fa-circle-minus" /> Đơn hàng đang xử lý: 17</li>
-                              <li><i className="fa-solid fa-circle-xmark" /> Đơn hàng bị hủy: 0</li>
+                            <ul className="stat-list">
+                              <li>✔ Đơn hàng thành công: 98</li>
+                              <li>➖ Đơn hàng đang xử lý: 17</li>
+                              <li>✖ Đơn hàng bị hủy: 0</li>
                             </ul>
                           </div>
                         </div>
                       </div>
 
-                      {/* KHỐI 3: DANH SÁCH KHÁCH HÀNG */}
-                      <div className="stat-card">
+                      {/* Khách hàng - Thêm sự kiện click để nhảy tab */}
+                      <div className="stat-card cursor-pointer" onClick={() => setAdminSection('customer')}>
                         <div className="stat-card__header">
-                          <h4>Danh sách khách hàng</h4>
+                          <span className="stat-card__title">Danh sách khách hàng</span>
                         </div>
-                        <div className="stat-card__body-layout">
+                        <div className="stat-card__body">
                           <div className="stat-card__left">
-                            <span className="stat-card__sub-label"><i className="fa-solid fa-user" /> Khách hàng</span>
-                            <p className="stat-card__value">
-                              {fmtNumber(
-                                customers.length
-                              )}
-                            </p>
+                            <span className="stat-card__icon">👤 Khách hàng</span>
+                            <span className="stat-card__number">10</span>
                           </div>
                           <div className="stat-card__right">
-                            <ul className="stat-list-links">
-                              <li><button type="button" onClick={() => setAdminSection('bill')}>Đơn hàng thành công</button></li>
-                              <li><button type="button" onClick={() => setAdminSection('bill')}>Đơn hàng đang xử lý</button></li>
-                              <li><button type="button" onClick={() => setAdminSection('bill')}>Đơn hàng bị hủy</button></li>
+                            <ul className="stat-list">
+                              <li>Đơn hàng thành công</li>
+                              <li>Đơn hàng đang xử lý</li>
+                              <li>Đơn hàng bị hủy</li>
                             </ul>
                           </div>
                         </div>
                       </div>
 
-                      {/* KHỐI 4: LIỆT KÊ SẢN PHẨM */}
-                      <div className="stat-card">
+                      {/* Số sản phẩm - Thêm sự kiện click để nhảy tab */}
+                      <div className="stat-card cursor-pointer" onClick={() => setAdminSection('products')}>
                         <div className="stat-card__header">
-                          <h4>Liệt kê sản phẩm</h4>
+                          <span className="stat-card__title">Liệt kê sản phẩm</span>
                         </div>
-                        <div className="stat-card__body-layout">
+                        <div className="stat-card__body">
                           <div className="stat-card__left">
-                            <span className="stat-card__sub-label"><i className="fa-solid fa-box" /> Số sản phẩm</span>
-                            <p className="stat-card__value">
-                              {fmtNumber(
-                                stats.total
-                              )}
-                            </p>
+                            <span className="stat-card__icon">📦 Số sản phẩm</span>
+                            <span className="stat-card__number">115</span>
                           </div>
                           <div className="stat-card__right">
-                            <ul className="stat-list-links">
-                              <li><button type="button" onClick={() => setAdminSection('bill')}>Đơn hàng thành công</button></li>
-                              <li><button type="button" onClick={() => setAdminSection('bill')}>Đơn hàng đang xử lý</button></li>
-                              <li><button type="button" onClick={() => setAdminSection('bill')}>Đơn hàng bị hủy</button></li>
+                            <ul className="stat-list">
+                              <li className="highlight-box">Đơn hàng thành công</li>
+                              <li>Đơn hàng đang xử lý</li>
+                              <li>Đơn hàng bị hủy</li>
                             </ul>
                           </div>
                         </div>
