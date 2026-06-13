@@ -405,15 +405,16 @@ const Admin = () => {
                       </div>
                       
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', margin: '15px 0' }}>
-                        <span style={{ fontSize: '36px', fontWeight: '900', color: '#111' }}>
-                          {stats.totalBills}
-                        </span>
-                        <div style={{ fontSize: '12px', textAlign: 'left', lineHeight: '1.8', minWidth: '180px' }}>
-                          <div>✓ Đơn hàng thành công: <strong style={{ float: 'right', marginLeft: '10px' }}>{stats.deliveredCount}</strong></div>
-                          <div>- Đơn hàng đang xử lý: <strong style={{ float: 'right', marginLeft: '10px' }}>{stats.pendingCount}</strong></div>
-                          <div>x Đơn hàng bị hủy: <strong style={{ float: 'right', marginLeft: '10px' }}>{stats.canceledCount}</strong></div>
+
+                          <span style={{ fontSize: '36px', fontWeight: '900', color: '#111' }}>
+                            {bills.length}
+                          </span>
+                          <div style={{ fontSize: '12px', textAlign: 'left', lineHeight: '1.8' }}>
+                            <div>✓ Đơn hàng thành công: <strong style={{ float: 'right', marginLeft: '10px' }}>{stats.successBills || bills.length}</strong></div>
+                            <div>- Đơn hàng đang xử lý: <strong style={{ float: 'right', marginLeft: '10px' }}>{stats.processingBills || 0}</strong></div>
+                            <div>x Đơn hàng bị hủy: <strong style={{ float: 'right', marginLeft: '10px' }}>{stats.canceledBills || 0}</strong></div>
+                          </div>
                         </div>
-                      </div>
                     </div>
 
                     {/* Ô KHỐI 3: DANH SÁCH KHÁCH HÀNG */}
