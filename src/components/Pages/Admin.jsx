@@ -605,8 +605,8 @@ const vipCustomers = useMemo(() => {
                   {/* Lưới phân cực 4 ô của bảng số liệu */}
                   <div className="stats-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
                     
-                    {/* Ô KHỐI 1: THỐNG KÊ DOANH THU */}
-                    <div style={{ border: '1px solid #000', padding: '15px', display: 'flex', flexDirection: 'column', height: '170px', position: 'relative' }}>
+                    {/* Ô KHỐI 1: THỐNG KÊ DOANH THU (LINK SANG TAB HÓA ĐƠN BILL) */}
+                    <div onClick={() => setAdminSection('bill')} style={{ border: '1px solid #000', padding: '15px', display: 'flex', flexDirection: 'column', height: '170px', position: 'relative', cursor: 'pointer' }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #000', paddingBottom: '6px', fontSize: '12px', fontWeight: 'bold', textTransform: 'uppercase' }}>
                         <span>💵 Tổng danh thu</span>
                         <span style={{ color: '#555' }}>Thống kê doanh thu</span>
@@ -632,8 +632,8 @@ const vipCustomers = useMemo(() => {
                       </div>
                     </div>
 
-                    {/* Ô KHỐI 2: THỐNG KÊ ĐƠN HÀNG */}
-                    <div style={{ border: '1px solid #000', padding: '15px', display: 'flex', flexDirection: 'column', height: '170px' }}>
+                    {/* Ô KHỐI 2: THỐNG KÊ ĐƠN HÀNG (LINK SANG TAB CHI TIẾT HÓA ĐƠN HOẶC HÓA ĐƠN BILL) */}
+                    <div onClick={() => setAdminSection('bill')} style={{ border: '1px solid #000', padding: '15px', display: 'flex', flexDirection: 'column', height: '170px', cursor: 'pointer' }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #000', paddingBottom: '6px', fontSize: '12px', fontWeight: 'bold', textTransform: 'uppercase' }}>
                         <span>🛒 Tổng đơn hàng</span>
                         <span style={{ color: '#555' }}>Thống kê đơn hàng</span>
@@ -658,8 +658,8 @@ const vipCustomers = useMemo(() => {
                       </div>
                     </div>
 
-                    {/* Ô KHỐI 3: DANH SÁCH KHÁCH HÀNG (GIỮ NGUYÊN BIẾN DỮ LIỆU + THÊM LINK JSX) */}
-                    <div style={{ border: '1px solid #000', padding: '15px', display: 'flex', flexDirection: 'column', height: '155px' }}>
+                    {/* Ô KHỐI 3: DANH SÁCH KHÁCH HÀNG (LINK SANG TAB CUSTOMER) */}
+                    <div onClick={() => setAdminSection('customer')} style={{ border: '1px solid #000', padding: '15px', display: 'flex', flexDirection: 'column', height: '155px', cursor: 'pointer' }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #000', paddingBottom: '6px', fontSize: '12px', fontWeight: 'bold', textTransform: 'uppercase' }}>
                         <span>👤 Khách hàng</span>
                         <span style={{ color: '#555' }}>Danh sách khách hàng</span>
@@ -672,15 +672,15 @@ const vipCustomers = useMemo(() => {
                         
                         {/* LINK SANG JSX CUSTOMER KHI NGƯỜI DÙNG CLICK */}
                         <div style={{ fontSize: '13px', textAlign: 'right', lineHeight: '2' }}>
-                          <div onClick={() => setAdminSection('customer')} style={{ cursor: 'pointer', textDecoration: 'underline', color: '#000' }}>Đơn hàng thành công</div>
-                          <div onClick={() => setAdminSection('customer')} style={{ cursor: 'pointer', textDecoration: 'underline', color: '#000' }}>Đơn hàng đang xử lý</div>
-                          <div onClick={() => setAdminSection('customer')} style={{ cursor: 'pointer', textDecoration: 'underline', color: '#000' }}>Đơn hàng bị hủy</div>
+                          <div style={{ textDecoration: 'underline', color: '#000' }}>Đơn hàng thành công</div>
+                          <div style={{ textDecoration: 'underline', color: '#000' }}>Đơn hàng đang xử lý</div>
+                          <div style={{ textDecoration: 'underline', color: '#000' }}>Đơn hàng bị hủy</div>
                         </div>
                       </div>
                     </div>
 
-                    {/* Ô KHỐI 4: LIỆT KÊ SẢN PHẨM (GIỮ NGUYÊN BIẾN DỮ LIỆU + THÊM LINK JSX) */}
-                    <div style={{ border: '1px solid #000', padding: '15px', display: 'flex', flexDirection: 'column', height: '155px' }}>
+                    {/* Ô KHỐI 4: LIỆT KÊ SẢN PHẨM (LINK SANG TAB PRODUCTS) */}
+                    <div onClick={() => setAdminSection('products')} style={{ border: '1px solid #000', padding: '15px', display: 'flex', flexDirection: 'column', height: '155px', cursor: 'pointer' }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #000', paddingBottom: '6px', fontSize: '12px', fontWeight: 'bold', textTransform: 'uppercase' }}>
                         <span>📦 Số sản phẩm</span>
                         <span style={{ color: '#555' }}>Liệt kê sản phẩm</span>
@@ -693,11 +693,11 @@ const vipCustomers = useMemo(() => {
                         
                         {/* LINK SANG JSX PRODUCT KHI NGƯỜI DÙNG CLICK */}
                         <div style={{ fontSize: '13px', textAlign: 'right', lineHeight: '2' }}>
-                          <div onClick={() => setAdminSection('products')} style={{ cursor: 'pointer', border: '1px solid #000', padding: '1px 5px', background: '#e2e8f0', display: 'inline-block', fontWeight: 'bold' }}>
+                          <div style={{ border: '1px solid #000', padding: '1px 5px', background: '#e2e8f0', display: 'inline-block', fontWeight: 'bold' }}>
                             Đơn hàng thành công
                           </div>
-                          <div onClick={() => setAdminSection('products')} style={{ cursor: 'pointer', color: '#000', marginTop: '2px' }}>Đơn hàng đang xử lý</div>
-                          <div onClick={() => setAdminSection('products')} style={{ cursor: 'pointer', color: '#000' }}>Đơn hàng bị hủy</div>
+                          <div style={{ color: '#000', marginTop: '2px' }}>Đơn hàng đang xử lý</div>
+                          <div style={{ color: '#000' }}>Đơn hàng bị hủy</div>
                         </div>
                       </div>
                     </div>
