@@ -343,17 +343,27 @@ const Admin = () => {
                     </div>
 
                     {/* Ô KHỐI 2: TỔNG ĐƠN HÀNG - ĐÃ FIX CHÍNH XÁC JSX ĐỘNG THEO YÊU CẦU */}
-                    <div onClick={() => setAdminSection('bill')} style={{ border: '1px solid #000', padding: '15px', display: 'flex', flexDirection: 'column', height: '170px', cursor: 'pointer' }}>
+                   <div onClick={() => setAdminSection('bill')} style={{ border: '1px solid #000', padding: '15px', display: 'flex', flexDirection: 'column', height: '170px', cursor: 'pointer' }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #000', paddingBottom: '6px', fontSize: '12px', fontWeight: 'bold', textTransform: 'uppercase' }}>
                         <span>🛒 Tổng đơn hàng</span>
                         <span style={{ color: '#555' }}>Thống kê đơn hàng</span>
                       </div>
                       
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flex: 1 }}>
-                        <div style={{ fontSize: '12px', textAlign: 'left', minWidth: '170px', alignSelf: 'center' }}>
-                          <div style={{ margin: '4px 0' }}>✔ Đơn hàng thành công: <span style={{ float: 'right', fontWeight: 'bold' }}>{stats.successCount}</span></div>
-                          <div style={{ margin: '4px 0', borderTop: '1px dashed #ccc', paddingTop: '2px' }}>➖ Đơn hàng đang xử lý: <span style={{ float: 'right', fontWeight: 'bold' }}>{stats.processingCount}</span></div>
-                          <div style={{ margin: '4px 0', borderTop: '1px dashed #ccc', paddingTop: '2px' }}>✖ Đơn hàng bị hủy: <span style={{ float: 'right', fontWeight: 'bold' }}>{stats.canceledCount}</span></div>
+                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                          <div style={{ fontSize: '32px', fontWeight: 'bold' }}>
+                            {stats.totalBills}
+                          </div>
+                          
+                          <div style={{ width: '55px', height: '55px', border: '3px solid #000', borderRadius: '50%', background: '#111', position: 'relative', marginTop: '4px' }}>
+                            <div style={{ position: 'absolute', top: '50%', left: '50%', width: '4px', height: '24px', background: '#fff', transform: 'translate(-50%, -50%) rotate(40deg)', transformOrigin: 'center' }}></div>
+                          </div>
+                        </div>
+
+                        <div style={{ fontSize: '12px', textAlign: 'left', lineHeight: '1.7', minWidth: '160px' }}>
+                          <div>✔ Thành công: <span style={{ float: 'right', fontWeight: 'bold' }}>{stats.deliveredCount}</span></div>
+                          <div style={{ borderTop: '1px dashed #ccc', paddingTop: '2px' }}>➖ Đang xử lý: <span style={{ float: 'right', fontWeight: 'bold' }}>{stats.pendingCount}</span></div>
+                          <div style={{ borderTop: '1px dashed #ccc', paddingTop: '2px' }}>✖ Bị hủy: <span style={{ float: 'right', fontWeight: 'bold' }}>{stats.canceledCount}</span></div>
                         </div>
                       </div>
                     </div>
