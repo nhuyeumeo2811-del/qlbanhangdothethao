@@ -511,7 +511,7 @@ const vipCustomers = useMemo(() => {
             <i className="fa-solid fa-layer-group" />
           </span>
 
-          <span>GalaxyCafe</span>
+          <span>LaLaShop</span>
         </div>
 
         <hr className="ruang-sidebar__divider" />
@@ -659,46 +659,86 @@ const vipCustomers = useMemo(() => {
               {adminSection ===
                 'dashboard' && (
                   <div className="dashboard">
-                    <h2>
-                      Dashboard
-                    </h2>
+                    <h2>Dashboard</h2>
 
-                    <div className="stats-grid">
-
-                      <div className="stat-card">
-                        <h4>
-                          Doanh thu
-                        </h4>
-
-                        <p>
-                          {fmtCurrency(
-                            stats.revenue
-                          )}
-                        </p>
+                    {/* Hàng phía trên: Thống kê doanh thu & Thống kê đơn hàng */}
+                    <div className="stats-grid-top" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '20px' }}>
+                      
+                      {/* Thẻ THỐNG KÊ DOANH THU */}
+                      <div className="stat-card row-layout" style={{ border: '1px solid #ccc', padding: '15px', borderRadius: '4px', backgroundColor: '#fff' }}>
+                        <div style={{ borderBottom: '2px solid #333', paddingBottom: '5px', marginBottom: '10px', fontWeight: 'bold' }}>
+                          THỐNG KÊ DOANH THU
+                        </div>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                          <div>
+                            <span style={{ fontSize: '12px', color: '#666', display: 'block' }}>💵 Tổng danh thu</span>
+                            <span style={{ fontSize: '28px', fontWeight: 'bold' }}>12TR</span>
+                          </div>
+                          {/* Khung giả lập biểu đồ cột/đường từ hình vẽ */}
+                          <div style={{ textAlign: 'right' }}>
+                            <div style={{ fontSize: '11px', color: 'green', marginBottom: '5px' }}>✓ Tăng trưởng tháng: <span style={{ fontWeight: 'bold' }}>+15%</span></div>
+                            <div style={{ width: '100px', height: '40px', border: '1px dashed #aaa', display: 'inline-block' }}></div>
+                          </div>
+                        </div>
                       </div>
 
-                      <div className="stat-card">
-                        <h4>
-                          Sản phẩm
-                        </h4>
-
-                        <p>
-                          {fmtNumber(
-                            stats.total
-                          )}
-                        </p>
+                      {/* Thẻ THỐNG KÊ ĐƠN HÀNG */}
+                      <div className="stat-card row-layout" style={{ border: '1px solid #ccc', padding: '15px', borderRadius: '4px', backgroundColor: '#fff' }}>
+                        <div style={{ borderBottom: '2px solid #333', paddingBottom: '5px', marginBottom: '10px', fontWeight: 'bold' }}>
+                          THỐNG KÊ ĐƠN HÀNG
+                        </div>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                          <div>
+                            <span style={{ fontSize: '12px', color: '#666', display: 'block' }}>🛒 Tổng đơn hàng</span>
+                            <span style={{ fontSize: '28px', fontWeight: 'bold' }}>115</span>
+                          </div>
+                          <div style={{ fontSize: '13px', textAlign: 'right' }}>
+                            <div>✓ Đơn hàng thành công: <span style={{ fontWeight: 'bold' }}>98</span></div>
+                            <div>➖ Đơn hàng đang xử lý: <span style={{ fontWeight: 'bold' }}>17</span></div>
+                            <div>✖ Đơn hàng bị hủy: <span style={{ fontWeight: 'bold' }}>0</span></div>
+                          </div>
+                        </div>
                       </div>
 
-                      <div className="stat-card">
-                        <h4>
-                          Khách hàng
-                        </h4>
+                    </div>
 
-                        <p>
-                          {fmtNumber(
-                            customers.length
-                          )}
-                        </p>
+                    {/* Hàng phía dưới: Danh sách khách hàng & Liệt kê sản phẩm */}
+                    <div className="stats-grid-bottom" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+                      
+                      {/* Thẻ Danh sách khách hàng */}
+                      <div className="stat-card row-layout" style={{ border: '1px solid #ccc', padding: '15px', borderRadius: '4px', backgroundColor: '#fff' }}>
+                        <div style={{ borderBottom: '2px solid #333', paddingBottom: '5px', marginBottom: '10px', fontWeight: 'bold' }}>
+                          Danh sách khách hàng
+                        </div>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                          <div>
+                            <span style={{ fontSize: '12px', color: '#666', display: 'block' }}>👤 Khách hàng</span>
+                            <span style={{ fontSize: '28px', fontWeight: 'bold' }}>10</span>
+                          </div>
+                          <div style={{ fontSize: '13px', color: '#555', textAlign: 'right' }}>
+                            <div style={{ margin: '4px 0' }}>Đơn hàng thành công</div>
+                            <div style={{ margin: '4px 0' }}>Đơn hàng đang xử lý</div>
+                            <div style={{ margin: '4px 0' }}>Đơn hàng bị hủy</div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Thẻ Liệt kê sản phẩm */}
+                      <div className="stat-card row-layout" style={{ border: '1px solid #ccc', padding: '15px', borderRadius: '4px', backgroundColor: '#fff' }}>
+                        <div style={{ borderBottom: '2px solid #333', paddingBottom: '5px', marginBottom: '10px', fontWeight: 'bold' }}>
+                          Liệt kê sản phẩm
+                        </div>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                          <div>
+                            <span style={{ fontSize: '12px', color: '#666', display: 'block' }}>📦 Số sản phẩm</span>
+                            <span style={{ fontSize: '28px', fontWeight: 'bold' }}>115</span>
+                          </div>
+                          <div style={{ fontSize: '13px', color: '#555', textAlign: 'right' }}>
+                            <div style={{ margin: '4px 0', border: '1px solid brown', padding: '0 4px' }}>Đơn hàng thành công</div>
+                            <div style={{ margin: '4px 0' }}>Đơn hàng đang xử lý</div>
+                            <div style={{ margin: '4px 0' }}>Đơn hàng bị hủy</div>
+                          </div>
+                        </div>
                       </div>
 
                     </div>
@@ -709,7 +749,7 @@ const vipCustomers = useMemo(() => {
         </main>
 
         <footer className="ruang-footer">
-          Copyright © GalaxyCafe
+          Copyright © LaLaShop
         </footer>
       </div>
 
