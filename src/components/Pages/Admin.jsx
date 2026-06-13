@@ -90,7 +90,9 @@ const Admin = () => {
   const userMenuRef = useRef(null);
 
   useEffect(() => {
-    const raw = localStorage.getItem('currentUser');
+    const raw =
+      localStorage.getItem('currentUser');
+
     if (!raw) {
       navigate('/login');
       return;
@@ -98,10 +100,12 @@ const Admin = () => {
 
     try {
       const u = JSON.parse(raw);
+
       if (u.role !== 'staff') {
         navigate('/');
         return;
       }
+
       setAllowed(true);
     } catch {
       navigate('/login');
