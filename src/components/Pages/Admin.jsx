@@ -265,10 +265,10 @@ const Admin = () => {
           ))}
         </ul>
       </aside>
-
+      
       <div className="ruang-shell">
 
-        <header className="ruang-topbar">
+        <header className="ruang-topbar" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 24px', height: '70px', background: '#fff', borderBottom: '1px solid #ccc' }}>
 
           <button
             type="button"
@@ -281,8 +281,7 @@ const Admin = () => {
           >
             <i className="fa-solid fa-bars" />
           </button>
-
-          <div className="ruang-topbar__right">
+      <div className="ruang-topbar__right">
 
             <div
               className="ruang-user"
@@ -297,13 +296,16 @@ const Admin = () => {
                   )
                 }
               >
-                <span className="ruang-user__avatar">
+                <span className="ruang-user__avatar" style={{ width: '36px', height: '36px', background: '#ccc', borderRadius: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', fontWeight: 'bold', border: '1px solid #999' }}>
                   {staffInitials}
                 </span>
 
-                <span className="ruang-user__name">
-                  {staffDisplayName}
-                </span>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                  <span className="ruang-user__name" style={{ fontSize: '14px', fontWeight: 'bold', color: '#333' }}>
+                    {staffDisplayName}
+                  </span>
+                  <span style={{ fontSize: '11px', color: '#666' }}>Quản trị viên v</span>
+                </div>
               </button>
 
               {userMenuOpen && (
