@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo, useRef, } from 'react';
+import React, { useEffect, useState, useMemo, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AdminProduct from './AdminProduct';
 import AdminCategory from './AdminCategory';
@@ -34,17 +34,14 @@ const BILL_STATUS_MAP = {
     label: 'Đã giao hàng',
     cls: 'done',
   },
-
   shipping: {
     label: 'Vận chuyển',
     cls: 'shipping',
   },
-
   pending: {
     label: 'Chưa giải quyết',
     cls: 'pending',
   },
-
   processing: {
     label: 'Xử lý',
     cls: 'processing',
@@ -65,9 +62,7 @@ function billStatusFromJson(statusRaw) {
 
   return {
     key: 'unknown',
-    label: key
-      ? String(statusRaw).trim()
-      : 'Chưa xác định',
+    label: key ? String(statusRaw).trim() : 'Chưa xác định',
     cls: 'unknown',
   };
 }
@@ -82,31 +77,20 @@ const Admin = () => {
   const [bills, setBills] = useState([]);
   const [customers, setCustomers] = useState([]);
   const [employees, setEmployees] = useState([]);
-  const [invoiceDetails, setInvoiceDetails] =
-    useState([]);
+  const [invoiceDetails, setInvoiceDetails] = useState([]);
 
   const [loading, setLoading] = useState(true);
-
   const [loadError, setLoadError] = useState('');
 
-  const [mobileSidebarOpen, setMobileSidebarOpen] =
-    useState(false);
-
-  const [userMenuOpen, setUserMenuOpen] =
-    useState(false);
-
-  const [logoutModalOpen, setLogoutModalOpen] =
-    useState(false);
-
-  const [adminSection, setAdminSection] =
-    useState('dashboard');
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [logoutModalOpen, setLogoutModalOpen] = useState(false);
+  const [adminSection, setAdminSection] = useState('dashboard');
 
   const userMenuRef = useRef(null);
 
   useEffect(() => {
-    const raw =
-      localStorage.getItem('currentUser');
-
+    const raw = localStorage.getItem('currentUser');
     if (!raw) {
       navigate('/login');
       return;
@@ -114,18 +98,15 @@ const Admin = () => {
 
     try {
       const u = JSON.parse(raw);
-
       if (u.role !== 'staff') {
         navigate('/');
         return;
       }
-
       setAllowed(true);
     } catch {
       navigate('/login');
     }
   }, [navigate]);
-
 
   useEffect(() => {
     if (!allowed) return;
@@ -135,14 +116,7 @@ const Admin = () => {
       setLoadError('');
 
       try {
-        const [
-          pRes,
-          cRes,
-          bRes,
-          cuRes,
-          eRes,
-          iRes,
-        ] = await Promise.all([
+        const [pRes, cRes, bRes, cuRes, eRes, iRes] = await Promise.all([
           fetch(`${jsonBase}products.json`),
           fetch(`${jsonBase}category.json`),
           fetch(`${jsonBase}bill.json`),
@@ -152,66 +126,38 @@ const Admin = () => {
         ]);
 
         if (!pRes.ok) {
-          throw new Error(
-            'Không tải được products.json'
-          );
+          throw new Error('Không tải được products.json');
         }
 
         const pdata = await pRes.json();
-
-        setProducts(
-          Array.isArray(pdata) ? pdata : []
-        );
+        setProducts(Array.isArray(pdata) ? pdata : []);
 
         if (cRes.ok) {
           const cdata = await cRes.json();
-
-          setCategories(
-            Array.isArray(cdata) ? cdata : []
-          );
+          setCategories(Array.isArray(cdata) ? cdata : []);
         }
 
         if (bRes.ok) {
           const bdata = await bRes.json();
-
-          setBills(
-            Array.isArray(bdata) ? bdata : []
-          );
+          setBills(Array.isArray(bdata) ? bdata : []);
         }
 
         if (cuRes.ok) {
           const cudata = await cuRes.json();
-
-          setCustomers(
-            Array.isArray(cudata)
-              ? cudata
-              : []
-          );
+          setCustomers(Array.isArray(cudata) ? cudata : []);
         }
 
         if (eRes.ok) {
           const edata = await eRes.json();
-
-          setEmployees(
-            Array.isArray(edata)
-              ? edata
-              : []
-          );
+          setEmployees(Array.isArray(edata) ? edata : []);
         }
 
         if (iRes.ok) {
           const idata = await iRes.json();
-
-          setInvoiceDetails(
-            Array.isArray(idata)
-              ? idata
-              : []
-          );
+          setInvoiceDetails(Array.isArray(idata) ? idata : []);
         }
       } catch (e) {
-        setLoadError(
-          e.message || 'Lỗi tải dữ liệu'
-        );
+        setLoadError(e.message || 'Lỗi tải dữ liệu');
       } finally {
         setLoading(false);
       }
@@ -224,324 +170,96 @@ const Admin = () => {
     if (!userMenuOpen) return;
 
     const handler = (e) => {
-      if (
-        userMenuRef.current &&
-        !userMenuRef.current.contains(e.target)
-      ) {
+      if (userMenuRef.current && !userMenuRef.current.contains(e.target)) {
         setUserMenuOpen(false);
       }
     };
 
-    document.addEventListener(
-      'mousedown',
-      handler
-    );
-
+    document.addEventListener('mousedown', handler);
     return () => {
-      document.removeEventListener(
-        'mousedown',
-        handler
-      );
+      document.removeEventListener('mousedown', handler);
     };
   }, [userMenuOpen]);
 
-  const staffInitials = useMemo(() => {
-    try {
-      const raw =
-        localStorage.getItem('currentUser');
-
-      if (!raw) return 'AD';
-
-      const u = JSON.parse(raw);
-
-      const name = String(
-        u.user || u.name || 'Staff'
-      ).trim();
-
-      const parts = name
-        .split(/\s+/)
-        .filter(Boolean);
-
-      if (!parts.length) return 'AD';
-
-      if (parts.length === 1) {
-        return parts[0]
-          .slice(0, 2)
-          .toUpperCase();
-      }
-
-      return (
-        parts[0][0] +
-        parts[parts.length - 1][0]
-      ).toUpperCase();
-    } catch {
-      return 'AD';
-    }
-  }, []);
-
   const staffDisplayName = useMemo(() => {
     try {
-      const raw =
-        localStorage.getItem('currentUser');
-
+      const raw = localStorage.getItem('currentUser');
       if (!raw) return 'Administrator';
-
       const u = JSON.parse(raw);
-
-      return (
-        String(
-          u.user || u.name || 'Staff'
-        ).trim() || 'Administrator'
-      );
+      return String(u.user || u.name || 'Staff').trim() || 'Administrator';
     } catch {
       return 'Administrator';
     }
   }, []);
 
+  // Tính toán số liệu thống kê thực tế từ JSON
   const stats = useMemo(() => {
     const total = products.length;
 
-    const soldSum =
-      invoiceDetails.reduce(
-        (sum, item) =>
-          sum + Number(item.quantity || 0),
-        0
-      );
+    const revenue = bills.reduce((sum, bill) => sum + Number(bill.total || 0), 0);
 
-    const catCount = categories.length;
-
-    const uncategorized =
-      products.filter(
-        (p) =>
-          p.categoryid == null ||
-          p.categoryid === ''
-      ).length;
-
-    const revenue = bills.reduce(
-      (sum, bill) =>
-        sum + Number(bill.total || 0),
-      0
-    );
-
-    const avgBill = bills.length
-      ? revenue / bills.length
-      : 0;
+    // Phân loại trạng thái đơn hàng thực tế
+    const deliveredCount = bills.filter((b) => String(b.status).trim().toLowerCase() === 'delivered').length;
+    const pendingCount = bills.filter((b) => {
+      const s = String(b.status).trim().toLowerCase();
+      return s === 'pending' || s === 'processing' || s === 'shipping';
+    }).length;
+    const canceledCount = bills.filter((b) => String(b.status).trim().toLowerCase() === 'canceled').length;
 
     return {
       total,
-      soldSum,
-      catCount,
-      uncategorized,
       revenue,
-      avgBill,
+      totalBills: bills.length,
+      deliveredCount,
+      pendingCount,
+      canceledCount,
     };
-  }, [
-    products,
-    categories,
-    invoiceDetails,
-    bills,
-  ]);
-const topSoldProducts = useMemo(() => {
-  const byProduct = invoiceDetails.reduce((map, item) => {
-      const pid = Number(item.product_id);
-      const quantity = Number(item.quantity || 0);
-      map.set(pid, (map.get(pid) || 0) + quantity);
-      return map;
-    }, new Map());
+  }, [products, bills]);
 
-    return [...byProduct.entries()]
-      .map(([id, sold]) => {
-        const product = products.find((p) =>
-Number(p.id) === id);
-        return {
-          id,
-          sold,
-          name: product?.name || `Sản phẩm #${id}`,
-        };
-      })
-      .sort((a, b) => b.sold - a.sold)
-      .slice(0, 5)
-      .map((p) => {
-        const sold = Number(p.sold || 0);
-        const percent = Math.max(0, Math.min(100,
-Math.round((sold / 800) * 100)));
-        return { id: p.id, name: p.name, sold, percent
-};
-      });
-  }, [products, invoiceDetails]);
-
-const revenueByDate = useMemo(() => {
-  const grouped = bills.reduce((acc, bill) => {
-    const key = String(bill.date || '').slice(0, 10)
-|| 'N/A';
-    acc.set(key, (acc.get(key) || 0) +
-Number(bill.total || 0));
-    return acc;
-  }, new Map());
-  const rows = [...grouped.entries()]
-
-  .map(([date, total]) => ({ date, total }))
-    .sort((a, b) => a.date.localeCompare(b.date));
-  const maxTotal = rows.reduce((m, row) => Math.max(m,
-row.total), 0);
-
-  return rows.map((row) => ({
-    ...row,
-    percent: maxTotal > 0 ? Math.max(8,
-Math.round((row.total / maxTotal) * 100)) : 0,
-  }));
-}, [bills]);
-
-const billTableRows = useMemo(() => {
-  const customerMap = new Map(customers.map((c) =>
-[Number(c.id), c.name]));
-  const productMap = new Map(products.map((p) =>
-[Number(p.id), p.name]));
-  const detailByBill = invoiceDetails.reduce((map,
-item) => {
-    const key = Number(item.bill_id);
-    if (!map.has(key)) map.set(key, []);
-    map.get(key).push(item);
-    return map;
-  }, new Map());
-
-  return [...bills]
-    .sort((a, b) => Number(b.id) - Number(a.id))
-    .slice(0, 6)
-    .map((bill) => {
-      const details =
-detailByBill.get(Number(bill.id)) || [];
-      const firstProduct = details[0];
-      const itemName = firstProduct
-        ?
-productMap.get(Number(firstProduct.product_id)) || `Sản
-phẩm #${firstProduct.product_id}`
-        : '';
-      return {
-        id: bill.id,
-        billCode: String(bill.id),
-        customerName:
-customerMap.get(Number(bill.customer_id)) || `KH
-#${bill.customer_id}`,
-        itemName,
-        status: billStatusFromJson(bill.status),
-      };
-    });
-}, [bills, customers, products, invoiceDetails]);
-
-const vipCustomers = useMemo(() => {
-  if (!bills.length) return [];
-  const latestDate = bills
-    .map((bill) => String(bill.date || ''))
-    .sort()
-    .slice(-1)[0];
-  const targetMonth = latestDate.slice(0, 7);
-  const customerMap = new Map(customers.map((c) =>
-[Number(c.id), c.name]));
-
-  const grouped = bills.reduce((map, bill) => {
-    if (!String(bill.date ||
-'').startsWith(targetMonth)) return map;
-    const cid = Number(bill.customer_id);
-    if (!map.has(cid)) {
-      map.set(cid, { customerId: cid, total: 0, count:
-0 });
-    }
-    const row = map.get(cid);
-    row.total += Number(bill.total || 0);
-    row.count += 1;
-    return map;
-  }, new Map());
-
-  return [...grouped.values()]
-    .sort((a, b) => b.total - a.total)
-    .slice(0, 5)
-    .map((row) => ({
-      ...row,
-      name: customerMap.get(row.customerId) || `KH
-#${row.customerId}`,
-    }));
-}, [bills, customers]);
   const goHome = () => navigate('/');
   const logout = () => {
     localStorage.removeItem('currentUser');
-
-    window.dispatchEvent(
-      new Event('userUpdated')
-    );
-
+    window.dispatchEvent(new Event('userUpdated'));
     navigate('/login');
-
     setLogoutModalOpen(false);
   };
 
-  const closeMobileNav = () => {
-    setMobileSidebarOpen(false);
-  };
-
   if (!allowed) {
-    return (
-      <div
-        className="ruang-boot"
-        aria-hidden
-      />
-    );
+    return <div className="ruang-boot" aria-hidden />;
   }
 
   return (
     <div className="ruang-layout">
-
       <div
-        className={`ruang-overlay ${mobileSidebarOpen
-            ? 'is-visible'
-            : ''
-          }`}
-        onClick={closeMobileNav}
+        className={`ruang-overlay ${mobileSidebarOpen ? 'is-visible' : ''}`}
+        onClick={() => setMobileSidebarOpen(false)}
         aria-hidden={!mobileSidebarOpen}
       />
 
-      <aside
-        className={`ruang-sidebar ${mobileSidebarOpen
-            ? 'is-open'
-            : ''
-          }`}
-      >
+      <aside className={`ruang-sidebar ${mobileSidebarOpen ? 'is-open' : ''}`}>
         <div className="ruang-sidebar__brand">
           <span className="ruang-sidebar__brand-icon">
             <i className="fa-solid fa-layer-group" />
           </span>
-
           <span>LaLaShop</span>
         </div>
-
         <hr className="ruang-sidebar__divider" />
-
-        <div className="ruang-sidebar__heading">
-          Tiện ích
-        </div>
-
+        <div className="ruang-sidebar__heading">Tiện ích</div>
         <ul className="ruang-sidebar__nav">
-
-          {Object.entries(SECTION_LABEL).map(
-            ([key, label]) => (
-              <li key={key}>
-                <button
-                  type="button"
-                  className={`ruang-sidebar__link ${adminSection === key
-                      ? 'is-active'
-                      : ''
-                    }`}
-                  onClick={() => {
-                    setAdminSection(key);
-                    closeMobileNav();
-                  }}
-                >
-                  {label}
-                </button>
-              </li>
-            )
-          )}
-
+          {Object.entries(SECTION_LABEL).map(([key, label]) => (
+            <li key={key}>
+              <button
+                type="button"
+                className={`ruang-sidebar__link ${adminSection === key ? 'is-active' : ''}`}
+                onClick={() => {
+                  setAdminSection(key);
+                  setMobileSidebarOpen(false);
+                }}
+              >
+                {label}
+              </button>
+            </li>
+          ))}
         </ul>
       </aside>
 
@@ -552,13 +270,10 @@ const vipCustomers = useMemo(() => {
           <div className="ruang-topbar__right">
             <div className="ruang-user" ref={userMenuRef} style={{ border: '1px solid #b7b7b7', padding: '6px 14px', background: '#fff', display: 'inline-block', position: 'relative' }}>
               <button type="button" className="ruang-user__toggle" onClick={() => setUserMenuOpen((v) => !v)} style={{ display: 'flex', alignItems: 'center', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
-                
-                {/* Hộp Avatar gạch chéo nét mảnh */}
                 <div style={{ width: '45px', height: '45px', border: '1px solid #b7b7b7', marginRight: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', position: 'relative' }}>
                   <div style={{ position: 'absolute', width: '100%', height: '100%', top: 0, left: 0 }}><svg width="100%" height="100%"><line x1="0" y1="0" x2="100%" y2="100%" stroke="#e0e0e0" strokeWidth="1"/><line x1="100%" y1="0" x2="0" y2="100%" stroke="#e0e0e0" strokeWidth="1"/></svg></div>
                   <span style={{ position: 'relative', background: '#fff', padding: '1px 3px' }}>Hình</span>
                 </div>
-
                 <div style={{ textAlign: 'left' }}>
                   <span className="ruang-user__name" style={{ display: 'block', fontWeight: 'bold', fontSize: '15px' }}>
                     {staffDisplayName}
@@ -579,7 +294,6 @@ const vipCustomers = useMemo(() => {
 
         {/* NƠI HIỂN THỊ MAIN TRUNG TÂM */}
         <main className="ruang-main" style={{ flex: 1, padding: '25px', background: '#fff' }}>
-          
           {loadError && (
             <div className="admin-msg admin-msg--error" style={{ padding: '12px', background: '#fff5f5', border: '1px solid #fc8181', color: '#c53030', marginBottom: '15px' }}>
               {loadError}
@@ -602,20 +316,20 @@ const vipCustomers = useMemo(() => {
                 <div className="dashboard">
                   <h2 style={{ fontSize: '26px', fontWeight: 'bold', margin: '0 0 20px 0' }}>Dashboard</h2>
 
-                  {/* Lưới phân cực 4 ô của bảng số liệu */}
                   <div className="stats-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
                     
-                    {/* Ô KHỐI 1: THỐNG KÊ DOANH THU (LINK SANG TAB HÓA ĐƠN BILL) */}
+                    {/* Ô KHỐI 1: TỔNG DOANH THU (HIỂN THỊ JSX THỰC TẾ) */}
                     <div onClick={() => setAdminSection('bill')} style={{ border: '1px solid #000', padding: '15px', display: 'flex', flexDirection: 'column', height: '170px', position: 'relative', cursor: 'pointer' }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #000', paddingBottom: '6px', fontSize: '12px', fontWeight: 'bold', textTransform: 'uppercase' }}>
-                        <span>💵 Tổng danh thu</span>
+                        <span>💵 Tổng doanh thu</span>
                         <span style={{ color: '#555' }}>Thống kê doanh thu</span>
                       </div>
                       
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flex: 1 }}>
-                        <div style={{ fontSize: '32px', fontWeight: 'bold' }}>12TR</div>
+                        <div style={{ fontSize: '24px', fontWeight: 'bold' }}>
+                          {fmtCurrency(stats.revenue)}
+                        </div>
                         
-                        {/* Biểu đồ hỗn hợp Line kết hợp Cột từ Wireframe */}
                         <div style={{ width: '180px', height: '85px', border: '1px solid #777', position: 'relative', display: 'flex', alignItems: 'flex-end', padding: '4px', gap: '10px' }}>
                           <svg style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none' }}>
                             <polyline fill="none" stroke="#555" strokeWidth="2" points="10,65 55,50 105,25 140,35 170,12" />
@@ -632,7 +346,7 @@ const vipCustomers = useMemo(() => {
                       </div>
                     </div>
 
-                    {/* Ô KHỐI 2: THỐNG KÊ ĐƠN HÀNG (LINK SANG TAB CHI TIẾT HÓA ĐƠN HOẶC HÓA ĐƠN BILL) */}
+                    {/* Ô KHỐI 2: TỔNG ĐƠN HÀNG (HIỂN THỊ JSX THỰC TẾ) */}
                     <div onClick={() => setAdminSection('bill')} style={{ border: '1px solid #000', padding: '15px', display: 'flex', flexDirection: 'column', height: '170px', cursor: 'pointer' }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #000', paddingBottom: '6px', fontSize: '12px', fontWeight: 'bold', textTransform: 'uppercase' }}>
                         <span>🛒 Tổng đơn hàng</span>
@@ -641,24 +355,24 @@ const vipCustomers = useMemo(() => {
                       
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flex: 1 }}>
                         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-                          <div style={{ fontSize: '32px', fontWeight: 'bold' }}>115</div>
+                          <div style={{ fontSize: '32px', fontWeight: 'bold' }}>
+                            {stats.totalBills}
+                          </div>
                           
-                          {/* Widget hình tròn la bàn cơ học */}
                           <div style={{ width: '55px', height: '55px', border: '3px solid #000', borderRadius: '50%', background: '#111', position: 'relative', marginTop: '4px' }}>
                             <div style={{ position: 'absolute', top: '50%', left: '50%', width: '4px', height: '24px', background: '#fff', transform: 'translate(-50%, -50%) rotate(40deg)', transformOrigin: 'center' }}></div>
                           </div>
                         </div>
 
-                        {/* List danh sách trạng thái tĩnh đi kèm số lượng */}
                         <div style={{ fontSize: '12px', textAlign: 'left', lineHeight: '1.7', minWidth: '160px' }}>
-                          <div>✔ Đơn hàng thành công: <span style={{ float: 'right', fontWeight: 'bold' }}>98</span></div>
-                          <div style={{ borderTop: '1px dashed #ccc', paddingTop: '2px' }}>➖ Đơn hàng đang xử lý: <span style={{ float: 'right', fontWeight: 'bold' }}>17</span></div>
-                          <div style={{ borderTop: '1px dashed #ccc', paddingTop: '2px' }}>✖ Đơn hàng bị hủy: <span style={{ float: 'right', fontWeight: 'bold' }}>0</span></div>
+                          <div>✔ Thành công: <span style={{ float: 'right', fontWeight: 'bold' }}>{stats.deliveredCount}</span></div>
+                          <div style={{ borderTop: '1px dashed #ccc', paddingTop: '2px' }}>➖ Đang xử lý: <span style={{ float: 'right', fontWeight: 'bold' }}>{stats.pendingCount}</span></div>
+                          <div style={{ borderTop: '1px dashed #ccc', paddingTop: '2px' }}>✖ Bị hủy: <span style={{ float: 'right', fontWeight: 'bold' }}>{stats.canceledCount}</span></div>
                         </div>
                       </div>
                     </div>
 
-                    {/* Ô KHỐI 3: DANH SÁCH KHÁCH HÀNG (LINK SANG TAB CUSTOMER) */}
+                    {/* Ô KHỐI 3: DANH SÁCH KHÁCH HÀNG (HIỂN THỊ JSX THỰC TẾ) */}
                     <div onClick={() => setAdminSection('customer')} style={{ border: '1px solid #000', padding: '15px', display: 'flex', flexDirection: 'column', height: '155px', cursor: 'pointer' }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #000', paddingBottom: '6px', fontSize: '12px', fontWeight: 'bold', textTransform: 'uppercase' }}>
                         <span>👤 Khách hàng</span>
@@ -670,16 +384,14 @@ const vipCustomers = useMemo(() => {
                           {customers.length}
                         </div>
                         
-                        {/* LINK SANG JSX CUSTOMER KHI NGƯỜI DÙNG CLICK */}
                         <div style={{ fontSize: '13px', textAlign: 'right', lineHeight: '2' }}>
-                          <div style={{ textDecoration: 'underline', color: '#000' }}>Đơn hàng thành công</div>
-                          <div style={{ textDecoration: 'underline', color: '#000' }}>Đơn hàng đang xử lý</div>
-                          <div style={{ textDecoration: 'underline', color: '#000' }}>Đơn hàng bị hủy</div>
+                          <div style={{ textDecoration: 'underline', color: '#000' }}>Xem chi tiết khách hàng</div>
+                          <div style={{ color: '#777', fontSize: '11px' }}>Quản lý thông tin thành viên</div>
                         </div>
                       </div>
                     </div>
 
-                    {/* Ô KHỐI 4: LIỆT KÊ SẢN PHẨM (LINK SANG TAB PRODUCTS) */}
+                    {/* Ô KHỐI 4: LIỆT KÊ SẢN PHẨM (HIỂN THỊ JSX THỰC TẾ) */}
                     <div onClick={() => setAdminSection('products')} style={{ border: '1px solid #000', padding: '15px', display: 'flex', flexDirection: 'column', height: '155px', cursor: 'pointer' }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #000', paddingBottom: '6px', fontSize: '12px', fontWeight: 'bold', textTransform: 'uppercase' }}>
                         <span>📦 Số sản phẩm</span>
@@ -691,13 +403,11 @@ const vipCustomers = useMemo(() => {
                           {products.length}
                         </div>
                         
-                        {/* LINK SANG JSX PRODUCT KHI NGƯỜI DÙNG CLICK */}
                         <div style={{ fontSize: '13px', textAlign: 'right', lineHeight: '2' }}>
                           <div style={{ border: '1px solid #000', padding: '1px 5px', background: '#e2e8f0', display: 'inline-block', fontWeight: 'bold' }}>
-                            Đơn hàng thành công
+                            Kho hàng chính
                           </div>
-                          <div style={{ color: '#000', marginTop: '2px' }}>Đơn hàng đang xử lý</div>
-                          <div style={{ color: '#000' }}>Đơn hàng bị hủy</div>
+                          <div style={{ color: '#555', marginTop: '2px', fontSize: '11px' }}>Tổng số lượng mẫu mã kho</div>
                         </div>
                       </div>
                     </div>
@@ -732,7 +442,6 @@ const vipCustomers = useMemo(() => {
           </div>
         </div>
       )}
-
     </div>
   );
 };
