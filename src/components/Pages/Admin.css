@@ -1103,3 +1103,84 @@
   margin: 0 auto;
   padding: 24px 20px 48px;
 }
+
+.ruang-cards .ruang-stat-card {
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), 
+              box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, box-shadow;
+}
+
+.ruang-cards .ruang-stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(90, 92, 105, 0.15);
+}
+
+/* Thêm hiệu ứng gợn sóng nhẹ cho icon khi hover vào card */
+.ruang-stat-card:hover .ruang-stat-card__icon {
+  transform: scale(1.08);
+  transition: transform 0.2s ease;
+}
+
+.ruang-stat-card__icon {
+  transition: transform 0.2s ease;
+}
+
+.dashboard .admin-toolbar--row {
+  border-bottom: 2px solid #eaecf4;
+  padding-bottom: 0.75rem;
+  margin-bottom: 1.5rem !important;
+}
+
+.dashboard .admin-toolbar--row h2 {
+  position: relative;
+  font-size: 1.35rem;
+}
+
+.dashboard .admin-toolbar--row h2::after {
+  content: '';
+  position: absolute;
+  bottom: -0.85rem;
+  left: 0;
+  width: 60px;
+  height: 4px;
+  background: #6777ef;
+  border-radius: 2px;
+}
+
+.dashboard .ruang-card {
+  border: 1px solid #e3e6f0;
+  animation: fadeInUp 0.4s ease-out;
+}
+
+.dashboard .admin-table th {
+  background-color: #f8f9fc;
+  border-bottom: 2px solid #e3e6f0;
+}
+
+.dashboard .admin-table td strong {
+  color: #4e73df;
+  font-size: 0.95rem;
+}
+
+.dashboard .ruang-status {
+  min-width: 130px;
+  text-align: center;
+  padding: 0.45rem 0.6rem;
+  letter-spacing: 0.02em;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.ruang-cards {
+  animation: fadeInUp 0.3s ease-out;
+}
