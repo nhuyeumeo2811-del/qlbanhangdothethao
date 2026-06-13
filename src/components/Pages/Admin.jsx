@@ -661,147 +661,194 @@ const vipCustomers = useMemo(() => {
                   <div className="dashboard">
                     <h2>Dashboard</h2>
 
-                    <div className="stats-grid">
-                      {/* Thống kê doanh thu */}
-                      <div className="stat-card">
-                        <div className="stat-card__header">
-                          <span className="stat-card__title">THỐNG KÊ DOANH THU</span>
-                        </div>
-                        <div className="stat-card__body">
-                          <div className="stat-card__left">
-                            <span className="stat-card__icon">💵 Tổng danh thu</span>
-                            <span className="stat-card__number">12TR</span>
-                          </div>
-                          <div className="stat-card__right">
-                            {/* Chèn hình ảnh/biểu đồ cột hoặc line ở đây */}
-                            <div className="stat-card__chart-placeholder">[Biểu đồ doanh thu]</div>
-                            <span className="stat-card__trend text-success">✔ Tăng trưởng tháng: +15%</span>
-                          </div>
+                    <div className="ruang-shell" style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+        
+        {/* TOPBAR BANNER QUẢN TRỊ VIÊN */}
+        <header className="ruang-topbar" style={{ height: '90px', borderBottom: '1px solid #b7b7b7', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', padding: '0 30px', background: '#fff' }}>
+          <div className="ruang-topbar__right">
+            <div className="ruang-user" ref={userMenuRef} style={{ border: '1px solid #b7b7b7', padding: '6px 14px', background: '#fff', display: 'inline-block', position: 'relative' }}>
+              <button type="button" className="ruang-user__toggle" onClick={() => setUserMenuOpen((v) => !v)} style={{ display: 'flex', alignItems: 'center', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
+                
+                {/* Hộp Avatar gạch chéo nét mảnh */}
+                <div style={{ width: '45px', height: '45px', border: '1px solid #b7b7b7', marginRight: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', position: 'relative' }}>
+                  <div style={{ position: 'absolute', width: '100%', height: '100%', top: 0, left: 0 }}><svg width="100%" height="100%"><line x1="0" y1="0" x2="100%" y2="100%" stroke="#e0e0e0" strokeWidth="1"/><line x1="100%" y1="0" x2="0" y2="100%" stroke="#e0e0e0" strokeWidth="1"/></svg></div>
+                  <span style={{ position: 'relative', background: '#fff', padding: '1px 3px' }}>Hình</span>
+                </div>
+
+                <div style={{ textAlign: 'left' }}>
+                  <span className="ruang-user__name" style={{ display: 'block', fontWeight: 'bold', fontSize: '15px' }}>
+                    {staffDisplayName}
+                  </span>
+                  <span style={{ fontSize: '12px', color: '#555' }}>Quản trị viên ˅</span>
+                </div>
+              </button>
+
+              {userMenuOpen && (
+                <div className="ruang-user__menu" style={{ position: 'absolute', right: '-1px', top: '56px', background: '#fff', border: '1px solid #b7b7b7', boxShadow: '0 4px 6px rgba(0,0,0,0.05)', minWidth: '130px', zIndex: 100 }}>
+                  <button type="button" onClick={goHome} style={{ display: 'block', width: '100%', padding: '10px', border: 'none', background: 'none', textAlign: 'left', cursor: 'pointer' }}>Trang chủ</button>
+                  <button type="button" onClick={() => setLogoutModalOpen(true)} style={{ display: 'block', width: '100%', padding: '10px', borderTop: '1px solid #f0f0f0', background: 'none', textAlign: 'left', cursor: 'pointer' }}>Đăng xuất</button>
+                </div>
+              )}
+            </div>
+          </div>
+        </header>
+
+        {/* NƠI HIỂN THỊ MAIN TRUNG TÂM */}
+        <main className="ruang-main" style={{ flex: 1, padding: '25px', background: '#fff' }}>
+          
+          {loadError && (
+            <div className="admin-msg admin-msg--error" style={{ padding: '12px', background: '#fff5f5', border: '1px solid #fc8181', color: '#c53030', marginBottom: '15px' }}>
+              {loadError}
+            </div>
+          )}
+
+          {loading ? (
+            <div className="ruang-loading" style={{ padding: '20px', textAlign: 'center', fontWeight: 'bold' }}>Đang tải...</div>
+          ) : (
+            <>
+              {adminSection === 'products' && <AdminProduct embedded />}
+              {adminSection === 'category' && <AdminCategory embedded />}
+              {adminSection === 'customer' && <AdminCustomer embedded />}
+              {adminSection === 'employee' && <AdminEmployee embedded />}
+              {adminSection === 'bill' && <AdminBill embedded />}
+              {adminSection === 'invoiceDetails' && <AdminInvoiceDetails embedded />}
+
+              {/* ROUTE MẶC ĐỊNH: DASHBOARD THEO BẢN VẼ PHÁC THẢO */}
+              {adminSection === 'dashboard' && (
+                <div className="dashboard">
+                  <h2 style={{ fontSize: '26px', fontWeight: 'bold', margin: '0 0 20px 0' }}>Dashboard</h2>
+
+                  {/* Lưới phân cực 4 ô của bảng số liệu */}
+                  <div className="stats-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+                    
+                    {/* Ô KHỐI 1: THỐNG KÊ DOANH THU */}
+                    <div style={{ border: '1px solid #000', padding: '15px', display: 'flex', flexDirection: 'column', height: '170px', position: 'relative' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #000', paddingBottom: '6px', fontSize: '12px', fontWeight: 'bold', textTransform: 'uppercase' }}>
+                        <span>💵 Tổng danh thu</span>
+                        <span style={{ color: '#555' }}>Thống kê doanh thu</span>
+                      </div>
+                      
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flex: 1 }}>
+                        <div style={{ fontSize: '32px', fontWeight: 'bold' }}>12TR</div>
+                        
+                        {/* Biểu đồ hỗn hợp Line kết hợp Cột từ Wireframe */}
+                        <div style={{ width: '180px', height: '85px', border: '1px solid #777', position: 'relative', display: 'flex', alignItems: 'flex-end', padding: '4px', gap: '10px' }}>
+                          <svg style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none' }}>
+                            <polyline fill="none" stroke="#555" strokeWidth="2" points="10,65 55,50 105,25 140,35 170,12" />
+                          </svg>
+                          <div style={{ width: '18px', height: '15px', background: '#ddd', border: '1px solid #000' }}></div>
+                          <div style={{ width: '18px', height: '30px', background: '#ddd', border: '1px solid #000' }}></div>
+                          <div style={{ width: '18px', height: '70px', background: '#bbb', border: '1px solid #000' }}></div>
+                          <div style={{ width: '18px', height: '45px', background: '#888', border: '1px solid #000' }}></div>
                         </div>
                       </div>
 
-                      {/* Thống kê đơn hàng */}
-                      <div className="stat-card">
-                        <div className="stat-card__header">
-                          <span className="stat-card__title">THỐNG KÊ ĐƠN HÀNG</span>
-                        </div>
-                        <div className="stat-card__body">
-                          <div className="stat-card__left">
-                            <span className="stat-card__icon">🛒 Tổng đơn hàng</span>
-                            <span className="stat-card__number">115</span>
-                          </div>
-                          <div className="stat-card__right">
-                            <ul className="stat-list">
-                              <li>✔ Đơn hàng thành công: 98</li>
-                              <li>➖ Đơn hàng đang xử lý: 17</li>
-                              <li>✖ Đơn hàng bị hủy: 0</li>
-                            </ul>
-                          </div>
-                        </div>
+                      <div style={{ fontSize: '11px', fontWeight: 'bold', color: '#2f855a' }}>
+                        ✔ Tăng trưởng tháng: <span style={{ color: '#48bb78' }}>+15%</span>
                       </div>
-
-                      {/* Khách hàng - Thêm sự kiện click để nhảy tab */}
-                      <div className="stat-card cursor-pointer" onClick={() => setAdminSection('customer')}>
-                        <div className="stat-card__header">
-                          <span className="stat-card__title">Danh sách khách hàng</span>
-                        </div>
-                        <div className="stat-card__body">
-                          <div className="stat-card__left">
-                            <span className="stat-card__icon">👤 Khách hàng</span>
-                            <span className="stat-card__number">10</span>
-                          </div>
-                          <div className="stat-card__right">
-                            <ul className="stat-list">
-                              <li>Đơn hàng thành công</li>
-                              <li>Đơn hàng đang xử lý</li>
-                              <li>Đơn hàng bị hủy</li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Số sản phẩm - Thêm sự kiện click để nhảy tab */}
-                      <div className="stat-card cursor-pointer" onClick={() => setAdminSection('products')}>
-                        <div className="stat-card__header">
-                          <span className="stat-card__title">Liệt kê sản phẩm</span>
-                        </div>
-                        <div className="stat-card__body">
-                          <div className="stat-card__left">
-                            <span className="stat-card__icon">📦 Số sản phẩm</span>
-                            <span className="stat-card__number">115</span>
-                          </div>
-                          <div className="stat-card__right">
-                            <ul className="stat-list">
-                              <li className="highlight-box">Đơn hàng thành công</li>
-                              <li>Đơn hàng đang xử lý</li>
-                              <li>Đơn hàng bị hủy</li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-
                     </div>
+
+                    {/* Ô KHỐI 2: THỐNG KÊ ĐƠN HÀNG */}
+                    <div style={{ border: '1px solid #000', padding: '15px', display: 'flex', flexDirection: 'column', height: '170px' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #000', paddingBottom: '6px', fontSize: '12px', fontWeight: 'bold', textTransform: 'uppercase' }}>
+                        <span>🛒 Tổng đơn hàng</span>
+                        <span style={{ color: '#555' }}>Thống kê đơn hàng</span>
+                      </div>
+                      
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flex: 1 }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                          <div style={{ fontSize: '32px', fontWeight: 'bold' }}>115</div>
+                          
+                          {/* Widget hình tròn la bàn cơ học */}
+                          <div style={{ width: '55px', height: '55px', border: '3px solid #000', borderRadius: '50%', background: '#111', position: 'relative', marginTop: '4px' }}>
+                            <div style={{ position: 'absolute', top: '50%', left: '50%', width: '4px', height: '24px', background: '#fff', transform: 'translate(-50%, -50%) rotate(40deg)', transformOrigin: 'center' }}></div>
+                          </div>
+                        </div>
+
+                        {/* List danh sách trạng thái tĩnh đi kèm số lượng */}
+                        <div style={{ fontSize: '12px', textAlign: 'left', lineHeight: '1.7', minWidth: '160px' }}>
+                          <div>✔ Đơn hàng thành công: <span style={{ float: 'right', fontWeight: 'bold' }}>98</span></div>
+                          <div style={{ borderTop: '1px dashed #ccc', paddingTop: '2px' }}>➖ Đơn hàng đang xử lý: <span style={{ float: 'right', fontWeight: 'bold' }}>17</span></div>
+                          <div style={{ borderTop: '1px dashed #ccc', paddingTop: '2px' }}>✖ Đơn hàng bị hủy: <span style={{ float: 'right', fontWeight: 'bold' }}>0</span></div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Ô KHỐI 3: DANH SÁCH KHÁCH HÀNG (GIỮ NGUYÊN BIẾN DỮ LIỆU + THÊM LINK JSX) */}
+                    <div style={{ border: '1px solid #000', padding: '15px', display: 'flex', flexDirection: 'column', height: '155px' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #000', paddingBottom: '6px', fontSize: '12px', fontWeight: 'bold', textTransform: 'uppercase' }}>
+                        <span>👤 Khách hàng</span>
+                        <span style={{ color: '#555' }}>Danh sách khách hàng</span>
+                      </div>
+                      
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flex: 1 }}>
+                        <div style={{ fontSize: '36px', fontWeight: 'bold' }}>
+                          {customers.length}
+                        </div>
+                        
+                        {/* LINK SANG JSX CUSTOMER KHI NGƯỜI DÙNG CLICK */}
+                        <div style={{ fontSize: '13px', textAlign: 'right', lineHeight: '2' }}>
+                          <div onClick={() => setAdminSection('customer')} style={{ cursor: 'pointer', textDecoration: 'underline', color: '#000' }}>Đơn hàng thành công</div>
+                          <div onClick={() => setAdminSection('customer')} style={{ cursor: 'pointer', textDecoration: 'underline', color: '#000' }}>Đơn hàng đang xử lý</div>
+                          <div onClick={() => setAdminSection('customer')} style={{ cursor: 'pointer', textDecoration: 'underline', color: '#000' }}>Đơn hàng bị hủy</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Ô KHỐI 4: LIỆT KÊ SẢN PHẨM (GIỮ NGUYÊN BIẾN DỮ LIỆU + THÊM LINK JSX) */}
+                    <div style={{ border: '1px solid #000', padding: '15px', display: 'flex', flexDirection: 'column', height: '155px' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #000', paddingBottom: '6px', fontSize: '12px', fontWeight: 'bold', textTransform: 'uppercase' }}>
+                        <span>📦 Số sản phẩm</span>
+                        <span style={{ color: '#555' }}>Liệt kê sản phẩm</span>
+                      </div>
+                      
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flex: 1 }}>
+                        <div style={{ fontSize: '36px', fontWeight: 'bold' }}>
+                          {products.length}
+                        </div>
+                        
+                        {/* LINK SANG JSX PRODUCT KHI NGƯỜI DÙNG CLICK */}
+                        <div style={{ fontSize: '13px', textAlign: 'right', lineHeight: '2' }}>
+                          <div onClick={() => setAdminSection('products')} style={{ cursor: 'pointer', border: '1px solid #000', padding: '1px 5px', background: '#e2e8f0', display: 'inline-block', fontWeight: 'bold' }}>
+                            Đơn hàng thành công
+                          </div>
+                          <div onClick={() => setAdminSection('products')} style={{ cursor: 'pointer', color: '#000', marginTop: '2px' }}>Đơn hàng đang xử lý</div>
+                          <div onClick={() => setAdminSection('products')} style={{ cursor: 'pointer', color: '#000' }}>Đơn hàng bị hủy</div>
+                        </div>
+                      </div>
+                    </div>
+
                   </div>
-                )}
+                </div>
+              )}
             </>
           )}
         </main>
 
-        <footer className="ruang-footer">
+        <footer className="ruang-footer" style={{ height: '50px', borderTop: '1px solid #b7b7b7', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '13px', background: '#fff', color: '#777' }}>
           Copyright © LaLaShop
         </footer>
       </div>
 
+      {/* MODAL ĐĂNG XUẤT */}
       {logoutModalOpen && (
-        <div className="ruang-modal-backdrop">
-
-          <div className="ruang-modal">
-
-            <div className="ruang-modal__header">
-              <h5>
-                Đăng xuất
-              </h5>
-
-              <button
-                type="button"
-                onClick={() =>
-                  setLogoutModalOpen(
-                    false
-                  )
-                }
-              >
-                ×
-              </button>
+        <div className="ruang-modal-backdrop" style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 999 }}>
+          <div className="ruang-modal" style={{ background: '#fff', border: '1px solid #000', padding: '20px', width: '320px' }}>
+            <div className="ruang-modal__header" style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 'bold', borderBottom: '1px solid #eee', paddingBottom: '8px' }}>
+              <h5>Đăng xuất</h5>
+              <button type="button" onClick={() => setLogoutModalOpen(false)} style={{ background: 'none', border: 'none', fontSize: '18px', cursor: 'pointer' }}>×</button>
             </div>
-
-            <div className="ruang-modal__body">
+            <div className="ruang-modal__body" style={{ padding: '15px 0', fontSize: '14px' }}>
               Bạn có chắc muốn đăng xuất?
             </div>
-
-            <div className="ruang-modal__footer">
-
-              <button
-                type="button"
-                onClick={() =>
-                  setLogoutModalOpen(
-                    false
-                  )
-                }
-              >
-                Hủy
-              </button>
-
-              <button
-                type="button"
-                onClick={logout}
-              >
-                Đăng xuất
-              </button>
-
+            <div className="ruang-modal__footer" style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
+              <button type="button" onClick={() => setLogoutModalOpen(false)} style={{ border: '1px solid #ccc', background: '#fff', padding: '6px 12px', cursor: 'pointer' }}>Hủy</button>
+              <button type="button" onClick={logout} style={{ background: '#000', color: '#fff', border: 'none', padding: '6px 12px', cursor: 'pointer' }}>Đăng xuất</button>
             </div>
           </div>
         </div>
       )}
+
     </div>
   );
 };
