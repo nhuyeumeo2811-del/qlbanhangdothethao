@@ -349,19 +349,16 @@ const Admin = () => {
                         <span style={{ color: '#555' }}>Thống kê đơn hàng</span>
                       </div>
                       
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flex: 1 }}>
-                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-                          <div style={{ fontSize: '32px', fontWeight: 'bold' }}>
-                            {stats.totalBills}
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', margin: '15px 0' }}>
+                          <span style={{ fontSize: '36px', fontWeight: '900', color: '#111' }}>
+                            {bills.length}
+                          </span>
+                          <div style={{ fontSize: '12px', textAlign: 'left', lineHeight: '1.8' }}>
+                            <div>✓ Đơn hàng thành công: <strong style={{ float: 'right', marginLeft: '10px' }}>{stats.successBills || bills.length}</strong></div>
+                            <div>- Đơn hàng đang xử lý: <strong style={{ float: 'right', marginLeft: '10px' }}>{stats.processingBills || 0}</strong></div>
+                            <div>x Đơn hàng bị hủy: <strong style={{ float: 'right', marginLeft: '10px' }}>{stats.canceledBills || 0}</strong></div>
                           </div>
                         </div>
-
-                        <div style={{ fontSize: '12px', textAlign: 'left', minWidth: '170px', alignSelf: 'center' }}>
-                          <div style={{ margin: '4px 0' }}>✔ Đơn hàng thành công: <span style={{ float: 'right', fontWeight: 'bold' }}>{stats.successCount}</span></div>
-                          <div style={{ margin: '4px 0', borderTop: '1px dashed #ccc', paddingTop: '2px' }}>➖ Đơn hàng đang xử lý: <span style={{ float: 'right', fontWeight: 'bold' }}>{stats.processingCount}</span></div>
-                          <div style={{ margin: '4px 0', borderTop: '1px dashed #ccc', paddingTop: '2px' }}>✖ Đơn hàng bị hủy: <span style={{ float: 'right', fontWeight: 'bold' }}>{stats.canceledCount}</span></div>
-                        </div>
-                      </div>
                     </div>
 
                     {/* Ô KHỐI 3: DANH SÁCH KHÁCH HÀNG */}
