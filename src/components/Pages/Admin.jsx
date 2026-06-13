@@ -445,8 +445,8 @@ const Admin = () => {
                           {products.length}
                         </div>
                         
-                        <div style={{ fontSize: '13px', textAlign: 'right', lineHeight: '2' }}>
-                          <div style={{ border-radius: '6px !important', border: '1px solid #000', padding: '1px 5px', background: '#e2e8f0', display: 'inline-block', fontWeight: 'bold' }}>
+                        <div style={{ fontSize: '13px', border-radius: '6px !important', textAlign: 'right', lineHeight: '2' }}>
+                          <div style={{ border: '1px solid #000', padding: '1px 5px', background: '#e2e8f0', display: 'inline-block', fontWeight: 'bold' }}>
                             Kho hàng chính
                           </div>
                           <div style={{ color: '#555', marginTop: '2px', fontSize: '11px' }}>Tổng số lượng mẫu mã kho</div>
