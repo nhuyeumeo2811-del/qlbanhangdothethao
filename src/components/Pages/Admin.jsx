@@ -184,7 +184,6 @@ const Admin = () => {
     };
   }, [userMenuOpen]);
 
-  // Tạo chữ cái viết tắt đại diện cho Avatar từ tên Staff
   const staffInitials = useMemo(() => {
     try {
       const raw = localStorage.getItem('currentUser');
@@ -211,12 +210,10 @@ const Admin = () => {
     }
   }, []);
 
-  // Tính toán số liệu thống kê thực tế từ mảng đơn hàng
   const stats = useMemo(() => {
     const total = products.length;
     const revenue = bills.reduce((sum, bill) => sum + Number(bill.total || 0), 0);
 
-    // Lọc trạng thái đơn hàng động từ state bills thực tế
     const deliveredCount = bills.filter((b) => String(b.status).trim().toLowerCase() === 'delivered').length;
     const pendingCount = bills.filter((b) => {
       const s = String(b.status).trim().toLowerCase();
@@ -283,7 +280,7 @@ const Admin = () => {
       
       <div className="ruang-shell">
 
-        {/* ĐOẠN HEADER RUANG-TOPBAR CỦA BẠN ĐÃ ĐƯỢC THÊM CHÍNH XÁC VÀO ĐÂY */}
+        {}
         <header className="ruang-topbar">
           <button
             type="button"
@@ -369,7 +366,7 @@ const Admin = () => {
 
                   <div className="stats-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
                     
-                    {/* Ô KHỐI 1: TỔNG DOANH THU */}
+                    {}
                     <div onClick={() => setAdminSection('bill')} style={{ border: '1px solid #000', padding: '15px', display: 'flex', flexDirection: 'column', height: '170px', position: 'relative', cursor: 'pointer' }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #000', paddingBottom: '6px', fontSize: '12px', fontWeight: 'bold', textTransform: 'uppercase' }}>
                         <span>💵 Tổng doanh thu</span>
@@ -397,7 +394,7 @@ const Admin = () => {
                       </div>
                     </div>
 
-                    {/* Ô KHỐI 2: TỔNG ĐƠN HÀNG - ĐÃ FIX KHỚP JSX ĐỘNG CHUẨN XÁC */}
+                    {}
                     <div onClick={() => setAdminSection('bill')} style={{ border: '1px solid #000', padding: '15px', display: 'flex', flexDirection: 'column', height: '170px', cursor: 'pointer' }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #000', paddingBottom: '6px', fontSize: '12px', fontWeight: 'bold', textTransform: 'uppercase' }}>
                         <span>🛒 Tổng đơn hàng</span>
@@ -417,7 +414,7 @@ const Admin = () => {
                         </div>
                     </div>
 
-                    {/* Ô KHỐI 3: DANH SÁCH KHÁCH HÀNG */}
+                    {}
                     <div onClick={() => setAdminSection('customer')} style={{ border: '1px solid #000', padding: '15px', display: 'flex', flexDirection: 'column', height: '155px', cursor: 'pointer' }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #000', paddingBottom: '6px', fontSize: '12px', fontWeight: 'bold', textTransform: 'uppercase' }}>
                         <span>👤 Khách hàng</span>
@@ -436,7 +433,7 @@ const Admin = () => {
                       </div>
                     </div>
 
-                    {/* Ô KHỐI 4: LIỆT KÊ SẢN PHẨM */}
+                    {}
                     <div onClick={() => setAdminSection('products')} style={{ border: '1px solid #000', padding: '15px', display: 'flex', flexDirection: 'column', height: '155px', cursor: 'pointer' }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #000', paddingBottom: '6px', fontSize: '12px', fontWeight: 'bold', textTransform: 'uppercase' }}>
                         <span>📦 Số sản phẩm</span>
