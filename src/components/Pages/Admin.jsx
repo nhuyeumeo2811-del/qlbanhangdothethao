@@ -359,7 +359,7 @@ Number(p.id) === id);
           name: product?.name || `Sản phẩm #${id}`,
         };
       })
-      .sort((a, b) => b.sort - a.sold)
+      .sort((a, b) => b.sold - a.sold)
       .slice(0, 5)
       .map((p) => {
         const sold = Number(p.sold || 0);
@@ -545,123 +545,7 @@ const vipCustomers = useMemo(() => {
         </ul>
       </aside>
 
-      <div className="ruang-shell">
-
-        <header className="ruang-topbar">
-
-          <button
-            type="button"
-            className="ruang-topbar__toggle"
-            onClick={() =>
-              setMobileSidebarOpen(
-                (v) => !v
-              )
-            }
-          >
-            <i className="fa-solid fa-bars" />
-          </button>
-
-          <div className="ruang-topbar__right">
-
-            <div
-              className="ruang-user"
-              ref={userMenuRef}
-            >
-              <button
-                type="button"
-                className="ruang-user__toggle"
-                onClick={() =>
-                  setUserMenuOpen(
-                    (v) => !v
-                  )
-                }
-              >
-                <span className="ruang-user__avatar">
-                  {staffInitials}
-                </span>
-
-                <span className="ruang-user__name">
-                  {staffDisplayName}
-                </span>
-              </button>
-
-              {userMenuOpen && (
-                <div className="ruang-user__menu">
-
-                  <button
-                    type="button"
-                    onClick={goHome}
-                  >
-                    Trang chủ
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setLogoutModalOpen(
-                        true
-                      );
-                    }}
-                  >
-                    Đăng xuất
-                  </button>
-
-                </div>
-              )}
-            </div>
-          </div>
-        </header>
-
-        <main className="ruang-main">
-
-          {loadError && (
-            <div className="admin-msg admin-msg--error">
-              {loadError}
-            </div>
-          )}
-
-          {loading ? (
-            <div className="ruang-loading">
-              Đang tải...
-            </div>
-          ) : (
-            <>
-              {adminSection ===
-                'products' && (
-                  <AdminProduct embedded />
-                )}
-
-              {adminSection ===
-                'category' && (
-                  <AdminCategory embedded />
-                )}
-
-              {adminSection ===
-                'customer' && (
-                  <AdminCustomer embedded />
-                )}
-
-              {adminSection ===
-                'employee' && (
-                  <AdminEmployee embedded />
-                )}
-
-              {adminSection ===
-                'bill' && (
-                  <AdminBill embedded />
-                )}
-
-              {adminSection ===
-                'invoiceDetails' && (
-                  <AdminInvoiceDetails embedded />
-                )}
-
-              {adminSection ===
-                'dashboard' && (
-                  <div className="dashboard">
-                    <h2>Dashboard</h2>
-
-                    <div className="ruang-shell" style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+      <div className="ruang-shell" style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
         
         {/* TOPBAR BANNER QUẢN TRỊ VIÊN */}
         <header className="ruang-topbar" style={{ height: '90px', borderBottom: '1px solid #b7b7b7', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', padding: '0 30px', background: '#fff' }}>
