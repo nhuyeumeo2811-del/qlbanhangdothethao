@@ -3,7 +3,7 @@
     "id": 1,
     "role": "manager",
     "name": "Đàm Tuyết Nhi",
-    "gender": "Nam",
+    "gender": "Nữ",
     "birthdate": "1990-01-01",
     "phone": "0908056800"
   },
@@ -14,5 +14,69 @@
     "gender": "Nữ",
     "birthdate": "1995-05-05",
     "phone": "0809457666"
+  },
+    {
+    "id": 3,
+    "role": "staff",
+    "name": "Trần Văn Hùng",
+    "gender": "Nam",
+    "birthdate": "1992-03-12",
+    "phone": "0902223344"
+  },
+  {
+    "id": 4,
+    "role": "manager",
+    "name": "Nguyễn Thị Lan",
+    "gender": "Nữ",
+    "birthdate": "1988-07-20",
+    "phone": "0913334455"
+  },
+  {
+    "id": 5,
+    "role": "staff",
+    "name": "Đặng Quốc Anh",
+    "gender": "Nam",
+    "birthdate": "1998-11-02",
+    "phone": "0905556677"
+  },
+  {
+    "id": 6,
+    "role": "staff",
+    "name": "Vũ Thị Ngọc",
+    "gender": "Nữ",
+    "birthdate": "1996-09-15",
+    "phone": "0916667788"
+  },
+  {
+    "id": 7,
+    "role": "manager",
+    "name": "Ngô Văn Quyền",
+    "gender": "Nam",
+    "birthdate": "1985-02-28",
+    "phone": "0907778899"
+  },
+  {
+    "id": 8,
+    "role": "staff",
+    "name": "Lê Văn Tiến",
+    "gender": "Nam",
+    "birthdate": "1994-12-10",
+    "phone": "0918889900"
+  },
+  {
+    "id": 9,
+    "role": "staff",
+    "name": "Mai Thị Kiều",
+    "gender": "Nữ",
+    "birthdate": "1997-04-25",
+    "phone": "0909990011"
+  },
+  {
+    "id": 10,
+    "role": "manager",
+    "name": "Trần Gia Bảo",
+    "gender": "Nam",
+    "birthdate": "1990-08-14",
+    "phone": "0910001122"
   }
 ]
