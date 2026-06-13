@@ -360,11 +360,13 @@ const Admin = () => {
                           </div>
                         </div>
 
-                        <div style={{ fontSize: '12px', textAlign: 'left', lineHeight: '1.7', minWidth: '160px' }}>
-                          <div>✔ Thành công: <span style={{ float: 'right', fontWeight: 'bold' }}>{stats.deliveredCount}</span></div>
-                          <div style={{ borderTop: '1px dashed #ccc', paddingTop: '2px' }}>➖ Đang xử lý: <span style={{ float: 'right', fontWeight: 'bold' }}>{stats.pendingCount}</span></div>
-                          <div style={{ borderTop: '1px dashed #ccc', paddingTop: '2px' }}>✖ Bị hủy: <span style={{ float: 'right', fontWeight: 'bold' }}>{stats.canceledCount}</span></div>
-                        </div>
+                        <div className="stat-card__right">
+                            <ul className="stat-list-details">
+                              <li><i className="fa-solid fa-circle-check" /> Đơn hàng thành công: 98</li>
+                              <li><i className="fa-solid fa-circle-minus" /> Đơn hàng đang xử lý: 17</li>
+                              <li><i className="fa-solid fa-circle-xmark" /> Đơn hàng bị hủy: 0</li>
+                            </ul>
+                          </div>
                       </div>
                     </div>
 
