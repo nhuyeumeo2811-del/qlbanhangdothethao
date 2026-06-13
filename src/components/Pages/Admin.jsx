@@ -192,13 +192,12 @@ const Admin = () => {
     }
   }, []);
 
-  // Tính toán số liệu thống kê thực tế từ JSON
+  // Tính toán số liệu thống kê thực tế từ các file JSON đã nạp
   const stats = useMemo(() => {
     const total = products.length;
-
     const revenue = bills.reduce((sum, bill) => sum + Number(bill.total || 0), 0);
 
-    // Phân loại trạng thái đơn hàng thực tế
+    // Đếm số lượng đơn hàng theo từng trạng thái thực tế
     const deliveredCount = bills.filter((b) => String(b.status).trim().toLowerCase() === 'delivered').length;
     const pendingCount = bills.filter((b) => {
       const s = String(b.status).trim().toLowerCase();
@@ -283,7 +282,7 @@ const Admin = () => {
               </button>
 
               {userMenuOpen && (
-                <div className="ruang-user__menu" style={{ position: 'absolute', right: '-1px', top: '56px', background: '#fff', border: '1px solid #b7b7b7', boxShadow: '0 4px 6px rgba(0,0,0,0.05)', minWidth: '130px', zIndex: 100 }}>
+                <div className="ruang-user__menu" style={{ position: 'absolute', right: '-1px', top: '5px', background: '#fff', border: '1px solid #b7b7b7', boxShadow: '0 4px 6px rgba(0,0,0,0.05)', minWidth: '130px', zIndex: 100 }}>
                   <button type="button" onClick={goHome} style={{ display: 'block', width: '100%', padding: '10px', border: 'none', background: 'none', textAlign: 'left', cursor: 'pointer' }}>Trang chủ</button>
                   <button type="button" onClick={() => setLogoutModalOpen(true)} style={{ display: 'block', width: '100%', padding: '10px', borderTop: '1px solid #f0f0f0', background: 'none', textAlign: 'left', cursor: 'pointer' }}>Đăng xuất</button>
                 </div>
@@ -318,7 +317,7 @@ const Admin = () => {
 
                   <div className="stats-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
                     
-                    {/* Ô KHỐI 1: TỔNG DOANH THU (HIỂN THỊ JSX THỰC TẾ) */}
+                    {/* Ô KHỐI 1: TỔNG DOANH THU */}
                     <div onClick={() => setAdminSection('bill')} style={{ border: '1px solid #000', padding: '15px', display: 'flex', flexDirection: 'column', height: '170px', position: 'relative', cursor: 'pointer' }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #000', paddingBottom: '6px', fontSize: '12px', fontWeight: 'bold', textTransform: 'uppercase' }}>
                         <span>💵 Tổng doanh thu</span>
@@ -346,7 +345,7 @@ const Admin = () => {
                       </div>
                     </div>
 
-                    {/* Ô KHỐI 2: TỔNG ĐƠN HÀNG (HIỂN THỊ JSX THỰC TẾ) */}
+                    {/* Ô KHỐI 2: TỔNG ĐƠN HÀNG - ĐÃ ĐƯỢC HIỆU CHỈNH CHÍNH XÁC JSX ĐỘNG */}
                     <div onClick={() => setAdminSection('bill')} style={{ border: '1px solid #000', padding: '15px', display: 'flex', flexDirection: 'column', height: '170px', cursor: 'pointer' }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #000', paddingBottom: '6px', fontSize: '12px', fontWeight: 'bold', textTransform: 'uppercase' }}>
                         <span>🛒 Tổng đơn hàng</span>
@@ -372,7 +371,7 @@ const Admin = () => {
                       </div>
                     </div>
 
-                    {/* Ô KHỐI 3: DANH SÁCH KHÁCH HÀNG (HIỂN THỊ JSX THỰC TẾ) */}
+                    {/* Ô KHỐI 3: DANH SÁCH KHÁCH HÀNG */}
                     <div onClick={() => setAdminSection('customer')} style={{ border: '1px solid #000', padding: '15px', display: 'flex', flexDirection: 'column', height: '155px', cursor: 'pointer' }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #000', paddingBottom: '6px', fontSize: '12px', fontWeight: 'bold', textTransform: 'uppercase' }}>
                         <span>👤 Khách hàng</span>
@@ -391,7 +390,7 @@ const Admin = () => {
                       </div>
                     </div>
 
-                    {/* Ô KHỐI 4: LIỆT KÊ SẢN PHẨM (HIỂN THỊ JSX THỰC TẾ) */}
+                    {/* Ô KHỐI 4: LIỆT KÊ SẢN PHẨM */}
                     <div onClick={() => setAdminSection('products')} style={{ border: '1px solid #000', padding: '15px', display: 'flex', flexDirection: 'column', height: '155px', cursor: 'pointer' }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #000', paddingBottom: '6px', fontSize: '12px', fontWeight: 'bold', textTransform: 'uppercase' }}>
                         <span>📦 Số sản phẩm</span>
