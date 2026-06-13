@@ -659,84 +659,94 @@ const vipCustomers = useMemo(() => {
               {adminSection ===
                 'dashboard' && (
                   <div className="dashboard">
-                    <h2>Dashboard</h2>
+                    <h2>
+                      Dashboard
+                    </h2>
 
-                    {/* Hàng phía trên: Thống kê doanh thu & Thống kê đơn hàng */}
-                    <div className="stats-grid-top" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '20px' }}>
-                      
-                      {/* Thẻ THỐNG KÊ DOANH THU */}
-                      <div className="stat-card row-layout" style={{ border: '1px solid #ccc', padding: '15px', borderRadius: '4px', backgroundColor: '#fff' }}>
-                        <div style={{ borderBottom: '2px solid #333', paddingBottom: '5px', marginBottom: '10px', fontWeight: 'bold' }}>
-                          THỐNG KÊ DOANH THU
+                    <div className="stats-grid">
+
+                      {/* KHỐI 1: THỐNG KÊ DOANH THU */}
+                      <div className="stat-card">
+                        <div className="stat-card__header">
+                          <h4>THỐNG KÊ DOANH THU</h4>
                         </div>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                          <div>
-                            <span style={{ fontSize: '12px', color: '#666', display: 'block' }}>💵 Tổng danh thu</span>
-                            <span style={{ fontSize: '28px', fontWeight: 'bold' }}>12TR</span>
+                        <div className="stat-card__body-layout">
+                          <div className="stat-card__left">
+                            <span className="stat-card__sub-label"><i className="fa-solid fa-circle-info" /> Tổng danh thu</span>
+                            <p className="stat-card__value">12TR</p>
                           </div>
-                          {/* Khung giả lập biểu đồ cột/đường từ hình vẽ */}
-                          <div style={{ textAlign: 'right' }}>
-                            <div style={{ fontSize: '11px', color: 'green', marginBottom: '5px' }}>✓ Tăng trưởng tháng: <span style={{ fontWeight: 'bold' }}>+15%</span></div>
-                            <div style={{ width: '100px', height: '40px', border: '1px dashed #aaa', display: 'inline-block' }}></div>
+                          <div className="stat-card__right">
+                            {/* Khu vực vẽ biểu đồ đường/cột - Bạn có thể giữ nguyên cấu trúc class css cũ hoặc thêm thẻ img/svg biểu đồ vào đây */}
+                            <div className="stat-chart-mock">[Biểu đồ doanh thu]</div>
+                            <span className="stat-card__growth-text"><i className="fa-solid fa-circle-check" /> Tăng trưởng tháng: <span className="growth-green">+15%</span></span>
                           </div>
                         </div>
                       </div>
 
-                      {/* Thẻ THỐNG KÊ ĐƠN HÀNG */}
-                      <div className="stat-card row-layout" style={{ border: '1px solid #ccc', padding: '15px', borderRadius: '4px', backgroundColor: '#fff' }}>
-                        <div style={{ borderBottom: '2px solid #333', paddingBottom: '5px', marginBottom: '10px', fontWeight: 'bold' }}>
-                          THỐNG KÊ ĐƠN HÀNG
+                      {/* KHỐI 2: THỐNG KÊ ĐƠN HÀNG */}
+                      <div className="stat-card">
+                        <div className="stat-card__header">
+                          <h4>THỐNG KÊ ĐƠN HÀNG</h4>
                         </div>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                          <div>
-                            <span style={{ fontSize: '12px', color: '#666', display: 'block' }}>🛒 Tổng đơn hàng</span>
-                            <span style={{ fontSize: '28px', fontWeight: 'bold' }}>115</span>
+                        <div className="stat-card__body-layout">
+                          <div className="stat-card__left">
+                            <span className="stat-card__sub-label"><i className="fa-solid fa-cart-shopping" /> Tổng đơn hàng</span>
+                            <p className="stat-card__value">115</p>
                           </div>
-                          <div style={{ fontSize: '13px', textAlign: 'right' }}>
-                            <div>✓ Đơn hàng thành công: <span style={{ fontWeight: 'bold' }}>98</span></div>
-                            <div>➖ Đơn hàng đang xử lý: <span style={{ fontWeight: 'bold' }}>17</span></div>
-                            <div>✖ Đơn hàng bị hủy: <span style={{ fontWeight: 'bold' }}>0</span></div>
-                          </div>
-                        </div>
-                      </div>
-
-                    </div>
-
-                    {/* Hàng phía dưới: Danh sách khách hàng & Liệt kê sản phẩm */}
-                    <div className="stats-grid-bottom" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
-                      
-                      {/* Thẻ Danh sách khách hàng */}
-                      <div className="stat-card row-layout" style={{ border: '1px solid #ccc', padding: '15px', borderRadius: '4px', backgroundColor: '#fff' }}>
-                        <div style={{ borderBottom: '2px solid #333', paddingBottom: '5px', marginBottom: '10px', fontWeight: 'bold' }}>
-                          Danh sách khách hàng
-                        </div>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                          <div>
-                            <span style={{ fontSize: '12px', color: '#666', display: 'block' }}>👤 Khách hàng</span>
-                            <span style={{ fontSize: '28px', fontWeight: 'bold' }}>10</span>
-                          </div>
-                          <div style={{ fontSize: '13px', color: '#555', textAlign: 'right' }}>
-                            <div style={{ margin: '4px 0' }}>Đơn hàng thành công</div>
-                            <div style={{ margin: '4px 0' }}>Đơn hàng đang xử lý</div>
-                            <div style={{ margin: '4px 0' }}>Đơn hàng bị hủy</div>
+                          <div className="stat-card__right">
+                            <ul className="stat-list-details">
+                              <li><i className="fa-solid fa-circle-check" /> Đơn hàng thành công: 98</li>
+                              <li><i className="fa-solid fa-circle-minus" /> Đơn hàng đang xử lý: 17</li>
+                              <li><i className="fa-solid fa-circle-xmark" /> Đơn hàng bị hủy: 0</li>
+                            </ul>
                           </div>
                         </div>
                       </div>
 
-                      {/* Thẻ Liệt kê sản phẩm */}
-                      <div className="stat-card row-layout" style={{ border: '1px solid #ccc', padding: '15px', borderRadius: '4px', backgroundColor: '#fff' }}>
-                        <div style={{ borderBottom: '2px solid #333', paddingBottom: '5px', marginBottom: '10px', fontWeight: 'bold' }}>
-                          Liệt kê sản phẩm
+                      {/* KHỐI 3: DANH SÁCH KHÁCH HÀNG */}
+                      <div className="stat-card">
+                        <div className="stat-card__header">
+                          <h4>Danh sách khách hàng</h4>
                         </div>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                          <div>
-                            <span style={{ fontSize: '12px', color: '#666', display: 'block' }}>📦 Số sản phẩm</span>
-                            <span style={{ fontSize: '28px', fontWeight: 'bold' }}>115</span>
+                        <div className="stat-card__body-layout">
+                          <div className="stat-card__left">
+                            <span className="stat-card__sub-label"><i className="fa-solid fa-user" /> Khách hàng</span>
+                            <p className="stat-card__value">
+                              {fmtNumber(
+                                customers.length
+                              )}
+                            </p>
                           </div>
-                          <div style={{ fontSize: '13px', color: '#555', textAlign: 'right' }}>
-                            <div style={{ margin: '4px 0', border: '1px solid brown', padding: '0 4px' }}>Đơn hàng thành công</div>
-                            <div style={{ margin: '4px 0' }}>Đơn hàng đang xử lý</div>
-                            <div style={{ margin: '4px 0' }}>Đơn hàng bị hủy</div>
+                          <div className="stat-card__right">
+                            <ul className="stat-list-links">
+                              <li><button type="button" onClick={() => setAdminSection('bill')}>Đơn hàng thành công</button></li>
+                              <li><button type="button" onClick={() => setAdminSection('bill')}>Đơn hàng đang xử lý</button></li>
+                              <li><button type="button" onClick={() => setAdminSection('bill')}>Đơn hàng bị hủy</button></li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* KHỐI 4: LIỆT KÊ SẢN PHẨM */}
+                      <div className="stat-card">
+                        <div className="stat-card__header">
+                          <h4>Liệt kê sản phẩm</h4>
+                        </div>
+                        <div className="stat-card__body-layout">
+                          <div className="stat-card__left">
+                            <span className="stat-card__sub-label"><i className="fa-solid fa-box" /> Số sản phẩm</span>
+                            <p className="stat-card__value">
+                              {fmtNumber(
+                                stats.total
+                              )}
+                            </p>
+                          </div>
+                          <div className="stat-card__right">
+                            <ul className="stat-list-links">
+                              <li><button type="button" onClick={() => setAdminSection('bill')}>Đơn hàng thành công</button></li>
+                              <li><button type="button" onClick={() => setAdminSection('bill')}>Đơn hàng đang xử lý</button></li>
+                              <li><button type="button" onClick={() => setAdminSection('bill')}>Đơn hàng bị hủy</button></li>
+                            </ul>
                           </div>
                         </div>
                       </div>
