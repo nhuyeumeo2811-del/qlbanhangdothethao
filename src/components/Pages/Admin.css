@@ -1103,3 +1103,144 @@
   margin: 0 auto;
   padding: 24px 20px 48px;
 }
+/* ==========================================================================
+   DASHBOARD CUSTOM STYLES (TONE XANH DƯƠNG NHẠT & BO TRÒN GÓC PHẲNG)
+   ========================================================================== */
+
+/* 1. KHUNG CHỨA TỔNG THỂ DASHBOARD */
+.dashboard {
+  animation: dashboardFadeIn 0.4s ease-out;
+}
+
+/* Tiêu đề chính Dashboard */
+.dashboard h2 {
+  color: #2c3e50;
+  font-family: 'Segoe UI', Roboto, sans-serif;
+  letter-spacing: -0.5px;
+  position: relative;
+  display: inline-block;
+  margin-bottom: 25px !important;
+}
+
+/* Đường gạch trang trí dưới chữ Dashboard */
+.dashboard h2::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  width: 45px;
+  height: 4px;
+  background: #5dade2; /* Xanh dương nhạt */
+  border-radius: 10px;
+}
+
+/* 2. LƯỚI HIỂN THỊ CÁC THẺ THỐNG KÊ (GRID) */
+.dashboard .stats-grid {
+  gap: 24px !important; /* Tăng khoảng cách giữa các ô */
+}
+
+/* 3. ĐỊNH DẠNG CHI TIẾT 4 Ô KHỐI THỐNG KÊ (OVERRIDE STYLE INLINE CŨ) */
+.dashboard .stats-grid > div {
+  /* Ghi đè viền đen và bo tròn góc */
+  border: 1px solid #e1eaf4 !important; 
+  border-radius: 16px !important; /* Bo tròn khung mạnh mẽ, hiện đại */
+  background: #ffffff;
+  
+  /* Đổ bóng nhẹ tone xanh dương mờ */
+  box-shadow: 0 5px 18px rgba(74, 144, 226, 0.06) !important;
+  
+  /* Tạo hiệu ứng mượt mà khi di chuột */
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), 
+              box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.25s ease !important;
+  will-change: transform, box-shadow;
+}
+
+/* Hiệu ứng hover nhấc nhẹ khung lên */
+.dashboard .stats-grid > div:hover {
+  transform: translateY(-5px);
+  border-color: #add8e6 !important; /* Viền xanh dương nhạt hơn khi hover */
+  box-shadow: 0 10px 25px rgba(52, 152, 219, 0.15) !important; /* Đổ bóng sâu hơn */
+}
+
+/* 4. TINH CHỈNH PHẦN HEADER CỦA TỪNG Ô KHỐI */
+.dashboard .stats-grid > div > div:first-child {
+  border-bottom: 1px solid #eef4fa !important; /* Thay gạch đen bằng gạch xanh nhạt */
+  color: #34495e !important;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.dashboard .stats-grid > div > div:first-child span:last-child {
+  color: #8fa0b3 !important; /* Làm dịu chữ mô tả bên phải */
+}
+
+/* 5. ĐỊNH DẠNG SỐ LIỆU & BIỂU ĐỒ (Ô 1 - DOANH THU) */
+.dashboard .stats-grid > div:nth-child(1) div[style*="font-size: 24px"] {
+  color: #2c3e50; /* Màu chữ số tiền */
+}
+
+/* Khung bọc SVG đồ thị mini */
+.dashboard .stats-grid > div:nth-child(1) div[style*="width: 180px"] {
+  border: 1px solid #d4e3f2 !important; /* Bo viền đồ thị màu xanh dịu */
+  border-radius: 8px !important; /* Bo tròn khung biểu đồ */
+  background: #fcfdfe;
+  overflow: hidden;
+}
+
+/* Đổi màu các cột đứng trong biểu đồ sang tone màu xanh nhạt phối hợp */
+.dashboard .stats-grid > div:nth-child(1) div[style*="width: 18px"]:nth-of-type(1) { background: #d6eaf8 !important; border: none !important; }
+.dashboard .stats-grid > div:nth-child(1) div[style*="width: 18px"]:nth-of-type(2) { background: #aed6f1 !important; border: none !important; }
+.dashboard .stats-grid > div:nth-child(1) div[style*="width: 18px"]:nth-of-type(3) { background: #85c1e9 !important; border: none !important; }
+.dashboard .stats-grid > div:nth-child(1) div[style*="width: 18px"]:nth-of-type(4) { background: #5dade2 !important; border: none !important; }
+
+/* Đường vẽ Polyline trong SVG */
+.dashboard .stats-grid > div:nth-child(1) svg polyline {
+  stroke: #2980b9 !important; /* Đường vẽ màu xanh dương đậm nét */
+  stroke-width: 2.5;
+}
+
+/* 6. TINH CHỈNH Ô 2 (TỔNG ĐƠN HÀNG) & CHỮ ĐẬM */
+.dashboard .stats-grid > div:nth-child(2) span[style*="font-size: 36px"] {
+  color: #2e4053 !important;
+}
+
+.dashboard .stats-grid > div:nth-child(2) strong {
+  color: #3498db !important; /* Highlight số lượng bằng màu xanh dương */
+}
+
+/* 7. Ô 3 & Ô 4 (KHÁCH HÀNG & SẢN PHẨM) */
+.dashboard .stats-grid > div:nth-child(3) div[style*="font-size: 36px"],
+.dashboard .stats-grid > div:nth-child(4) div[style*="font-size: 36px"] {
+  color: #2c3e50;
+}
+
+/* Link "Xem chi tiết khách hàng" */
+.dashboard .stats-grid > div:nth-child(3) div[style*="text-decoration: underline"] {
+  color: #3498db !important;
+  text-decoration: none !important;
+  font-weight: 500;
+}
+.dashboard .stats-grid > div:nth-child(3) div[style*="text-decoration: underline"]:hover {
+  text-decoration: underline !important;
+}
+
+/* Label "Kho hàng chính" ở ô sản phẩm */
+.dashboard .stats-grid > div:nth-child(4) div[style*="background: #e2e8f0"] {
+  background: #e8f4fd !important; /* Đổi từ xám sang nền xanh dương siêu nhạt */
+  color: #2980b9 !important;      /* Chữ xanh dương */
+  border: 1px solid #d4e6f1 !important;
+  border-radius: 6px !important;  /* Bo tròn nhẹ nhãn */
+  padding: 2px 8px !important;
+}
+
+/* 8. HIỆU ỨNG FLUID ANIMATION */
+@keyframes dashboardFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
