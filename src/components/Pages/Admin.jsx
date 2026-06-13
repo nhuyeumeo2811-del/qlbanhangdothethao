@@ -192,12 +192,12 @@ const Admin = () => {
     }
   }, []);
 
-  // Tính toán số liệu thống kê thực tế từ các file JSON đã nạp
+  // Tính toán số liệu thống kê thực tế từ mảng đơn hàng
   const stats = useMemo(() => {
     const total = products.length;
     const revenue = bills.reduce((sum, bill) => sum + Number(bill.total || 0), 0);
 
-    // Đếm số lượng đơn hàng theo từng trạng thái thực tế
+    // Tính toán số lượng đơn hàng chuẩn xác dựa trên state bills thực tế
     const deliveredCount = bills.filter((b) => String(b.status).trim().toLowerCase() === 'delivered').length;
     const pendingCount = bills.filter((b) => {
       const s = String(b.status).trim().toLowerCase();
@@ -264,7 +264,6 @@ const Admin = () => {
 
       <div className="ruang-shell" style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
         
-        {/* TOPBAR BANNER QUẢN TRỊ VIÊN */}
         <header className="ruang-topbar" style={{ height: '90px', borderBottom: '1px solid #b7b7b7', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', padding: '0 30px', background: '#fff' }}>
           <div className="ruang-topbar__right">
             <div className="ruang-user" ref={userMenuRef} style={{ border: '1px solid #b7b7b7', padding: '6px 14px', background: '#fff', display: 'inline-block', position: 'relative' }}>
@@ -282,7 +281,7 @@ const Admin = () => {
               </button>
 
               {userMenuOpen && (
-                <div className="ruang-user__menu" style={{ position: 'absolute', right: '-1px', top: '5px', background: '#fff', border: '1px solid #b7b7b7', boxShadow: '0 4px 6px rgba(0,0,0,0.05)', minWidth: '130px', zIndex: 100 }}>
+                <div className="ruang-user__menu" style={{ position: 'absolute', right: '-1px', top: '56px', background: '#fff', border: '1px solid #b7b7b7', boxShadow: '0 4px 6px rgba(0,0,0,0.05)', minWidth: '130px', zIndex: 100 }}>
                   <button type="button" onClick={goHome} style={{ display: 'block', width: '100%', padding: '10px', border: 'none', background: 'none', textAlign: 'left', cursor: 'pointer' }}>Trang chủ</button>
                   <button type="button" onClick={() => setLogoutModalOpen(true)} style={{ display: 'block', width: '100%', padding: '10px', borderTop: '1px solid #f0f0f0', background: 'none', textAlign: 'left', cursor: 'pointer' }}>Đăng xuất</button>
                 </div>
@@ -291,7 +290,6 @@ const Admin = () => {
           </div>
         </header>
 
-        {/* NƠI HIỂN THỊ MAIN TRUNG TÂM */}
         <main className="ruang-main" style={{ flex: 1, padding: '25px', background: '#fff' }}>
           {loadError && (
             <div className="admin-msg admin-msg--error" style={{ padding: '12px', background: '#fff5f5', border: '1px solid #fc8181', color: '#c53030', marginBottom: '15px' }}>
@@ -310,7 +308,6 @@ const Admin = () => {
               {adminSection === 'bill' && <AdminBill embedded />}
               {adminSection === 'invoiceDetails' && <AdminInvoiceDetails embedded />}
 
-              {/* ROUTE MẶC ĐỊNH: DASHBOARD THEO BẢN VẼ PHÁC THẢO */}
               {adminSection === 'dashboard' && (
                 <div className="dashboard">
                   <h2 style={{ fontSize: '26px', fontWeight: 'bold', margin: '0 0 20px 0' }}>Dashboard</h2>
@@ -345,7 +342,7 @@ const Admin = () => {
                       </div>
                     </div>
 
-                    {/* Ô KHỐI 2: TỔNG ĐƠN HÀNG - ĐÃ ĐƯỢC HIỆU CHỈNH CHÍNH XÁC JSX ĐỘNG */}
+                    {/* Ô KHỐI 2: TỔNG ĐƠN HÀNG - ĐÃ FIX CHÍNH XÁC JSX ĐỘNG THEO YÊU CẦU */}
                     <div onClick={() => setAdminSection('bill')} style={{ border: '1px solid #000', padding: '15px', display: 'flex', flexDirection: 'column', height: '170px', cursor: 'pointer' }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #000', paddingBottom: '6px', fontSize: '12px', fontWeight: 'bold', textTransform: 'uppercase' }}>
                         <span>🛒 Tổng đơn hàng</span>
@@ -423,7 +420,6 @@ const Admin = () => {
         </footer>
       </div>
 
-      {/* MODAL ĐĂNG XUẤT */}
       {logoutModalOpen && (
         <div className="ruang-modal-backdrop" style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 999 }}>
           <div className="ruang-modal" style={{ background: '#fff', border: '1px solid #000', padding: '20px', width: '320px' }}>
