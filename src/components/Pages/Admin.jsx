@@ -90,8 +90,7 @@ const Admin = () => {
   const userMenuRef = useRef(null);
 
   useEffect(() => {
-    const raw =
-      localStorage.getItem('currentUser');
+    const raw = localStorage.getItem('currentUser');
 
     if (!raw) {
       navigate('/login');
@@ -185,6 +184,22 @@ const Admin = () => {
     };
   }, [userMenuOpen]);
 
+  // Tạo chữ cái viết tắt đại diện cho Avatar từ tên Staff
+  const staffInitials = useMemo(() => {
+    try {
+      const raw = localStorage.getItem('currentUser');
+      if (!raw) return 'AD';
+      const u = JSON.parse(raw);
+      const name = String(u.user || u.name || 'Staff').trim();
+      const parts = name.split(/\s+/).filter(Boolean);
+      if (!parts.length) return 'AD';
+      if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+      return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+    } catch {
+      return 'AD';
+    }
+  }, []);
+
   const staffDisplayName = useMemo(() => {
     try {
       const raw = localStorage.getItem('currentUser');
@@ -201,7 +216,7 @@ const Admin = () => {
     const total = products.length;
     const revenue = bills.reduce((sum, bill) => sum + Number(bill.total || 0), 0);
 
-    // Tính toán số lượng đơn hàng chuẩn xác dựa trên state bills thực tế
+    // Lọc trạng thái đơn hàng động từ state bills thực tế
     const deliveredCount = bills.filter((b) => String(b.status).trim().toLowerCase() === 'delivered').length;
     const pendingCount = bills.filter((b) => {
       const s = String(b.status).trim().toLowerCase();
@@ -266,10 +281,10 @@ const Admin = () => {
         </ul>
       </aside>
       
-     <div className="ruang-shell">
+      <div className="ruang-shell">
 
-        <header className="ruang-topbar" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 24px', height: '70px', background: '#fff', borderBottom: '1px solid #ccc' }}>
-
+        {/* ĐOẠN HEADER RUANG-TOPBAR CỦA BẠN ĐÃ ĐƯỢC THÊM CHÍNH XÁC VÀO ĐÂY */}
+        <header className="ruang-topbar">
           <button
             type="button"
             className="ruang-topbar__toggle"
@@ -283,11 +298,9 @@ const Admin = () => {
           </button>
 
           <div className="ruang-topbar__right">
-
             <div
               className="ruang-user"
               ref={userMenuRef}
-              style={{ border: '1px solid #ccc', padding: '6px 12px', borderRadius: '4px', background: '#f9f9f9' }}
             >
               <button
                 type="button"
@@ -297,23 +310,18 @@ const Admin = () => {
                     (v) => !v
                   )
                 }
-                style={{ display: 'flex', alignItems: 'center', gap: '10px', background: 'none', border: 'none', cursor: 'pointer' }}
               >
-                <span className="ruang-user__avatar" style={{ width: '36px', height: '36px', background: '#ccc', borderRadius: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', fontWeight: 'bold', border: '1px solid #999' }}>
-                  Hình
+                <span className="ruang-user__avatar">
+                  {staffInitials}
                 </span>
 
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-                  <span className="ruang-user__name" style={{ fontSize: '14px', fontWeight: 'bold', color: '#333' }}>
-                    {staffDisplayName}
-                  </span>
-                  <span style={{ fontSize: '11px', color: '#666' }}>Quản trị viên v</span>
-                </div>
+                <span className="ruang-user__name">
+                  {staffDisplayName}
+                </span>
               </button>
 
               {userMenuOpen && (
                 <div className="ruang-user__menu">
-
                   <button
                     type="button"
                     onClick={goHome}
@@ -331,7 +339,6 @@ const Admin = () => {
                   >
                     Đăng xuất
                   </button>
-
                 </div>
               )}
             </div>
@@ -390,23 +397,23 @@ const Admin = () => {
                       </div>
                     </div>
 
-                    {/* Ô KHỐI 2: TỔNG ĐƠN HÀNG - ĐÃ FIX CHÍNH XÁC JSX ĐỘNG THEO YÊU CẦU */}
-                   <div onClick={() => setAdminSection('bill')} style={{ border: '1px solid #000', padding: '15px', display: 'flex', flexDirection: 'column', height: '170px', cursor: 'pointer' }}>
+                    {/* Ô KHỐI 2: TỔNG ĐƠN HÀNG - ĐÃ FIX KHỚP JSX ĐỘNG CHUẨN XÁC */}
+                    <div onClick={() => setAdminSection('bill')} style={{ border: '1px solid #000', padding: '15px', display: 'flex', flexDirection: 'column', height: '170px', cursor: 'pointer' }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #000', paddingBottom: '6px', fontSize: '12px', fontWeight: 'bold', textTransform: 'uppercase' }}>
                         <span>🛒 Tổng đơn hàng</span>
                         <span style={{ color: '#555' }}>Thống kê đơn hàng</span>
                       </div>
                       
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', margin: '15px 0' }}>
-                          <span style={{ fontSize: '36px', fontWeight: '900', color: '#111' }}>
-                            {bills.length}
-                          </span>
-                          <div style={{ fontSize: '12px', textAlign: 'left', lineHeight: '1.8' }}>
-                            <div>✓ Đơn hàng thành công: <strong style={{ float: 'right', marginLeft: '10px' }}>{stats.successBills || bills.length}</strong></div>
-                            <div>- Đơn hàng đang xử lý: <strong style={{ float: 'right', marginLeft: '10px' }}>{stats.processingBills || 0}</strong></div>
-                            <div>x Đơn hàng bị hủy: <strong style={{ float: 'right', marginLeft: '10px' }}>{stats.canceledBills || 0}</strong></div>
-                          </div>
+                        <span style={{ fontSize: '36px', fontWeight: '900', color: '#111' }}>
+                          {stats.totalBills}
+                        </span>
+                        <div style={{ fontSize: '12px', textAlign: 'left', lineHeight: '1.8', minWidth: '180px' }}>
+                          <div>✓ Đơn hàng thành công: <strong style={{ float: 'right', marginLeft: '10px' }}>{stats.deliveredCount}</strong></div>
+                          <div>- Đơn hàng đang xử lý: <strong style={{ float: 'right', marginLeft: '10px' }}>{stats.pendingCount}</strong></div>
+                          <div>x Đơn hàng bị hủy: <strong style={{ float: 'right', marginLeft: '10px' }}>{stats.canceledCount}</strong></div>
                         </div>
+                      </div>
                     </div>
 
                     {/* Ô KHỐI 3: DANH SÁCH KHÁCH HÀNG */}
