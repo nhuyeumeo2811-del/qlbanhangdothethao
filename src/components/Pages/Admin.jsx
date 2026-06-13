@@ -709,7 +709,7 @@ const vipCustomers = useMemo(() => {
         </main>
 
         <footer className="ruang-footer">
-          Copyright © GalaxyCafe
+          Copyright © LaLaShop
         </footer>
       </div>
 
