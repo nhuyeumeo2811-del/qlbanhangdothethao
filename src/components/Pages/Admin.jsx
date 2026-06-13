@@ -327,6 +327,11 @@ const Admin = () => {
       ? revenue / bills.length
       : 0;
 
+    // Tính toán thêm số lượng đơn hàng theo trạng thái phục vụ hiển thị Wireframe
+    const successBills = bills.filter(b => billStatusFromJson(b.status).key === 'delivered').length;
+    const processingBills = bills.filter(b => ['processing', 'pending', 'shipping'].includes(billStatusFromJson(b.status).key)).length;
+    const canceledBills = bills.filter(b => billStatusFromJson(b.status).key === 'unknown').length;
+
     return {
       total,
       soldSum,
@@ -334,6 +339,9 @@ const Admin = () => {
       uncategorized,
       revenue,
       avgBill,
+      successBills,
+      processingBills,
+      canceledBills,
     };
   }, [
     products,
@@ -366,7 +374,7 @@ Number(p.id) === id);
         const percent = Math.max(0, Math.min(100,
 Math.round((sold / 800) * 100)));
         return { id: p.id, name: p.name, sold, percent
-};
+        };
       });
   }, [products, invoiceDetails]);
 
@@ -517,29 +525,38 @@ const vipCustomers = useMemo(() => {
         <hr className="ruang-sidebar__divider" />
 
         <div className="ruang-sidebar__heading">
-          Tiện ích
+          QUẢN TRỊ VIÊN BÁO CÁO
         </div>
 
         <ul className="ruang-sidebar__nav">
 
           {Object.entries(SECTION_LABEL).map(
-            ([key, label]) => (
-              <li key={key}>
-                <button
-                  type="button"
-                  className={`ruang-sidebar__link ${adminSection === key
-                      ? 'is-active'
-                      : ''
-                    }`}
-                  onClick={() => {
-                    setAdminSection(key);
-                    closeMobileNav();
-                  }}
-                >
-                  {label}
-                </button>
-              </li>
-            )
+            ([key, label]) => {
+              // Phục vụ cấu trúc text hiển thị phụ giống Wireframe
+              let subLabel = "Tổng thể";
+              if (key === 'bill' || key === 'invoiceDetails') subLabel = "Theo dõi";
+              if (key === 'employee' || key === 'customer' || key === 'category') subLabel = "Quản lý";
+
+              return (
+                <li key={key}>
+                  <button
+                    type="button"
+                    className={`ruang-sidebar__link ${adminSection === key
+                        ? 'is-active'
+                        : ''
+                      }`}
+                    onClick={() => {
+                      setAdminSection(key);
+                      closeMobileNav();
+                    }}
+                    style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', textAlign: 'left', padding: '12px 16px' }}
+                  >
+                    <span style={{ fontSize: '14px', fontWeight: 'bold' }}>{label}</span>
+                    <span style={{ fontSize: '11px', opacity: 0.6 }}>{subLabel}</span>
+                  </button>
+                </li>
+              );
+            }
           )}
 
         </ul>
@@ -547,7 +564,7 @@ const vipCustomers = useMemo(() => {
 
       <div className="ruang-shell">
 
-        <header className="ruang-topbar">
+        <header className="ruang-topbar" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 24px', height: '70px', background: '#fff', borderBottom: '1px solid #ccc' }}>
 
           <button
             type="button"
@@ -566,6 +583,7 @@ const vipCustomers = useMemo(() => {
             <div
               className="ruang-user"
               ref={userMenuRef}
+              style={{ border: '1px solid #ccc', padding: '6px 12px', borderRadius: '4px', background: '#f9f9f9' }}
             >
               <button
                 type="button"
@@ -575,14 +593,18 @@ const vipCustomers = useMemo(() => {
                     (v) => !v
                   )
                 }
+                style={{ display: 'flex', alignItems: 'center', gap: '10px', background: 'none', border: 'none', cursor: 'pointer' }}
               >
-                <span className="ruang-user__avatar">
-                  {staffInitials}
+                <span className="ruang-user__avatar" style={{ width: '36px', height: '36px', background: '#ccc', borderRadius: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', fontWeight: 'bold', border: '1px solid #999' }}>
+                  Hình
                 </span>
 
-                <span className="ruang-user__name">
-                  {staffDisplayName}
-                </span>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                  <span className="ruang-user__name" style={{ fontSize: '14px', fontWeight: 'bold', color: '#333' }}>
+                    {staffDisplayName}
+                  </span>
+                  <span style={{ fontSize: '11px', color: '#666' }}>Quản trị viên v</span>
+                </div>
               </button>
 
               {userMenuOpen && (
@@ -612,159 +634,7 @@ const vipCustomers = useMemo(() => {
           </div>
         </header>
 
-        <main className="ruang-main">
+        <main className="ruang-main" style={{ padding: '24px', background: '#f5f5f5', minHeight: 'calc(100vh - 120px)' }}>
 
           {loadError && (
-            <div className="admin-msg admin-msg--error">
-              {loadError}
-            </div>
-          )}
-
-          {loading ? (
-            <div className="ruang-loading">
-              Đang tải...
-            </div>
-          ) : (
-            <>
-              {adminSection ===
-                'products' && (
-                  <AdminProduct embedded />
-                )}
-
-              {adminSection ===
-                'category' && (
-                  <AdminCategory embedded />
-                )}
-
-              {adminSection ===
-                'customer' && (
-                  <AdminCustomer embedded />
-                )}
-
-              {adminSection ===
-                'employee' && (
-                  <AdminEmployee embedded />
-                )}
-
-              {adminSection ===
-                'bill' && (
-                  <AdminBill embedded />
-                )}
-
-              {adminSection ===
-                'invoiceDetails' && (
-                  <AdminInvoiceDetails embedded />
-                )}
-
-              {adminSection ===
-                'dashboard' && (
-                  <div className="dashboard">
-                    <h2>
-                      Dashboard
-                    </h2>
-
-                    <div className="stats-grid">
-
-                      <div className="stat-card">
-                        <h4>
-                          Doanh thu
-                        </h4>
-
-                        <p>
-                          {fmtCurrency(
-                            stats.revenue
-                          )}
-                        </p>
-                      </div>
-
-                      <div className="stat-card">
-                        <h4>
-                          Sản phẩm
-                        </h4>
-
-                        <p>
-                          {fmtNumber(
-                            stats.total
-                          )}
-                        </p>
-                      </div>
-
-                      <div className="stat-card">
-                        <h4>
-                          Khách hàng
-                        </h4>
-
-                        <p>
-                          {fmtNumber(
-                            customers.length
-                          )}
-                        </p>
-                      </div>
-
-                    </div>
-                  </div>
-                )}
-            </>
-          )}
-        </main>
-
-        <footer className="ruang-footer">
-          Copyright © LaLaShop
-        </footer>
-      </div>
-
-      {logoutModalOpen && (
-        <div className="ruang-modal-backdrop">
-
-          <div className="ruang-modal">
-
-            <div className="ruang-modal__header">
-              <h5>
-                Đăng xuất
-              </h5>
-
-              <button
-                type="button"
-                onClick={() =>
-                  setLogoutModalOpen(
-                    false
-                  )
-                }
-              >
-                ×
-              </button>
-            </div>
-
-            <div className="ruang-modal__body">
-              Bạn có chắc muốn đăng xuất?
-            </div>
-
-            <div className="ruang-modal__footer">
-
-              <button
-                type="button"
-                onClick={() =>
-                  setLogoutModalOpen(
-                    false
-                  )
-                }
-              >
-                Hủy
-              </button>
-
-              <button
-                type="button"
-                onClick={logout}
-              >
-                Đăng xuất
-              </button>
-
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-};
-
-export default Admin;
+            <div className="admin-msg admin-msg--
