@@ -1,11 +1,7 @@
-/* ==========================================================================
-   PHẦN ĐỈNH HEADER (TOP BAR) - ĐỒNG BỘ THEO LALASHOP
-   ========================================================================== */
 .phuclong-header {
     background-color: white;
     width: 100%;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    /* Dùng flex-direction column để quản lý thứ tự các thanh lớn bằng thuộc tính order */
     display: flex;
     flex-direction: column;
 }
@@ -16,7 +12,6 @@
     background-color: white;
     padding: 10px 20px; 
     border-bottom: 1px solid #e9ecef;
-    /* Giữ vị trí thanh top ở trên cùng */
     order: 1;
 }
 
@@ -29,7 +24,6 @@
     position: relative;
 }
 
-/* Loại bỏ thuộc tính absolute của logo cũ để logo tự động đứng bên trái */
 .header-logo-container {
     position: relative;
     left: auto;
@@ -62,7 +56,6 @@
     transform: scale(1.05);
 }
 
-/* Thông tin giao hàng */
 .header-delivery-info {
     display: flex;
     align-items: center;
@@ -249,22 +242,8 @@ button.login-link {
     font-weight: bold;
 }
 
-
-/* ==========================================================================
-   PHẦN THANH TÌM KIẾM (SEARCH STRIP) - THAY ĐỔI THỨ TỰ BẰNG ORDER
-   ========================================================================== */
-.header-search-strip {
-    position: relative;
-    z-index: 1150;
-    background-color: #115bb6; 
-    padding: 12px 20px; 
-    border-bottom: 1px solid #0d468b;
-    /* Dùng order: 2 để thanh tìm kiếm nhảy xuống nằm ở giữa top-bar và navigation */
-    order: 2;
-}
-
 .header-search-strip__inner {
-    max-width: 1300px;
+    width: 100%;
     margin: 0 auto;
     position: relative;
 }
