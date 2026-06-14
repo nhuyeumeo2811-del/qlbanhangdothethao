@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Header.css';
 
-import logoImg from "../../img/Logo.png";
+import logoImg from "../../img/logo.png";
 import { imageMap } from '../../utils/productImages';
 import { normalizeSearchText, rankProductsBySearch, } from '../../utils/productSearch';
 
