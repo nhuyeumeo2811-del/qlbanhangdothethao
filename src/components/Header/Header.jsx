@@ -1,16 +1,27 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './Header.css';
 import logoImg from '../../img/logo.png';
 import { imageMap } from '../../utils/productImages';
-import { normalizeSearchText, rankProductsBySearch } from '../../utils/productSearch';
+import { normalizeSearchText, rankProductsBySearch,} from '../../utils/productSearch';
 
 const jsonBase = import.meta.env.BASE_URL || '/';
+
+const customNormalizeText = (text) => {
+    if (!text) return '';
+    return text
+        .toLowerCase()
+        .normalize('NFD') 
+        .replace(/[\u0300-\u036f]/g, '') 
+        .replace(/đ/g, 'd')
+        .trim()
+        .replace(/\s+/g, ' ');
+};
 
 const translations = {
     VN: {
         delivery: 'Giao hàng miễn phí',
-        login: 'Đăng nhập',
+        login: 'Quản trị viên',
         cart: 'Giỏ hàng',
         searchPlaceholder: 'Bạn muốn mua gì...',
         searchBtn: 'Tìm',
@@ -32,7 +43,7 @@ const translations = {
     },
     EN: {
         delivery: 'Free Delivery',
-        login: 'Login',
+        login: 'Admin',
         cart: 'Cart',
         searchPlaceholder: 'What are you looking for...',
         searchBtn: 'Search',
@@ -73,24 +84,20 @@ const Header = () => {
 
     const t = translations[lang];
 
-    // Tối ưu hóa tìm kiếm sử dụng hàm bổ trợ chuyên dụng đã import
     const searchMatches = useMemo(() => {
-        const cleanQuery = normalizeSearchText ? normalizeSearchText(searchQuery) : searchQuery.toLowerCase().trim();
+        const cleanQuery = customNormalizeText(searchQuery);
         
         if (!cleanQuery) return [];
 
-        const filtered = products.filter((product) => {
-            if (!product || !product.name) return false;
-            const cleanProductName = normalizeSearchText ? normalizeSearchText(product.name) : product.name.toLowerCase();
-            return cleanProductName.includes(cleanQuery);
-        });
-
-        // Nếu có hàm xếp hạng thứ tự tìm kiếm ưu tiên, áp dụng tại đây
-        if (rankProductsBySearch) {
-            return rankProductsBySearch(filtered, cleanQuery).slice(0, 10);
-        }
-
-        return filtered.slice(0, 10); 
+        return products
+            .filter((product) => {
+                if (!product || !product.name) return false;
+                
+                const cleanProductName = customNormalizeText(product.name);
+                
+                return cleanProductName.includes(cleanQuery);
+            })
+            .slice(0, 10); 
     }, [products, searchQuery]);
 
     useEffect(() => {
@@ -241,7 +248,8 @@ const Header = () => {
 
     const handleSearchSubmit = (e) => {
         e.preventDefault();
-        if (!searchQuery.trim()) return;
+        const q = customNormalizeText(searchQuery);
+        if (!q) return;
 
         navigate(`/products?q=${encodeURIComponent(searchQuery.trim())}`);
         setSearchFocused(false);
@@ -274,83 +282,83 @@ const Header = () => {
                     </div>
 
                     <div className="header-search-strip__inner" ref={searchBoxRef}>
-                        <form
-                            className="header-search-form"
-                            onSubmit={handleSearchSubmit}
-                            role="search"
+                    <form
+                        className="header-search-form"
+                        onSubmit={handleSearchSubmit}
+                        role="search"
+                    >
+                        <i
+                            className="fas fa-search header-search-icon"
+                            aria-hidden="true"
+                        />
+
+                        <input
+                            type="search"
+                            className="header-search-input"
+                            placeholder={t.searchPlaceholder}
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            onFocus={() => setSearchFocused(true)}
+                            aria-label="Tìm kiếm sản phẩm"
+                            aria-autocomplete="list"
+                            aria-controls="header-search-suggestions"
+                            autoComplete="off"
+                        />
+
+                        <button type="submit" className="header-search-submit">
+                            {t.searchBtn}
+                        </button>
+                    </form>
+
+                    {searchFocused && searchQuery.trim().length > 0 && (
+                        <ul
+                            id="header-search-suggestions"
+                            className="header-search__dropdown"
+                            role="listbox"
+                            aria-label="Gợi ý sản phẩm"
                         >
-                            <i
-                                className="fas fa-search header-search-icon"
-                                aria-hidden="true"
-                            />
+                            {searchMatches.length === 0 ? (
+                                <li className="header-search__empty" role="status">
+                                    <i className="fas fa-search-minus" style={{ marginRight: '8px', opacity: 0.6 }}></i>
+                                    {t.noProduct}
+                                </li>
+                            ) : (
+                                searchMatches.map((p) => (
+                                    <li key={p.id} role="presentation">
+                                        <button
+                                            type="button"
+                                            className="header-search__option"
+                                            role="option"
+                                            onClick={() => goToProduct(p)}
+                                        >
+                                            <span className="header-search__thumb-wrap">
+                                                <img
+                                                    src={p.image || 'https://via.placeholder.com/88'}
+                                                    alt={p.name}
+                                                    className="header-search__thumb"
+                                                    loading="lazy"
+                                                />
+                                            </span>
 
-                            <input
-                                type="search"
-                                className="header-search-input"
-                                placeholder={t.searchPlaceholder}
-                                value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)}
-                                onFocus={() => setSearchFocused(true)}
-                                aria-label="Tìm kiếm sản phẩm"
-                                aria-autocomplete="list"
-                                aria-controls="header-search-suggestions"
-                                autoComplete="off"
-                            />
-
-                            <button type="submit" className="header-search-submit">
-                                {t.searchBtn}
-                            </button>
-                        </form>
-
-                        {searchFocused && searchQuery.trim().length > 0 && (
-                            <ul
-                                id="header-search-suggestions"
-                                className="header-search__dropdown"
-                                role="listbox"
-                                aria-label="Gợi ý sản phẩm"
-                            >
-                                {searchMatches.length === 0 ? (
-                                    <li className="header-search__empty" role="status">
-                                        <i className="fas fa-search-minus" style={{ marginRight: '8px', opacity: 0.6 }}></i>
-                                        {t.noProduct}
-                                    </li>
-                                ) : (
-                                    searchMatches.map((p) => (
-                                        <li key={p.id} role="presentation">
-                                            <button
-                                                type="button"
-                                                className="header-search__option"
-                                                role="option"
-                                                onClick={() => goToProduct(p)}
-                                            >
-                                                <span className="header-search__thumb-wrap">
-                                                    <img
-                                                        src={p.image || 'https://via.placeholder.com/88'}
-                                                        alt={p.name}
-                                                        className="header-search__thumb"
-                                                        loading="lazy"
-                                                    />
+                                            <span className="header-search__meta">
+                                                <span className="header-search__name" title={p.name}>
+                                                    {p.name}
                                                 </span>
-
-                                                <span className="header-search__meta">
-                                                    <span className="header-search__name" title={p.name}>
-                                                        {p.name}
+                                                {p.currentPrice && (
+                                                    <span className="header-search__price">
+                                                        {p.currentPrice}
                                                     </span>
-                                                    {p.currentPrice && (
-                                                        <span className="header-search__price">
-                                                            {p.currentPrice}
-                                                        </span>
-                                                    )}
-                                                </span>
+                                                )}
+                                            </span>
 
-                                                <i className="fas fa-chevron-right header-search__arrow" style={{ marginLeft: 'auto', fontSize: '11px', opacity: 0.3 }}></i>
-                                            </button>
-                                        </li>
-                                    ))
-                                )}
-                            </ul>
-                        )}
-                    </div>
+                                            <i className="fas fa-chevron-right header-search__arrow" style={{ marginLeft: 'auto', fontSize: '11px', opacity: 0.3 }}></i>
+                                        </button>
+                                    </li>
+                                ))
+                            )}
+                        </ul>
+                    )}
+                </div>
 
                     <div className="header-user-actions">
                         <div className="header-delivery-info">
@@ -368,11 +376,15 @@ const Header = () => {
                                     className="login-link header-user-menu-trigger"
                                     aria-expanded={userMenuOpen}
                                     aria-haspopup="true"
-                                    onClick={() => setUserMenuOpen((o) => !o)}
+                                    onClick={() =>
+                                        setUserMenuOpen((o) => !o)
+                                    }
                                 >
                                     {userLabel}
+
                                     <i
-                                        className={`fas fa-chevron-down header-user-menu-caret ${userMenuOpen ? 'is-open' : ''}`}
+                                        className={`fas fa-chevron-down header-user-menu-caret ${userMenuOpen ? 'is-open' : ''
+                                            }`}
                                         aria-hidden="true"
                                     />
                                 </button>
@@ -391,10 +403,10 @@ const Header = () => {
                                                 navigate('/profile');
                                             }}
                                         >
-                                            {t.profile}
+                                            HỒ SƠ
                                         </button>
 
-                                        {(currentUser.role === 'staff' || currentUser.role === 'admin') && (
+                                        {currentUser.role === 'staff' && (
                                             <button
                                                 type="button"
                                                 className="header-user-dropdown-item"
@@ -404,7 +416,7 @@ const Header = () => {
                                                     navigate('/admin');
                                                 }}
                                             >
-                                                {t.admin}
+                                                Quản trị
                                             </button>
                                         )}
 
@@ -414,7 +426,7 @@ const Header = () => {
                                             role="menuitem"
                                             onClick={handleLogout}
                                         >
-                                            {t.logout}
+                                            Đăng xuất
                                         </button>
                                     </div>
                                 )}
@@ -425,7 +437,7 @@ const Header = () => {
                                 className="login-link"
                                 onClick={() => navigate('/login')}
                             >
-                                {t.login}
+                                Đăng nhập
                             </button>
                         )}
                         
@@ -452,7 +464,7 @@ const Header = () => {
                             onClick={() => navigate('/cart')}
                         >
                             <i className="fas fa-shopping-cart"></i>
-                            <span>{t.cart}</span>
+                            <span>Giỏ hàng</span>
                             <span className="cart-badge">{cartCount}</span>
                         </button>
                     </div>
@@ -461,56 +473,58 @@ const Header = () => {
 
             <nav className="header-navigation" aria-label="Điều hướng chính">
                 <div className="nav-content">
-                    <Link to="/" className="nav-link">
+                    <a href="/" className="nav-link">
                         {t.home}
-                    </Link>
+                    </a>
 
                     <div
                         className="nav-item-with-dropdown"
                         onMouseEnter={() => setHoveredMenu('coffee')}
                         onMouseLeave={() => setHoveredMenu(null)}
                     >
-                        <Link
-                            to="/lalashop/thoi-trang-nu"
-                            className={`nav-link ${hoveredMenu === 'coffee' ? 'active' : ''}`}
+                        <a
+                            href="/coffee"
+                            className={`nav-link ${
+                                hoveredMenu === 'coffee' ? 'active' : ''
+                            }`}
                         >
                             {t.coffee}
-                        </Link>
+                        </a>
 
                         {hoveredMenu === 'coffee' && (
                             <div className="dropdown-menu">
                                 {t.coffeeMenu.map((item, index) => (
-                                    <Link
+                                    <a
                                         key={index}
-                                        to={item.href}
+                                        href={item.href}
                                         className="dropdown-item"
                                     >
                                         {item.text}
-                                    </Link>
+                                    </a>
                                 ))}
                             </div>
                         )}
                     </div>
 
-                    <Link to="/tea" className="nav-link">
+                    <a href="/tea" className="nav-link">
                         {t.tea}
-                    </Link>
+                    </a>
 
-                    <Link to="/drinks" className="nav-link">
+                    <a href="/drinks" className="nav-link">
                         {t.drinks}
-                    </Link>
+                    </a>
 
-                    <Link to="/products" className="nav-link">
+                    <a href="/products" className="nav-link">
                         {t.products}
-                    </Link>
+                    </a>
 
-                    <Link to="/promotions" className="nav-link">
+                    <a href="/promotions" className="nav-link">
                         {t.promotions}
-                    </Link>
+                    </a>
 
-                    <Link to="/about" className="nav-link">
+                    <a href="/about" className="nav-link">
                         {t.about}
-                    </Link>
+                    </a>
                 </div>
             </nav>
         </header>
