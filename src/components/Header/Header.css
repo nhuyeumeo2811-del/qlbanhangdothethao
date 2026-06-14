@@ -1,5 +1,5 @@
 /* ==========================================================================
-   PHẦN ĐỈNH HEADER (TOP BAR) - ĐỒNG BỘ THEO LALASHOP
+   PHẦN ĐỈNH HEADER (TOP BAR) - ĐỒNG BỘ THEO LALASHOP VÀ ĐỊNH VỊ 3 CỘT
    ========================================================================== */
 .phuclong-header {
     background-color: white;
@@ -11,62 +11,41 @@
     position: relative;
     z-index: 1200;
     background-color: white;
-    padding: 10px 20px; /* Thu gọn padding dọc để thanh mảnh như bản thiết kế */
+    padding: 10px 20px; 
     border-bottom: 1px solid #e9ecef;
 }
 
+/* Áp dụng CSS Grid chia 3 cột cố định */
 .header-top-content {
     max-width: 1300px;
     margin: 0 auto;
-    display: flex;
+    display: grid;
+    grid-template-columns: 240px 1fr auto; 
     align-items: center;
-    justify-content: space-between;
+    gap: 20px;
     position: relative;
 }
 
-/* Thông tin giao hàng - Giao hàng miễn phí & Hotline */
-.header-delivery-info {
+/* Khối nhóm trái bọc chung Logo và text giao hàng */
+.header-left-group {
     display: flex;
-    align-items: center;
-    gap: 8px;
-    flex: 1;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
 }
 
-.delivery-text {
-    font-weight: 700;
-    color: #111111;
-    font-size: 14px;
-}
-
-.delivery-icon {
-    color: #111111;
-    font-size: 14px;
-}
-
-.delivery-phone {
-    font-weight: 700;
-    color: #111111;
-    font-size: 14px;
-}
-
-.delivery-scooter {
-    margin-left: 10px;
-    color: #115bb6; /* Đổi sang tông xanh dương năng động của LaLaShop */
-    font-size: 20px;
-}
-
-/* Định vị Logo LaLaShop nằm chính giữa trung tâm */
+/* Gỡ bỏ position absolute cũ để định hình khối tự do */
 .header-logo-container {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
+    position: relative;
+    left: auto;
+    transform: none;
     flex: 0 0 auto;
 }
 
 .phuclong-logo {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
 }
 
 .header-logo-btn {
@@ -79,7 +58,7 @@
 }
 
 .header-logo-image {
-    height: 55px; /* Điều chỉnh lại độ cao logo cân đối, không bị quá to */
+    height: 48px;  /* Co nhẹ chiều cao giúp cân bằng thanh tìm kiếm ở giữa */
     width: auto;
     object-fit: contain;
     transition: transform 0.2s ease;
@@ -89,12 +68,41 @@
     transform: scale(1.05);
 }
 
-/* Các tương tác người dùng phía bên phải (Quản trị viên, Giỏ hàng) */
+/* Thông tin giao hàng đặt gọn dưới logo */
+.header-delivery-info {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.delivery-text {
+    font-weight: 700;
+    color: #111111;
+    font-size: 11px;
+}
+
+.delivery-icon {
+    color: #111111;
+    font-size: 11px;
+}
+
+.delivery-phone {
+    font-weight: 700;
+    color: #111111;
+    font-size: 11px;
+}
+
+.delivery-scooter {
+    margin-left: 4px;
+    color: #115bb6; 
+    font-size: 14px;
+}
+
+/* CỤM ĐƯỢC CHUYỂN LÊN GIỮA */
 .header-user-actions {
     display: flex;
     align-items: center;
     gap: 15px;
-    flex: 1;
     justify-content: flex-end;
     font-size: 14px;
     color: #333333;
@@ -104,6 +112,7 @@
     color: #333333;
     text-decoration: none;
     font-weight: 500;
+    white-space: nowrap;
 }
 
 .login-link:hover {
@@ -128,6 +137,7 @@ button.login-link {
     gap: 6px;
     cursor: pointer;
     color: #333333;
+    white-space: nowrap;
 }
 
 .header-user-menu-caret {
@@ -216,7 +226,7 @@ button.login-link {
     gap: 8px;
     padding: 6px 18px;
     border: 1.5px solid #115bb6;
-    border-radius: 20px; /* Bo tròn viền dạng hình viên thuốc giống thiết kế */
+    border-radius: 20px; 
     background-color: white;
     color: #115bb6;
     font-weight: 600;
@@ -254,20 +264,22 @@ button.login-link {
 
 
 /* ==========================================================================
-   PHẦN THANH TÌM KIẾM (SEARCH STRIP) - CHUẨN MÀU NỀN TRẮNG XANH NHẸ LALASHOP
+   PHẦN THANH TÌM KIẾM (SEARCH STRIP) - BIẾN THÀNH KHỐI TRUNG TÂM CỦA GRID
    ========================================================================== */
 .header-search-strip {
     position: relative;
     z-index: 1150;
-    background: #f1f6fc; /* Màu nền xanh dương nhạt cực mượt làm nền cho thanh tìm kiếm */
-    border-bottom: 1px solid #e2ebf5;
-    padding: 12px 20px;
+    background: transparent; /* Loại bỏ background xanh cũ để tiệp màu trắng thanh tao */
+    border-bottom: none;
+    padding: 0;
     height: auto;
+    width: 100%;
+    max-width: 520px; /* Khống chế bề rộng tìm kiếm vừa vặn trung tâm */
+    justify-self: center; /* Đẩy khối tìm kiếm đứng yên giữa cột 2 */
 }
 
 .header-search-strip__inner {
-    max-width: 650px;
-    margin: 0 auto;
+    width: 100%;
     position: relative;
 }
 
@@ -423,7 +435,6 @@ button.login-link {
     width: 100%;
 }
 
-/* Điểm nhấn giá tiền màu xanh thể thao đặc trưng */
 .header-search__price {
     font-size: 13px;
     font-weight: 600;
@@ -439,7 +450,7 @@ button.login-link {
 
 
 /* ==========================================================================
-   DANH MỤC MENU ĐIỀU HƯỚNG (NAVIGATION BAR) - CHỮ IN HOA, VIỀN XÁM NHẸ MẢNH
+   DANH MỤC MENU ĐIỀU HƯỚNG (NAVIGATION BAR) - GIỮ NGUYÊN KHÔNG ĐỔI
    ========================================================================== */
 .header-navigation {
     background-color: white;
@@ -454,29 +465,27 @@ button.login-link {
     justify-content: center;
     flex-wrap: wrap;
     gap: 0;
-    padding: 0 20px; /* Bỏ padding dọc bao ngoài, chuyển dồn vào nav-link để hover phủ kín chiều cao */
+    padding: 0 20px; 
 }
 
-/* Định dạng text in hoa, bold đậm chất thể thao đúng theo layout LaLaShop */
 .nav-link {
     color: #222222;
     text-decoration: none;
-    font-weight: 700; /* Đậm nét khỏe khoắn */
+    font-weight: 700; 
     font-size: 13px;
-    text-transform: uppercase; /* Bắt buộc viết hoa toàn bộ */
+    text-transform: uppercase; 
     letter-spacing: 0.3px;
     transition: all 0.2s ease;
     position: relative;
-    padding: 16px 18px; /* Tăng padding để menu rộng rãi, dễ click */
+    padding: 16px 18px; 
     display: inline-block;
 }
 
 .nav-link:hover {
     color: #115bb6;
-    background-color: #f8f9fa; /* Tạo hiệu ứng highlight nền khi hover */
+    background-color: #f8f9fa; 
 }
 
-/* Trạng thái danh mục đang được lựa chọn (Active) đổi hẳn màu nền xanh chữ trắng viên thuốc */
 .nav-link.active {
     background-color: #115bb6;
     color: white;
@@ -491,7 +500,6 @@ button.login-link {
     display: none;
 }
 
-/* Menu Dropdown đổ xuống */
 .nav-item-with-dropdown {
     position: relative;
 }
@@ -516,7 +524,7 @@ button.login-link {
     z-index: 1000;
     padding: 6px 0;
     margin-top: 0;
-    border-top: 2px solid #115bb6; /* Thanh màu xanh định vị thương hiệu ở mép trên dropdown */
+    border-top: 2px solid #115bb6; 
     animation: fadeIn 0.18s ease-out;
 }
 
@@ -538,7 +546,7 @@ button.login-link {
     text-decoration: none;
     font-size: 14px;
     font-weight: 500;
-    text-transform: none; /* Dropdown con giữ nguyên kiểu chữ thường thanh lịch */
+    text-transform: none; 
     transition: all 0.15s ease;
     letter-spacing: normal;
 }
@@ -546,38 +554,20 @@ button.login-link {
 .dropdown-item:hover {
     background-color: #f5f9ff;
     color: #115bb6;
-    padding-left: 24px; /* Dịch chuyển nhẹ khi hover tạo cảm giác mượt mà */
+    padding-left: 24px; 
 }
 
 .dropdown-item::after {
     display: none;
 }
 
-
 /* ==========================================================================
    PHẦN ĐÁP ỨNG GIAO DIỆN (RESPONSIVE SCREEN)
    ========================================================================== */
 @media (max-width: 1024px) {
-    .header-delivery-info {
-        font-size: 13px;
-    }
-
-    .delivery-scooter {
-        font-size: 18px;
-    }
-
-    .header-search-strip {
-        padding: 10px 16px;
-    }
-
-    .header-search__form,
-    .header-search-form {
-        padding: 3px 4px 3px 16px;
-    }
-
-    .header-search__submit,
-    .header-search-submit {
-        padding: 7px 20px;
+    .header-top-content {
+        grid-template-columns: 200px 1fr auto;
+        gap: 15px;
     }
 
     .nav-content {
@@ -592,26 +582,19 @@ button.login-link {
 
 @media (max-width: 768px) {
     .header-top-content {
+        display: flex;
         flex-direction: column;
         gap: 12px;
         padding-bottom: 5px;
     }
 
-    .header-logo-container {
-        position: relative;
-        left: auto;
-        transform: none;
-        order: -1; /* Đưa logo lên đầu tiên khi xem trên giao diện điện thoại */
+    .header-left-group {
+        align-items: center;
     }
 
     .header-user-actions {
         justify-content: center;
         width: 100%;
-    }
-
-    .header-search__input,
-    .header-search-input {
-        font-size: 15px;
     }
 
     .nav-content {
