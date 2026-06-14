@@ -71,6 +71,10 @@ const Login = () => {
         }
     };
 
+    // Sử dụng đường dẫn tương đối an toàn hơn hoặc kết hợp BASE_URL
+const jsonBase = import.meta.env.BASE_URL || '/';
+const response = await fetch(`${jsonBase}account.json`);
+    
     const openForgot = () => {
         setForgotMode(true);
         setFpError('');
