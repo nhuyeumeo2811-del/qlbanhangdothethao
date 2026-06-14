@@ -1,7 +1,13 @@
+/* ==========================================================================
+   PHẦN ĐỈNH HEADER (TOP BAR) - ĐỒNG BỘ THEO LALASHOP
+   ========================================================================== */
 .phuclong-header {
     background-color: white;
     width: 100%;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    /* Dùng flex-direction column để quản lý thứ tự các thanh lớn bằng thuộc tính order */
+    display: flex;
+    flex-direction: column;
 }
 
 .header-top-bar {
@@ -10,31 +16,30 @@
     background-color: white;
     padding: 10px 20px; 
     border-bottom: 1px solid #e9ecef;
+    /* Giữ vị trí thanh top ở trên cùng */
+    order: 1;
 }
 
-/* Chuyển sang hàng ngang xếp tự nhiên theo thứ tự trong file JSX */
 .header-top-content {
     max-width: 1300px;
     margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 15px;
     position: relative;
 }
 
-/* Loại bỏ thuộc tính absolute cũ để logo tự đứng bên trái */
+/* Loại bỏ thuộc tính absolute của logo cũ để logo tự động đứng bên trái */
 .header-logo-container {
     position: relative;
     left: auto;
     transform: none;
-    flex: 0 0 auto;
+    margin-right: 20px;
 }
 
 .phuclong-logo {
     display: flex;
     align-items: center;
-    justify-content: center;
 }
 
 .header-logo-btn {
@@ -57,11 +62,12 @@
     transform: scale(1.05);
 }
 
+/* Thông tin giao hàng */
 .header-delivery-info {
     display: flex;
     align-items: center;
     gap: 8px;
-    flex: 0 0 auto;
+    flex: 1;
 }
 
 .delivery-text {
@@ -91,10 +97,6 @@
     display: flex;
     align-items: center;
     gap: 15px;
-    flex: 0 0 auto;
-    justify-content: flex-end;
-    font-size: 14px;
-    color: #333333;
 }
 
 .login-link {
@@ -249,22 +251,21 @@ button.login-link {
 
 
 /* ==========================================================================
-   PHẦN THANH TÌM KIẾM (SEARCH STRIP) - BIẾN THÀNH KHỐI NẰM GIỮA
+   PHẦN THANH TÌM KIẾM (SEARCH STRIP) - THAY ĐỔI THỨ TỰ BẰNG ORDER
    ========================================================================== */
 .header-search-strip {
     position: relative;
     z-index: 1150;
-    background: transparent; /* Gỡ nền xanh để ăn khớp vào thanh top bar trắng */
-    border-bottom: none;
-    padding: 0;
-    height: auto;
-    flex: 1; /* Cho phép co giãn tự do để chiếm không gian ở giữa */
-    max-width: 500px; /* Định giới hạn chiều rộng tối đa */
-    margin: 0 15px;
+    background-color: #115bb6; 
+    padding: 12px 20px; 
+    border-bottom: 1px solid #0d468b;
+    /* Dùng order: 2 để thanh tìm kiếm nhảy xuống nằm ở giữa top-bar và navigation */
+    order: 2;
 }
 
 .header-search-strip__inner {
-    width: 100%;
+    max-width: 1300px;
+    margin: 0 auto;
     position: relative;
 }
 
@@ -273,19 +274,11 @@ button.login-link {
     display: flex;
     align-items: center;
     gap: 12px;
-    border: 1px solid #cbdcf2;
+    border: 1px solid #ffffff;
     border-radius: 30px;
     background: #ffffff;
     padding: 3px 4px 3px 20px;
-    box-shadow: 0 2px 10px rgba(17, 91, 182, 0.04);
-    transition: all 0.3s ease;
-}
-
-.header-search__form:focus-within,
-.header-search-form:focus-within {
-    border-color: #115bb6;
-    box-shadow: 0 0 0 3px rgba(17, 91, 182, 0.1), 
-                0 4px 20px rgba(17, 91, 182, 0.06);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
 .header-search__icon,
@@ -293,13 +286,11 @@ button.login-link {
     color: #115bb6;
     font-size: 16px;
     opacity: 0.8;
-    flex-shrink: 0;
 }
 
 .header-search__input,
 .header-search-input {
     flex: 1;
-    min-width: 0;
     border: none;
     background: transparent;
     padding: 8px 0;
@@ -315,7 +306,6 @@ button.login-link {
 
 .header-search__submit,
 .header-search-submit {
-    flex-shrink: 0;
     border: none;
     border-radius: 25px;
     padding: 8px 26px;
@@ -324,18 +314,12 @@ button.login-link {
     cursor: pointer;
     background: #115bb6;
     color: #ffffff;
-    transition: all 0.2s ease;
+    transition: background 0.2s;
 }
 
 .header-search__submit:hover,
 .header-search-submit:hover {
     background: #0d468b;
-    box-shadow: 0 2px 8px rgba(17, 91, 182, 0.2);
-}
-
-.header-search__submit:active,
-.header-search-submit:active {
-    transform: scale(0.97);
 }
 
 .header-search__dropdown {
@@ -347,10 +331,10 @@ button.login-link {
     padding: 8px 0;
     list-style: none;
     background: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
     border: 1px solid #e1eaf5;
-    max-height: 350px;
+    max-height: 300px;
     overflow-y: auto;
     z-index: 1200;
 }
@@ -366,30 +350,26 @@ button.login-link {
 .header-search__option {
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 12px;
     width: 100%;
-    padding: 10px 16px;
+    padding: 8px 16px;
     border: none;
     background: none;
     text-align: left;
     cursor: pointer;
-    transition: background 0.2s ease;
+    transition: background 0.2s;
 }
 
-.header-search__option:hover,
-.header-search__option:focus-visible {
+.header-search__option:hover {
     background: #f4f8fc;
-    outline: none;
 }
 
 .header-search__thumb-wrap {
-    flex-shrink: 0;
-    width: 46px;
-    height: 46px;
-    border-radius: 6px;
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
     overflow: hidden;
     background: #f5f5f5;
-    border: 1px solid #eeeeee;
 }
 
 .header-search__thumb {
@@ -401,32 +381,25 @@ button.login-link {
 .header-search__meta {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    gap: 2px;
-    min-width: 0;
 }
 
 .header-search__name {
     font-size: 14px;
     font-weight: 500;
-    color: #222222;
-    line-height: 1.4;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    width: 100%;
+    color: #333333;
 }
 
 .header-search__price {
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 600;
     color: #115bb6;
+    margin-top: 2px;
 }
 
 .header-search__empty {
-    padding: 24px 16px;
+    padding: 16px;
     font-size: 14px;
-    color: #7a828a;
+    color: #666666;
     text-align: center;
 }
 
@@ -437,6 +410,8 @@ button.login-link {
 .header-navigation {
     background-color: white;
     border-bottom: 1px solid #eaeaea;
+    /* Đưa thanh điều hướng xuống dưới cùng */
+    order: 3;
 }
 
 .nav-content {
@@ -543,6 +518,10 @@ button.login-link {
     display: none;
 }
 
+
+/* ==========================================================================
+   PHẦN ĐÁP ỨNG GIAO DIỆN (RESPONSIVE SCREEN)
+   ========================================================================== */
 @media (max-width: 1024px) {
     .header-delivery-info {
         font-size: 13px;
@@ -553,8 +532,7 @@ button.login-link {
     }
 
     .header-search-strip {
-        padding: 0;
-        margin: 0 10px;
+        padding: 10px 16px;
     }
 
     .header-search__form,
@@ -588,16 +566,12 @@ button.login-link {
         position: relative;
         left: auto;
         transform: none;
+        margin-right: 0;
     }
 
     .header-user-actions {
         justify-content: center;
         width: 100%;
-    }
-
-    .header-search-strip {
-        max-width: 100%;
-        margin: 5px 0;
     }
 
     .nav-content {
