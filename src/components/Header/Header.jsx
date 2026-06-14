@@ -285,97 +285,24 @@ const Header = () => {
                     </div>
 
                     <div className="header-user-actions">
-                        {currentUser ? (
-                            <div className="header-user-menu" ref={userMenuRef}>
-                                <button
-                                    type="button"
-                                    className="login-link header-user-menu-trigger"
-                                    aria-expanded={userMenuOpen}
-                                    aria-haspopup="true"
-                                    onClick={() => setUserMenuOpen((o) => !o)}
-                                >
-                                    {userLabel}
-                                    <i
-                                        className={`fas fa-chevron-down header-user-menu-caret ${
-                                            userMenuOpen ? 'is-open' : ''
-                                        }`}
-                                        aria-hidden="true"
-                                    />
-                                </button>
-
-                                {userMenuOpen && (
-                                    <div className="header-user-dropdown" role="menu">
-                                        <button
-                                            type="button"
-                                            className="header-user-dropdown-item"
-                                            role="menuitem"
-                                            onClick={() => {
-                                                setUserMenuOpen(false);
-                                                navigate('/profile');
-                                            }}
-                                        >
-                                            {t.profile}
-                                        </button>
-
-                                        {currentUser.role === 'staff' && (
-                                            <button
-                                                type="button"
-                                                className="header-user-dropdown-item"
-                                                role="menuitem"
-                                                onClick={() => {
-                                                    setUserMenuOpen(false);
-                                                    navigate('/admin');
-                                                }}
-                                            >
-                                                {t.admin}
-                                            </button>
-                                        )}
-
-                                        <button
-                                            type="button"
-                                            className="header-user-dropdown-item header-user-dropdown-item--logout"
-                                            role="menuitem"
-                                            onClick={handleLogout}
-                                        >
-                                            {t.logout}
-                                        </button>
-                                    </div>
-                                )}
-                            </div>
-                        ) : (
-                            <button
-                                type="button"
-                                className="login-link"
-                                onClick={() => navigate('/login')}
-                            >
-                                {t.login}
-                            </button>
-                        )}
-
+                        <button
+                            className="login-link"
+                            onClick={() => navigate('/login')}
+                        >
+                            {currentUser ? (currentUser.name || currentUser.user) : 'Đăng nhập'}
+                        </button>
                         <span className="action-separator">|</span>
-
                         <div className="language-selector">
-                            <span 
-                                className={`lang-option ${lang === 'VN' ? 'lang-active' : ''}`}
-                                onClick={() => setLang('VN')}
-                            >
-                                VN
-                            </span>
+                            <span className="lang-active">VN</span>
                             <span className="lang-separator">|</span>
-                            <span 
-                                className={`lang-option ${lang === 'EN' ? 'lang-active' : ''}`}
-                                onClick={() => setLang('EN')}
-                            >
-                                EN
-                            </span>
+                            <span className="lang-option">EN</span>
                         </div>
-
                         <button
                             className="cart-button"
                             onClick={() => navigate('/cart')}
                         >
                             <i className="fas fa-shopping-cart"></i>
-                            <span>{t.cart}</span>
+                            <span>Giỏ hàng</span>
                             <span className="cart-badge">{cartCount}</span>
                         </button>
                     </div>
