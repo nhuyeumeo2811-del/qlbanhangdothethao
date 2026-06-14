@@ -61,7 +61,7 @@ const Login = () => {
             window.dispatchEvent(new Event('userUpdated'));
 
             if (matchedAccount.role === 'staff') {
-                navigate('/');
+                navigate('/admin');
             } else {
                 navigate('/admin');
             }
