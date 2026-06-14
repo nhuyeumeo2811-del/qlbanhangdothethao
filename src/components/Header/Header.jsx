@@ -73,7 +73,6 @@ const Header = () => {
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [showDropdown, setShowDropdown] = useState(false);
     
-    // Auth state giả định hoặc kết nối từ LocalStorage nếu có
     const [isLoggedIn, setIsLoggedIn] = useState(() => {
         return localStorage.getItem('isLoggedIn') === 'true';
     });
@@ -91,7 +90,6 @@ const Header = () => {
 
     const t = translations[lang];
 
-    // Đọc số lượng giỏ hàng
     useEffect(() => {
         const updateCartCount = () => {
             const cart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -109,7 +107,6 @@ const Header = () => {
         };
     }, []);
 
-    // Fetch danh sách sản phẩm để tìm kiếm nâng cao
     useEffect(() => {
         fetch(`${jsonBase}products.json`)
             .then((res) => {
@@ -153,7 +150,6 @@ const Header = () => {
         setFilteredProducts(matches.slice(0, 6)); // Giới hạn 6 gợi ý nhanh
     }, [searchQuery, allProducts]);
 
-    // Đóng dropdown khi click ra ngoài
     useEffect(() => {
         const handleClickOutside = (e) => {
             if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
@@ -196,11 +192,9 @@ const Header = () => {
 
     return (
         <header className="phuclong-header">
-            {/* THANH TOP BAR BAO GỒM CẢ LOGO, SEARCH VÀ CHỨC NĂNG */}
             <div className="header-top-bar">
                 <div className="header-top-content">
                     
-                    {/* CỤM TRÁI: LOGO VÀ THÔNG TIN GIAO HÀNG */}
                     <div className="header-left-group">
                         <div className="header-logo-container">
                             <div className="phuclong-logo">
@@ -210,14 +204,11 @@ const Header = () => {
                             </div>
                         </div>
                         <div className="header-delivery-info">
-                            <i className="fas fa-shipping-fast delivery-icon"></i>
-                            <span className="delivery-text">{t.delivery}:</span>
+                            <i className="fas fa-phone delivery-icon"></i>
                             <span className="delivery-phone">0294.3855.225</span>
-                            <i className="fas fa-motorcycle delivery-scooter"></i>
                         </div>
                     </div>
 
-                    {/* CỤM GIỮA: THANH TÌM KIẾM ĐƯỢC CHUYỂN LÊN ĐÂY */}
                     <div className="header-search-strip" ref={dropdownRef}>
                         <div className="header-search-strip__inner">
                             <form className="header-search__form" onSubmit={handleSearchSubmit}>
@@ -238,7 +229,6 @@ const Header = () => {
                                 </button>
                             </form>
 
-                            {/* DROPDOWN GỢI Ý KẾT QUẢ TÌM KIẾM */}
                             {showDropdown && searchQuery.trim() && (
                                 <ul className="header-search__dropdown">
                                     {filteredProducts.length > 0 ? (
@@ -276,7 +266,6 @@ const Header = () => {
                         </div>
                     </div>
 
-                    {/* CỤM PHẢI: USER ACTIONS & GIỎ HÀNG */}
                     <div className="header-user-actions">
                         {isLoggedIn ? (
                             <div className="header-user-menu" ref={userMenuRef}>
@@ -322,7 +311,6 @@ const Header = () => {
 
                         <span className="action-separator">|</span>
 
-                        {/* Đổi ngôn ngữ */}
                         <div className="language-selector" onClick={toggleLang}>
                             <span className={lang === 'VN' ? 'lang-active' : 'lang-option'}>VN</span>
                             <span className="lang-separator">|</span>
@@ -331,7 +319,6 @@ const Header = () => {
 
                         <span className="action-separator">|</span>
 
-                        {/* Nút Giỏ Hàng */}
                         <button className="cart-button" onClick={() => navigate('/cart')}>
                             <i className="fas fa-shopping-cart"></i>
                             <span>{t.cart}</span>
@@ -342,7 +329,6 @@ const Header = () => {
                 </div>
             </div>
 
-            {/* DANH MỤC MENU ĐIỀU HƯỚNG CHÍNH */}
             <nav className="header-navigation">
                 <div className="nav-content">
                     <a href="/" className="nav-link">
