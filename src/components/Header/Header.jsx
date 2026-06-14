@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Header.css';
-
 import logoImg from '../../img/logo.png';
 import { imageMap } from '../../utils/productImages';
-import { normalizeSearchText, rankProductsBySearch } from '../../utils/productSearch';
+import { normalizeSearchText, rankProductsBySearch,} from '../../utils/productSearch';
 
 const jsonBase = import.meta.env.BASE_URL || '/';
 
@@ -85,14 +84,22 @@ const Header = () => {
 
     const t = translations[lang];
 
-    // Search matches
     const searchMatches = useMemo(() => {
-        return rankProductsBySearch(products, searchQuery, 10);
+        const cleanQuery = customNormalizeText(searchQuery);
+        
+        if (!cleanQuery) return [];
+
+        return products
+            .filter((product) => {
+                if (!product || !product.name) return false;
+                
+                const cleanProductName = customNormalizeText(product.name);
+                
+                return cleanProductName.includes(cleanQuery);
+            })
+            .slice(0, 10); 
     }, [products, searchQuery]);
 
-    // =========================
-    // CART + USER
-    // =========================
     useEffect(() => {
         const updateCartCount = () => {
             const savedCart = localStorage.getItem('cart');
@@ -104,12 +111,10 @@ const Header = () => {
 
             try {
                 const cart = JSON.parse(savedCart);
-
                 const totalItems = cart.reduce(
                     (sum, item) => sum + (item.quantity || 0),
                     0
                 );
-
                 setCartCount(totalItems);
             } catch (error) {
                 console.error('Lỗi đọc giỏ hàng:', error);
@@ -153,20 +158,15 @@ const Header = () => {
         };
     }, []);
 
-    // =========================
-    // LOAD PRODUCTS
-    // =========================
     useEffect(() => {
         let cancelled = false;
 
         const loadProducts = async () => {
             try {
                 const res = await fetch(`${jsonBase}products.json`);
-
                 if (!res.ok) return;
 
                 const data = await res.json();
-
                 if (cancelled) return;
 
                 const mapped = data.map((item) => ({
@@ -187,9 +187,6 @@ const Header = () => {
         };
     }, []);
 
-    // =========================
-    // CLOSE SEARCH WHEN CLICK OUTSIDE
-    // =========================
     useEffect(() => {
         if (!searchFocused) return;
 
@@ -209,9 +206,6 @@ const Header = () => {
         };
     }, [searchFocused]);
 
-    // =========================
-    // CLOSE USER MENU
-    // =========================
     useEffect(() => {
         if (!userMenuOpen) return;
 
@@ -237,23 +231,16 @@ const Header = () => {
         }
     }, [currentUser]);
 
-    // =========================
-    // HANDLERS
-    // =========================
     const handleLogout = () => {
         localStorage.removeItem('currentUser');
-
         setUserMenuOpen(false);
-
         window.dispatchEvent(new Event('userUpdated'));
-
         navigate('/');
     };
 
     const goToProduct = (product) => {
         setSearchQuery('');
         setSearchFocused(false);
-
         navigate(`/product/${product.id}`, {
             state: { product },
         });
@@ -261,15 +248,10 @@ const Header = () => {
 
     const handleSearchSubmit = (e) => {
         e.preventDefault();
-
-        const q = normalizeSearchText(searchQuery);
-
+        const q = customNormalizeText(searchQuery);
         if (!q) return;
 
-        navigate(
-            `/products?q=${encodeURIComponent(searchQuery.trim())}`
-        );
-
+        navigate(`/products?q=${encodeURIComponent(searchQuery.trim())}`);
         setSearchFocused(false);
     };
 
@@ -279,29 +261,9 @@ const Header = () => {
 
     return (
         <header className="phuclong-header">
-            {/* ========================= */}
-            {/* TOP HEADER */}
-            {/* ========================= */}
             <div className="header-top-bar">
                 <div className="header-top-content">
-                    {/* LEFT */}
-                    <div className="header-delivery-info">
-                        <span className="delivery-text">
-                            {t.delivery}
-                        </span>
 
-                        <i className="fas fa-phone delivery-icon"></i>
-
-                        <span className="delivery-phone">
-                            1800 6779
-                        </span>
-
-                        <div className="delivery-scooter">
-                            <i className="fas fa-motorcycle"></i>
-                        </div>
-                    </div>
-
-                    {/* CENTER LOGO */}
                     <div className="header-logo-container">
                         <div className="phuclong-logo">
                             <button
@@ -319,130 +281,7 @@ const Header = () => {
                         </div>
                     </div>
 
-                    {/* RIGHT ACTIONS */}
-                    <div className="header-user-actions">
-                        {currentUser ? (
-                            <div
-                                className="header-user-menu"
-                                ref={userMenuRef}
-                            >
-                                <button
-                                    type="button"
-                                    className="login-link header-user-menu-trigger"
-                                    aria-expanded={userMenuOpen}
-                                    aria-haspopup="true"
-                                    onClick={() =>
-                                        setUserMenuOpen((o) => !o)
-                                    }
-                                >
-                                    {userLabel}
-
-                                    <i
-                                        className={`fas fa-chevron-down header-user-menu-caret ${userMenuOpen ? 'is-open' : ''
-                                            }`}
-                                        aria-hidden="true"
-                                    />
-                                </button>
-
-                                {userMenuOpen && (
-                                    <div
-                                        className="header-user-dropdown"
-                                        role="menu"
-                                    >
-                                        <button
-                                            type="button"
-                                            className="header-user-dropdown-item"
-                                            role="menuitem"
-                                            onClick={() => {
-                                                setUserMenuOpen(false);
-                                                navigate('/profile');
-                                            }}
-                                        >
-                                            {t.profile}
-                                        </button>
-
-                                        {currentUser.role === 'staff' && (
-                                            <button
-                                                type="button"
-                                                className="header-user-dropdown-item"
-                                                role="menuitem"
-                                                onClick={() => {
-                                                    setUserMenuOpen(false);
-                                                    navigate('/admin');
-                                                }}
-                                            >
-                                                {t.admin}
-                                            </button>
-                                        )}
-
-                                        <button
-                                            type="button"
-                                            className="header-user-dropdown-item header-user-dropdown-item--logout"
-                                            role="menuitem"
-                                            onClick={handleLogout}
-                                        >
-                                            {t.logout}
-                                        </button>
-                                    </div>
-                                )}
-                            </div>
-                        ) : (
-                            <button
-                                type="button"
-                                className="login-link"
-                                onClick={() => navigate('/login')}
-                            >
-                                {t.login}
-                            </button>
-                        )}
-
-                        <span className="action-separator">|</span>
-
-                        <div className="language-selector">
-                            <span 
-                                className={`lang-option ${lang === 'VN' ? 'lang-active' : ''}`}
-                                onClick={() => setLang('VN')}
-                            >
-                                VN
-                            </span>
-
-                            <span className="lang-separator">|</span>
-
-                            <span 
-                                className={`lang-option ${lang === 'EN' ? 'lang-active' : ''}`}
-                                onClick={() => setLang('EN')}
-                            >
-                                EN
-                            </span>
-                        </div>
-
-                        <button
-                            className="cart-button"
-                            onClick={() => navigate('/cart')}
-                        >
-                            <i className="fas fa-shopping-cart"></i>
-
-                            <span>{t.cart}</span>
-
-                            <span className="cart-badge">
-                                {cartCount}
-                            </span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            {/* ========================= */}
-            {/* SEARCH */}
-            {/* ========================= */}
-            <div
-                className="header-search-strip"
-                aria-label="Tìm kiếm"
-            >
-                <div
-                    className="header-search-strip__inner"
-                    ref={searchBoxRef}
-                >
+                    <div className="header-search-strip__inner" ref={searchBoxRef}>
                     <form
                         className="header-search-form"
                         onSubmit={handleSearchSubmit}
@@ -458,9 +297,7 @@ const Header = () => {
                             className="header-search-input"
                             placeholder={t.searchPlaceholder}
                             value={searchQuery}
-                            onChange={(e) =>
-                                setSearchQuery(e.target.value)
-                            }
+                            onChange={(e) => setSearchQuery(e.target.value)}
                             onFocus={() => setSearchFocused(true)}
                             aria-label="Tìm kiếm sản phẩm"
                             aria-autocomplete="list"
@@ -468,72 +305,102 @@ const Header = () => {
                             autoComplete="off"
                         />
 
-                        <button
-                            type="submit"
-                            className="header-search-submit"
-                        >
+                        <button type="submit" className="header-search-submit">
                             {t.searchBtn}
                         </button>
                     </form>
 
-                    {searchFocused &&
-                        searchQuery.trim().length > 0 && (
-                            <ul
-                                id="header-search-suggestions"
-                                className="header-search-dropdown"
-                                role="listbox"
-                                aria-label="Gợi ý sản phẩm"
-                            >
-                                {searchMatches.length === 0 ? (
-                                    <li
-                                        className="header-search-empty"
-                                        role="status"
-                                    >
-                                        <i className="fas fa-search-minus" style={{ marginRight: '8px', opacity: 0.6 }}></i>
-                                        {t.noProduct}
-                                    </li>
-                                ) : (
-                                    searchMatches.map((p) => (
-                                        <li key={p.id} role="presentation">
-                                            <button
-                                                type="button"
-                                                className="header-search__option"
-                                                role="option"
-                                                onClick={() => goToProduct(p)}
-                                            >
-                                                <span className="header-search__thumb-wrap">
-                                                    <img
-                                                        src={p.image || 'https://via.placeholder.com/88'}
-                                                        alt={p.name}
-                                                        className="header-search__thumb"
-                                                        loading="lazy"
-                                                    />
-                                                </span>
+                    {searchFocused && searchQuery.trim().length > 0 && (
+                        <ul
+                            id="header-search-suggestions"
+                            className="header-search__dropdown"
+                            role="listbox"
+                            aria-label="Gợi ý sản phẩm"
+                        >
+                            {searchMatches.length === 0 ? (
+                                <li className="header-search__empty" role="status">
+                                    <i className="fas fa-search-minus" style={{ marginRight: '8px', opacity: 0.6 }}></i>
+                                    {t.noProduct}
+                                </li>
+                            ) : (
+                                searchMatches.map((p) => (
+                                    <li key={p.id} role="presentation">
+                                        <button
+                                            type="button"
+                                            className="header-search__option"
+                                            role="option"
+                                            onClick={() => goToProduct(p)}
+                                        >
+                                            <span className="header-search__thumb-wrap">
+                                                <img
+                                                    src={p.image || 'https://via.placeholder.com/88'}
+                                                    alt={p.name}
+                                                    className="header-search__thumb"
+                                                    loading="lazy"
+                                                />
+                                            </span>
 
-                                                <span className="header-search__meta">
-                                                    <span className="header-search__name" title={p.name}>
-                                                        {p.name}
+                                            <span className="header-search__meta">
+                                                <span className="header-search__name" title={p.name}>
+                                                    {p.name}
+                                                </span>
+                                                {p.currentPrice && (
+                                                    <span className="header-search__price">
+                                                        {p.currentPrice}
                                                     </span>
-                                                    {p.currentPrice && (
-                                                        <span className="header-search__price">
-                                                            {p.currentPrice}
-                                                        </span>
-                                                    )}
-                                                </span>
+                                                )}
+                                            </span>
 
-                                                <i className="fas fa-chevron-right header-search__arrow" style={{ marginLeft: 'auto', fontSize: '11px', opacity: 0.3 }}></i>
-                                            </button>
-                                        </li>
-                                    ))
-                                )}
-                            </ul>
-                        )}
+                                            <i className="fas fa-chevron-right header-search__arrow" style={{ marginLeft: 'auto', fontSize: '11px', opacity: 0.3 }}></i>
+                                        </button>
+                                    </li>
+                                ))
+                            )}
+                        </ul>
+                    )}
+                </div>
+
+                    <div className="header-user-actions">
+                        <div className="header-delivery-info">
+                            <i className="fas fa-phone delivery-icon"></i>
+                            <span className="delivery-phone">1800 6779</span>
+                        </div>
+                        <button
+                            className="login-link"
+                            onClick={() => navigate('/login')}
+                        >
+                            {currentUser ? (currentUser.name || currentUser.user) : 'Đăng nhập'}
+                        </button>
+                        <span className="action-separator">|</span>
+
+                        <div className="language-selector">
+                            <span 
+                                className={`lang-option ${lang === 'VN' ? 'lang-active' : ''}`}
+                                onClick={() => setLang('VN')}
+                            >
+                                VN
+                            </span>
+                            <span className="lang-separator">|</span>
+                            <span 
+                                className={`lang-option ${lang === 'EN' ? 'lang-active' : ''}`}
+                                onClick={() => setLang('EN')}
+                            >
+                                EN
+                            </span>
+                        </div>
+
+                        <button
+                            className="cart-button"
+                            onClick={() => navigate('/cart')}
+                        >
+                            <i className="fas fa-shopping-cart"></i>
+                            <span>Giỏ hàng</span>
+                            <span className="cart-badge">{cartCount}</span>
+                        </button>
+                    </div>
                 </div>
             </div>
 
-            {/* ========================= */}
-            {/* NAVIGATION */}
-            {/* ========================= */}
             <nav className="header-navigation" aria-label="Điều hướng chính">
                 <div className="nav-content">
                     <a href="/" className="nav-link">
