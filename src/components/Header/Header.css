@@ -30,24 +30,24 @@
 
 .delivery-text {
     font-weight: bold;
-    color: #c8102e;
+    color: #312829;
     font-size: 14px;
 }
 
 .delivery-icon {
-    color: #c8102e;
+    color: #312829;
     font-size: 14px;
 }
 
 .delivery-phone {
     font-weight: bold;
-    color: #c8102e;
+    color: #312829;
     font-size: 14px;
 }
 
 .delivery-scooter {
     margin-left: 10px;
-    color: #28a745;
+    color: #1a5ca7;
     font-size: 20px;
 }
 
@@ -100,7 +100,7 @@
 }
 
 .login-link:hover {
-    color: #1a472a;
+    color: #1a5ca7;
 }
 
 button.login-link {
@@ -159,16 +159,16 @@ button.login-link {
 
 .header-user-dropdown__item:hover {
     background: #f5f5f5;
-    color: #1a472a;
+    color: #1a5ca7;
 }
 
 .header-user-dropdown__item--logout {
-    color: #c8102e;
+    color: #0066cc;
 }
 
 .header-user-dropdown__item--logout:hover {
-    background: #fff5f5;
-    color: #a00d26;
+    background: #f0f6fc;
+    color: #0052a3;
 }
 
 .action-separator {
@@ -197,7 +197,7 @@ button.login-link {
 }
 
 .lang-option:hover {
-    color: #1a472a;
+    color: #1a5ca7;
 }
 
 .cart-button {
@@ -205,10 +205,10 @@ button.login-link {
     align-items: center;
     gap: 8px;
     padding: 8px 16px;
-    border: 2px solid #1a472a;
+    border: 2px solid #1a5ca7;
     border-radius: 8px;
     background-color: white;
-    color: #1a472a;
+    color: #1a5ca7;
     font-weight: 500;
     cursor: pointer;
     position: relative;
@@ -217,7 +217,7 @@ button.login-link {
 }
 
 .cart-button:hover {
-    background-color: #1a472a;
+    background-color: #1a5ca7;
     color: white;
 }
 
@@ -231,7 +231,7 @@ button.login-link {
     right: -8px;
     width: 20px;
     height: 20px;
-    background-color: #28a745;
+    background-color: #0066cc;
     color: white;
     border-radius: 50%;
     display: flex;
@@ -244,7 +244,7 @@ button.login-link {
 .header-search-strip {
     position: relative;
     z-index: 1150;
-    background: linear-gradient(180deg, #fafcfa 0%, #f0f4f1 100%);
+    background: linear-gradient(180deg, #f5f9fc 0%, #e6effa 100%);
     border: none;
     padding: 14px 20px 16px;
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
@@ -262,23 +262,23 @@ button.login-link {
     display: flex;
     align-items: center;
     gap: 12px;
-    border: 1px solid #c5d4c8;
+    border: 1px solid #cbdcf2;
     border-radius: 999px;
     background: #fff;
     padding: 4px 6px 4px 18px;
-    box-shadow: 0 2px 12px rgba(26, 71, 42, 0.08);
+    box-shadow: 0 2px 12px rgba(26, 92, 167, 0.08);
     transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .header-search__form:focus-within {
-    border-color: #1a472a;
+    border-color: #1a5ca7;
     box-shadow:
-        0 0 0 3px rgba(26, 71, 42, 0.15),
-        0 4px 16px rgba(26, 71, 42, 0.1);
+        0 0 0 3px rgba(26, 92, 167, 0.15),
+        0 4px 16px rgba(26, 92, 167, 0.1);
 }
 
 .header-search__icon {
-    color: #1a472a;
+    color: #1a5ca7;
     font-size: 15px;
     opacity: 0.85;
     flex-shrink: 0;
@@ -296,7 +296,7 @@ button.login-link {
 }
 
 .header-search__input::placeholder {
-    color: #8a9a8e;
+    color: #9cb1cc;
 }
 
 .header-search__submit {
@@ -307,7 +307,7 @@ button.login-link {
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
-    background: linear-gradient(180deg, #1f5c36 0%, #1a472a 100%);
+    background: linear-gradient(180deg, #226fca 0%, #1a5ca7 100%);
     color: #fff;
     transition: filter 0.2s, transform 0.15s;
 }
@@ -331,7 +331,7 @@ button.login-link {
     background: #fff;
     border-radius: 14px;
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
-    border: 1px solid #e8ece9;
+    border: 1px solid #e1eaf5;
     max-height: min(380px, 65vh);
     overflow-y: auto;
 }
@@ -351,7 +351,7 @@ button.login-link {
 
 .header-search__option:hover,
 .header-search__option:focus-visible {
-    background: #f4f8f5;
+    background: #f4f8fc;
     outline: none;
 }
 
@@ -389,13 +389,13 @@ button.login-link {
 .header-search__price {
     font-size: 13px;
     font-weight: 600;
-    color: #1a472a;
+    color: #1a5ca7;
 }
 
 .header-search__empty {
     padding: 20px 18px;
     font-size: 14px;
-    color: #6b7570;
+    color: #6b7275;
     line-height: 1.45;
     text-align: center;
 }
@@ -430,11 +430,11 @@ button.login-link {
 }
 
 .nav-link:hover {
-    color: #1a472a;
+    color: #1a5ca7;
 }
 
 .nav-link.active {
-    background-color: #1a472a;
+    background-color: #1a5ca7;
     color: white;
 }
 
@@ -451,7 +451,7 @@ button.login-link {
 }
 
 .nav-item-with-dropdown:hover .nav-link {
-    background-color: #1a472a;
+    background-color: #1a5ca7;
     color: white;
     border-radius: 4px 4px 0 0;
 }
@@ -500,7 +500,7 @@ button.login-link {
 
 .dropdown-item:hover {
     background-color: #f5f5f5;
-    color: #1a472a;
+    color: #1a5ca7;
 }
 
 .dropdown-item::after {
@@ -566,4 +566,188 @@ button.login-link {
     .nav-link {
         font-size: 11px;
     }
+}
+
+/* ==========================================================================
+   PHẦN TÌM KIẾM (SEARCH BAR) - ĐÃ CẬP NHẬT
+   ========================================================================== */
+.header-search-strip {
+    position: relative;
+    z-index: 1150;
+    background: linear-gradient(180deg, #f5f9fc 0%, #e6effa 100%);
+    border-bottom: 1px solid #d2e0f2;
+    padding: 10px 20px; /* Thu nhỏ padding cho thanh tìm kiếm thanh thoát hơn */
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.header-search-strip__inner {
+    max-width: 600px; /* Thu hẹp lại một chút nhìn sẽ sang hơn */
+    margin: 0 auto;
+    position: relative;
+}
+
+/* Sửa lại để tương thích với cả class gạch nối lẫn gạch dưới */
+.header-search__form,
+.header-search-form {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border: 1px solid #cbdcf2;
+    border-radius: 30px; /* Bo tròn đều hiện đại */
+    background: #fff;
+    padding: 4px 6px 4px 18px;
+    box-shadow: 0 2px 10px rgba(26, 92, 167, 0.05);
+    transition: all 0.3s ease;
+}
+
+.header-search__form:focus-within,
+.header-search-form:focus-within {
+    border-color: #1a5ca7;
+    box-shadow: 0 0 0 3px rgba(26, 92, 167, 0.12), 
+                0 4px 20px rgba(26, 92, 167, 0.08);
+}
+
+/* Sửa lỗi class icon */
+.header-search__icon,
+.header-search-icon {
+    color: #1a5ca7;
+    font-size: 15px;
+    opacity: 0.7;
+    flex-shrink: 0;
+}
+
+.header-search__input,
+.header-search-input {
+    flex: 1;
+    min-width: 0;
+    border: none;
+    background: transparent;
+    padding: 8px 0; /* Giảm nhẹ padding cho cân đối */
+    font-size: 14px;
+    color: #333;
+    outline: none;
+}
+
+.header-search__input::placeholder,
+.header-search-input::placeholder {
+     color: #cedcf0;
+}
+
+.header-search__submit,
+.header-search-submit {
+    flex-shrink: 0;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 24px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    background: linear-gradient(180deg, #226fca 0%, #1a5ca7 100%);
+    color: #fff;
+    transition: all 0.2s ease;
+}
+
+.header-search__submit:hover,
+.header-search-submit:hover {
+    filter: brightness(1.1);
+    box-shadow: 0 2px 8px rgba(26, 92, 167, 0.2);
+}
+
+.header-search__submit:active,
+.header-search-submit:active {
+    transform: scale(0.96);
+}
+
+/* DROPDOWN GỢI Ý KẾT QUẢ */
+.header-search__dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    margin: 0;
+    padding: 8px 0;
+    list-style: none;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e1eaf5;
+    max-height: 350px;
+    overflow-y: auto;
+    z-index: 1200;
+}
+
+/* Tùy chỉnh thanh cuộn cho dropdown mượt mà hơn */
+.header-search__dropdown::-webkit-scrollbar {
+    width: 6px;
+}
+.header-search__dropdown::-webkit-scrollbar-thumb {
+    background: #cbdcf2;
+    border-radius: 4px;
+}
+
+.header-search__option {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+    padding: 10px 16px;
+    border: none;
+    background: none;
+    text-align: left;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.header-search__option:hover,
+.header-search__option:focus-visible {
+    background: #f4f8fc;
+    outline: none;
+}
+
+.header-search__thumb-wrap {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #f5f5f5;
+    border: 1px solid #eaeaea;
+}
+
+.header-search__thumb {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.header-search__meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    min-width: 0;
+}
+
+.header-search__name {
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    line-height: 1.4;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+}
+
+.header-search__price {
+    font-size: 13px;
+    font-weight: 600;
+    color: #0066cc; /* Đổi sang màu đỏ giống màu brand/delivery để tạo điểm nhấn giá tiền --> Đoạn này bạn ghi chú 'Đổi sang màu đỏ' nhưng yêu cầu đổi tổng thể sang xanh dương nên mình đã đổi sang mã xanh dương sáng nổi bật #0066cc */
+}
+
+.header-search__empty {
+    padding: 24px 16px;
+    font-size: 14px;
+    color: #7a828a;
+    text-align: center;
 }
