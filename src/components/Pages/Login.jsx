@@ -61,9 +61,9 @@ const Login = () => {
             window.dispatchEvent(new Event('userUpdated'));
 
             if (matchedAccount.role === 'staff') {
-                navigate('/');
-            } else {
                 navigate('/admin');
+            } else {
+                navigate('/');
             }
         } catch (err) {
             console.error(err);
@@ -89,7 +89,7 @@ const Login = () => {
     const handleForgotSubmit = async (e) => {
         e.preventDefault();
         setFpError('');
-        setFpSuccess('');
+setFpSuccess('');
 
         const u = fpUser.trim();
         const p1 = fpNew.trim();
@@ -159,7 +159,7 @@ const Login = () => {
                                     placeholder="Xác nhận mật khẩu mới"
                                     value={fpConfirm}
                                     autoComplete="new-password"
-                                    onChange={(e) => setFpConfirm(e.target.value)}
+onChange={(e) => setFpConfirm(e.target.value)}
                                 />
                             </div>
                             {fpError && <div className="login-error">{fpError}</div>}
@@ -211,7 +211,7 @@ const Login = () => {
                                 <i className="fab fa-google"></i> <span>Google</span>
                             </button>
                         </div>
-                        <div className="login-footer">
+<div className="login-footer">
                             <span>Not a member?</span>
                             <Link to="/signup" className="signup-link">Signup now</Link>
                         </div>
