@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Header.css';
-import logoImg from '../../img/logo.png';
+import logoImg = '../../img/logo.png';
 import { imageMap } from '../../utils/productImages';
 
 const jsonBase = import.meta.env.BASE_URL || '/';
@@ -194,7 +194,7 @@ const Header = () => {
             <div className="header-top-bar">
                 <div className="header-top-content">
                     
-                    {/* 1. BÊN TRÁI: LOGO ĐÃ ĐƯỢC ĐƯA LÊN ĐẦU VÀ THÔNG TIN GIAO HÀNG */}
+                    {/* CHUYỂN LOGO LÊN ĐẦU KHỐI TOP CONTENT */}
                     <div className="header-logo-container">
                         <div className="phuclong-logo">
                             <button className="header-logo-btn" onClick={() => navigate('/')}>
@@ -210,65 +210,6 @@ const Header = () => {
                         <i className="fas fa-motorcycle delivery-scooter"></i>
                     </div>
 
-                    {/* 2. Ở GIỮA: THANH TÌM KIẾM CHUYỂN VÀO ĐÂY */}
-                    <div className="header-search-strip" ref={dropdownRef}>
-                        <div className="header-search-strip__inner">
-                            <form className="header-search__form" onSubmit={handleSearchSubmit}>
-                                <i className="fas fa-search header-search__icon"></i>
-                                <input
-                                    type="text"
-                                    className="header-search__input"
-                                    placeholder={t.searchPlaceholder}
-                                    value={searchQuery}
-                                    onChange={(e) => {
-                                        setSearchQuery(e.target.value);
-                                        setShowDropdown(true);
-                                    }}
-                                    onFocus={() => setShowDropdown(true)}
-                                />
-                                <button type="submit" className="header-search__submit">
-                                    {t.searchBtn}
-                                </button>
-                            </form>
-
-                            {showDropdown && searchQuery.trim() && (
-                                <ul className="header-search__dropdown">
-                                    {filteredProducts.length > 0 ? (
-                                        filteredProducts.map((product) => {
-                                            const finalImgSrc = imageMap[product.image] || product.image;
-                                            return (
-                                                <li key={product.id}>
-                                                    <button
-                                                        type="button"
-                                                        className="header-search__option"
-                                                        onClick={() => handleOptionClick(product.name)}
-                                                    >
-                                                        <div className="header-search__thumb-wrap">
-                                                            <img
-                                                                src={finalImgSrc}
-                                                                alt={product.name}
-                                                                className="header-search__thumb"
-                                                            />
-                                                        </div>
-                                                        <div className="header-search__meta">
-                                                            <span className="header-search__name">{product.name}</span>
-                                                            <span className="header-search__price">
-                                                                {Number(product.price).toLocaleString('vi-VN')} đ
-                                                            </span>
-                                                        </div>
-                                                    </button>
-                                                </li>
-                                            );
-                                        })
-                                    ) : (
-                                        <div className="header-search__empty">{t.noProduct}</div>
-                                    )}
-                                </ul>
-                            )}
-                        </div>
-                    </div>
-
-                    {/* 3. BÊN PHẢI: CÁC NÚT CHỨC NĂNG VÀ GIỎ HÀNG */}
                     <div className="header-user-actions">
                         {isLoggedIn ? (
                             <div className="header-user-menu" ref={userMenuRef}>
@@ -329,6 +270,64 @@ const Header = () => {
                         </button>
                     </div>
 
+                </div>
+            </div>
+
+            {/* THANH TÌM KIẾM GIỮ NGUYÊN HOÀN TOÀN CẤU TRÚC CODE CŨ */}
+            <div className="header-search-strip" ref={dropdownRef}>
+                <div className="header-search-strip__inner">
+                    <form className="header-search__form" onSubmit={handleSearchSubmit}>
+                        <i className="fas fa-search header-search__icon"></i>
+                        <input
+                            type="text"
+                            className="header-search__input"
+                            placeholder={t.searchPlaceholder}
+                            value={searchQuery}
+                            onChange={(e) => {
+                                setSearchQuery(e.target.value);
+                                setShowDropdown(true);
+                            }}
+                            onFocus={() => setShowDropdown(true)}
+                        />
+                        <button type="submit" className="header-search__submit">
+                            {t.searchBtn}
+                        </button>
+                    </form>
+
+                    {showDropdown && searchQuery.trim() && (
+                        <ul className="header-search__dropdown">
+                            {filteredProducts.length > 0 ? (
+                                filteredProducts.map((product) => {
+                                    const finalImgSrc = imageMap[product.image] || product.image;
+                                    return (
+                                        <li key={product.id}>
+                                            <button
+                                                type="button"
+                                                className="header-search__option"
+                                                onClick={() => handleOptionClick(product.name)}
+                                            >
+                                                <div className="header-search__thumb-wrap">
+                                                    <img
+                                                        src={finalImgSrc}
+                                                        alt={product.name}
+                                                        className="header-search__thumb"
+                                                    />
+                                                </div>
+                                                <div className="header-search__meta">
+                                                    <span className="header-search__name">{product.name}</span>
+                                                    <span className="header-search__price">
+                                                        {Number(product.price).toLocaleString('vi-VN')} đ
+                                                    </span>
+                                                </div>
+                                            </button>
+                                        </li>
+                                    );
+                                })
+                            ) : (
+                                <div className="header-search__empty">{t.noProduct}</div>
+                            )}
+                        </ul>
+                    )}
                 </div>
             </div>
 
