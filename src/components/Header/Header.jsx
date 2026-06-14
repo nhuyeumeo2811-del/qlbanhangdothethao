@@ -15,7 +15,7 @@ const customNormalizeText = (text) => {
         .replace(/đ/g, 'd')
         .trim()
         .replace(/\s+/g, ' ');
-
+};
 const translations = {
     VN: {
         delivery: 'Giao hàng miễn phí',
