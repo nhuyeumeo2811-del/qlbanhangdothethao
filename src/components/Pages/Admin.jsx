@@ -388,10 +388,7 @@ const Admin = () => {
                           <div style={{ width: '18px', height: '45px', background: '#888', border: '1px solid #000' }}></div>
                         </div>
                       </div>
-
-                      <div style={{ fontSize: '11px', fontWeight: 'bold', color: '#2f855a' }}>
-                        ✔ Tăng trưởng tháng: <span style={{ color: '#48bb78' }}>+15%</span>
-                      </div>
+                      
                     </div>
 
                     {}
