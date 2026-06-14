@@ -20,46 +20,46 @@ const customNormalizeText = (text) => {
 const translations = {
     VN: {
         delivery: 'Giao hàng miễn phí',
-        login: 'Quản trị viên',
+        login: 'Đăng nhập',
         cart: 'Giỏ hàng',
         searchPlaceholder: 'Bạn muốn mua gì...',
         searchBtn: 'Tìm',
         noProduct: 'Không tìm thấy sản phẩm phù hợp. Thử từ khóa khác xem sao nhé!',
         home: 'TRANG CHỦ',
-        coffee: 'TRANG PHỤC THỂ THAO',
-        tea: 'MŨ NÓN',
-        drinks: 'THỰC PHẨM BỔ SUNG',
-        products: 'GIÀY THỂ THAO',
+        apparel: 'TRANG PHỤC THỂ THAO',
+        shoes: 'GIÀY THỂ THAO',
+        headwear: 'MŨ NÓN',
+        supplements: 'THỰC PHẨM BỔ SUNG',
         promotions: 'KHUYẾN MÃI',
         about: 'VỀ CHÚNG TÔI',
         profile: 'HỒ SƠ',
         admin: 'Quản trị',
         logout: 'Đăng xuất',
-        coffeeMenu: [
+        apparelMenu: [
             { text: 'Thời Trang Nữ', href: '/lalashop/thoi-trang-nu' },
             { text: 'Thời Trang Nam', href: '/lalashop/thoi-trang-nam' },
         ]
     },
     EN: {
         delivery: 'Free Delivery',
-        login: 'Admin',
+        login: 'Login',
         cart: 'Cart',
         searchPlaceholder: 'What are you looking for...',
         searchBtn: 'Search',
         noProduct: 'No products found. Please try another keyword!',
         home: 'HOME',
-        coffee: 'SPORTSWEAR',
-        tea: 'HATS & CAPS',
-        drinks: 'SUPPLEMENTS',
-        products: 'SPORTS SHOES',
+        apparel: 'SPORTSWEAR',
+        shoes: 'SPORT SHOES',
+        headwear: 'HATS & CAPS',
+        supplements: 'SUPPLEMENTS',
         promotions: 'PROMOTIONS',
         about: 'ABOUT US',
         profile: 'PROFILE',
         admin: 'Admin',
         logout: 'Logout',
-        coffeeMenu: [
-            { text: 'Women Fashion', href: '/lalashop/thoi-trang-nu' },
-            { text: 'Men Fashion', href: '/lalashop/thoi-trang-nam' },
+        apparelMenu: [
+            { text: 'Women\'s Fashion', href: '/lalashop/thoi-trang-nu' },
+            { text: 'Men\'s Fashion', href: '/lalashop/thoi-trang-nam' },
         ]
     }
 };
@@ -201,7 +201,7 @@ const Header = () => {
         document.addEventListener('mousedown', onPointerDown);
 
         return () => {
-            document.removeEventListener('mousedown', onPointerDown);
+            document.addEventListener('mousedown', onPointerDown);
         };
     }, [searchFocused]);
 
@@ -259,9 +259,10 @@ const Header = () => {
         : t.login;
 
     return (
-        <header className="phuclong-header">
+        <header className="sportshop-header">
             <div className="header-top-bar">
                 <div className="header-top-content">
+                    {/* LEFT */}
                     <div className="header-delivery-info">
                         <span className="delivery-text">{t.delivery}</span>
                         <i className="fas fa-phone delivery-icon"></i>
@@ -271,8 +272,9 @@ const Header = () => {
                         </div>
                     </div>
 
+                    {/* CENTER - LOGO */}
                     <div className="header-logo-container">
-                        <div className="phuclong-logo">
+                        <div className="sportshop-logo">
                             <button
                                 type="button"
                                 className="header-logo-btn"
@@ -281,13 +283,14 @@ const Header = () => {
                             >
                                 <img
                                     src={logoImg}
-                                    alt="Logo"
+                                    alt="LaLaShop Logo"
                                     className="header-logo-image"
                                 />
                             </button>
                         </div>
                     </div>
 
+                    {/* RIGHT - ACTIONS */}
                     <div className="header-user-actions">
                         {currentUser ? (
                             <div className="header-user-menu" ref={userMenuRef}>
@@ -358,6 +361,7 @@ const Header = () => {
 
                         <span className="action-separator">|</span>
 
+                        {/* LANGUAGE */}
                         <div className="language-selector">
                             <span 
                                 className={`lang-option ${lang === 'VN' ? 'lang-active' : ''}`}
@@ -374,6 +378,7 @@ const Header = () => {
                             </span>
                         </div>
 
+                        {/* CART */}
                         <button
                             className="cart-button"
                             onClick={() => navigate('/cart')}
@@ -386,6 +391,7 @@ const Header = () => {
                 </div>
             </div>
 
+            {/* SEARCH STRIP */}
             <div className="header-search-strip" aria-label="Tìm kiếm">
                 <div className="header-search-strip__inner" ref={searchBoxRef}>
                     <form
@@ -467,51 +473,53 @@ const Header = () => {
                 </div>
             </div>
 
+            {/* NAVIGATION */}
             <nav className="header-navigation" aria-label="Điều hướng chính">
                 <div className="nav-content">
                     <a href="/" className="nav-link">
                         {t.home}
                     </a>
 
+                    {/* TRANG PHỤC THỂ THAO DROPDOWN */}
                     <div
                         className="nav-item-with-dropdown"
-                        onMouseEnter={() => setHoveredMenu('coffee')}
+                        onMouseEnter={() => setHoveredMenu('apparel')}
                         onMouseLeave={() => setHoveredMenu(null)}
                     >
                         <a
-                            href="/coffee"
+                            href="/apparel"
                             className={`nav-link ${
-                                hoveredMenu === 'coffee' ? 'active' : ''
+                                hoveredMenu === 'apparel' ? 'active' : ''
                             }`}
                         >
-                            {t.coffee}
+                            {t.apparel}
                         </a>
 
-                        {hoveredMenu === 'coffee' && (
+                        {hoveredMenu === 'apparel' && (
                             <div className="dropdown-menu">
-                                {t.coffeeMenu.map((item, index) => (
+                                {t.apparelMenu.map((item, index) => (
                                     <a
                                         key={index}
                                         href={item.href}
                                         className="dropdown-item"
                                     >
                                         {item.text}
-                                    </a>
+                                    </button>
                                 ))}
                             </div>
                         )}
                     </div>
 
-                    <a href="/tea" className="nav-link">
-                        {t.tea}
+                    <a href="/shoes" className="nav-link">
+                        {t.shoes}
                     </a>
 
-                    <a href="/drinks" className="nav-link">
-                        {t.drinks}
+                    <a href="/headwear" className="nav-link">
+                        {t.headwear}
                     </a>
 
-                    <a href="/products" className="nav-link">
-                        {t.products}
+                    <a href="/supplements" className="nav-link">
+                        {t.supplements}
                     </a>
 
                     <a href="/promotions" className="nav-link">
