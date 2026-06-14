@@ -9,11 +9,11 @@ const jsonBase = import.meta.env.BASE_URL || '/';
 const customNormalizeText = (text) => {
     if (!text) return '';
     return text
-        .toLowerCase();
-        .normalize('NFD') ;
-        .replace(/[\u0300-\u036f]/g, '') ;
-        .replace(/đ/g, 'd');
-        .trim();
+        .toLowerCase()
+        .normalize('NFD') 
+        .replace(/[\u0300-\u036f]/g, '') 
+        .replace(/đ/g, 'd')
+        .trim()
         .replace(/\s+/g, ' ');
 
 const translations = {
