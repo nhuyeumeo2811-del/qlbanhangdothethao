@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import './Header.css';
 import logoImg from '../../img/logo.png';
 import { imageMap } from '../../utils/productImages';
+import { normalizeSearchText, rankProductsBySearch,} from '../../utils/productSearch';
 
 const jsonBase = import.meta.env.BASE_URL || '/';
 
