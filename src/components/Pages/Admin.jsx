@@ -423,8 +423,9 @@ const Admin = () => {
                           {customers.length}
                         </div>
                         
-                        <div style={{ fontSize: '16px', textAlign: 'right', lineHeight: '2' }}>
+                        <div style={{ fontSize: '15px', textAlign: 'right', lineHeight: '2' }}>
                           <div style={{ textDecoration: 'underline', color: '#000' }}>Xem chi tiết khách hàng</div>
+                          <span className="ruang-stat-card__badge ruang-stat-card__badge--muted">Thông tin khách hàng</span>
                         </div>
                       </div>
                     </div>
