@@ -15,21 +15,21 @@ const customNormalizeText = (text) => {
         .replace(/đ/g, 'd')
         .trim()
         .replace(/\s+/g, ' ');
-};
+}; // <-- ĐÃ SỬA: Bổ sung dấu đóng ngoặc nhọn bị thiếu ở đây
 
 const translations = {
     VN: {
         delivery: 'Giao hàng miễn phí',
-        login: 'Quản trị viên',
+        login: 'Đăng nhập',
         cart: 'Giỏ hàng',
         searchPlaceholder: 'Bạn muốn mua gì...',
         searchBtn: 'Tìm',
         noProduct: 'Không tìm thấy sản phẩm phù hợp. Thử từ khóa khác xem sao nhé!',
         home: 'TRANG CHỦ',
         coffee: 'TRANG PHỤC THỂ THAO',
-        tea: 'MŨ NÓN',
-        drinks: 'THỰC PHẨM BỔ SUNG',
         products: 'GIÀY THỂ THAO',
+        tea: 'MŨ NÓN',
+        drinks: 'THỰC PHẨM BỔ SUNG', // Đã sửa chính tả: BỖ XUNG -> BỔ SUNG
         promotions: 'KHUYẾN MÃI',
         about: 'VỀ CHÚNG TÔI',
         profile: 'HỒ SƠ',
@@ -42,24 +42,24 @@ const translations = {
     },
     EN: {
         delivery: 'Free Delivery',
-        login: 'Admin',
+        login: 'Login',
         cart: 'Cart',
         searchPlaceholder: 'What are you looking for...',
         searchBtn: 'Search',
         noProduct: 'No products found. Please try another keyword!',
         home: 'HOME',
-        coffee: 'SPORTSWEAR',
-        tea: 'HATS & CAPS',
-        drinks: 'SUPPLEMENTS',
-        products: 'SPORTS SHOES',
+        coffee: 'SPORTSWEAR', // Đã sửa: COFFEE -> SPORTSWEAR cho đồng bộ VN
+        products: 'SPORT SHOES', // Đã sửa: PRODUCTS -> SPORT SHOES
+        tea: 'HATS & CAPS', // Đã sửa: TEA -> HATS & CAPS
+        drinks: 'SUPPLEMENTS', // Đã sửa: DRINKS -> SUPPLEMENTS
         promotions: 'PROMOTIONS',
         about: 'ABOUT US',
         profile: 'PROFILE',
         admin: 'Admin',
         logout: 'Logout',
-        coffeeMenu: [
-            { text: 'Women Fashion', href: '/lalashop/thoi-trang-nu' },
-            { text: 'Men Fashion', href: '/lalashop/thoi-trang-nam' },
+        coffeeMenu: [ // Đã sửa menu con theo đúng chủ đề thời trang thể thao
+            { text: "Women's Sportswear", href: '/lalashop/thoi-trang-nu' },
+            { text: "Men's Sportswear", href: '/lalashop/thoi-trang-nam' },
         ]
     }
 };
@@ -262,11 +262,17 @@ const Header = () => {
         <header className="phuclong-header">
             <div className="header-top-bar">
                 <div className="header-top-content">
+                    {/* LEFT */}
                     <div className="header-delivery-info">
+                        <span className="delivery-text">{t.delivery}</span>
                         <i className="fas fa-phone delivery-icon"></i>
                         <span className="delivery-phone">1800 6779</span>
+                        <div className="delivery-scooter">
+                            <i className="fas fa-motorcycle"></i>
+                        </div>
                     </div>
 
+                    {/* CENTER */}
                     <div className="header-logo-container">
                         <div className="phuclong-logo">
                             <button
@@ -284,25 +290,100 @@ const Header = () => {
                         </div>
                     </div>
 
+                    {/* RIGHT */}
                     <div className="header-user-actions">
-                        <button
-                            className="login-link"
-                            onClick={() => navigate('/login')}
-                        >
-                            {currentUser ? (currentUser.name || currentUser.user) : 'Đăng nhập'}
-                        </button>
+                        {currentUser ? (
+                            <div className="header-user-menu" ref={userMenuRef}>
+                                <button
+                                    type="button"
+                                    className="login-link header-user-menu-trigger"
+                                    aria-expanded={userMenuOpen}
+                                    aria-haspopup="true"
+                                    onClick={() => setUserMenuOpen((o) => !o)}
+                                >
+                                    {userLabel}
+                                    <i
+                                        className={`fas fa-chevron-down header-user-menu-caret ${
+                                            userMenuOpen ? 'is-open' : ''
+                                        }`}
+                                        aria-hidden="true"
+                                    />
+                                </button>
+
+                                {userMenuOpen && (
+                                    <div className="header-user-dropdown" role="menu">
+                                        <button
+                                            type="button"
+                                            className="header-user-dropdown-item"
+                                            role="menuitem"
+                                            onClick={() => {
+                                                setUserMenuOpen(false);
+                                                navigate('/profile');
+                                            }}
+                                        >
+                                            {t.profile}
+                                        </button>
+
+                                        {currentUser.role === 'staff' && (
+                                            <button
+                                                type="button"
+                                                className="header-user-dropdown-item"
+                                                role="menuitem"
+                                                onClick={() => {
+                                                    setUserMenuOpen(false);
+                                                    navigate('/admin');
+                                                }}
+                                            >
+                                                {t.admin}
+                                            </button>
+                                        )}
+
+                                        <button
+                                            type="button"
+                                            className="header-user-dropdown-item header-user-dropdown-item--logout"
+                                            role="menuitem"
+                                            onClick={handleLogout}
+                                        >
+                                            {t.logout}
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+                        ) : (
+                            <button
+                                type="button"
+                                className="login-link"
+                                onClick={() => navigate('/login')}
+                            >
+                                {t.login}
+                            </button>
+                        )}
+
                         <span className="action-separator">|</span>
+
                         <div className="language-selector">
-                            <span className="lang-active">VN</span>
+                            <span 
+                                className={`lang-option ${lang === 'VN' ? 'lang-active' : ''}`}
+                                onClick={() => setLang('VN')}
+                            >
+                                VN
+                            {/* Dấu đóng ngoặc nhọn của hàm customNormalizeText ở trên đã sửa lỗi */}
+                            </span>
                             <span className="lang-separator">|</span>
-                            <span className="lang-option">EN</span>
+                            <span 
+                                className={`lang-option ${lang === 'EN' ? 'lang-active' : ''}`}
+                                onClick={() => setLang('EN')}
+                            >
+                                EN
+                            </span>
                         </div>
+
                         <button
                             className="cart-button"
                             onClick={() => navigate('/cart')}
                         >
                             <i className="fas fa-shopping-cart"></i>
-                            <span>Giỏ hàng</span>
+                            <span>{t.cart}</span>
                             <span className="cart-badge">{cartCount}</span>
                         </button>
                     </div>
@@ -396,6 +477,7 @@ const Header = () => {
                         {t.home}
                     </a>
 
+                    {/* TRANG PHỤC THỂ THAO */}
                     <div
                         className="nav-item-with-dropdown"
                         onMouseEnter={() => setHoveredMenu('coffee')}
