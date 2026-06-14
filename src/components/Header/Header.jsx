@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Header.css';
-import logoImg = '../../img/logo.png';
+import logoImg from '../../img/logo.png';
 import { imageMap } from '../../utils/productImages';
 
 const jsonBase = import.meta.env.BASE_URL || '/';
