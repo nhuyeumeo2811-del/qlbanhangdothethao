@@ -38,7 +38,8 @@ const Login = () => {
             const normalizedUsername = trimmedUser.toLowerCase();
             const normalizedPassword = trimmedPass;
 
-            const response = await fetch('/account.json');
+            const jsonBase = import.meta.env.BASE_URL || '/';
+            const response = await fetch(`${jsonBase}account.json`);
             if (!response.ok) {
                 throw new Error('Không thể tải dữ liệu tài khoản');
             }
