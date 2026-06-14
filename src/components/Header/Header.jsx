@@ -6,30 +6,32 @@ import { imageMap } from '../../utils/productImages';
 
 const jsonBase = import.meta.env.BASE_URL || '/';
 
+// Hàm chuẩn hóa chuỗi: Chuyển thành chữ thường, xóa dấu tiếng Việt, xóa khoảng trắng thừa
 const customNormalizeText = (text) => {
     if (!text) return '';
     return text
         .toLowerCase()
-        .normalize('NFD') 
-        .replace(/[\u0300-\u036f]/g, '') 
-        .replace(/đ/g, 'd')
+        .normalize('NFD') // Tách các dấu ra khỏi chữ cái gốc
+        .replace(/[\u0300-\u036f]/g, '') // Xóa các ký tự dấu
+        .replace(/đ/g, 'd') // Sửa riêng chữ đ
         .trim()
-        .replace(/\s+/g, ' ');
+        .replace(/\s+/g, ' '); // Gộp nhiều khoảng trắng thừa thành 1 khoảng trắng đơn
 };
 
+// Bộ từ điển dịch thuật để chuyển đổi ngôn ngữ VN <-> EN
 const translations = {
     VN: {
         delivery: 'Giao hàng miễn phí',
-        login: 'Quản trị viên',
+        login: 'Đăng nhập',
         cart: 'Giỏ hàng',
         searchPlaceholder: 'Bạn muốn mua gì...',
         searchBtn: 'Tìm',
         noProduct: 'Không tìm thấy sản phẩm phù hợp. Thử từ khóa khác xem sao nhé!',
         home: 'TRANG CHỦ',
         coffee: 'TRANG PHỤC THỂ THAO',
-        tea: 'MŨ NÓN',
-        drinks: 'THỰC PHẨM BỔ SUNG',
         products: 'GIÀY THỂ THAO',
+        tea: 'MŨ NÓN',
+        drinks: 'THỰC PHẨM BỖ XUNG',
         promotions: 'KHUYẾN MÃI',
         about: 'VỀ CHÚNG TÔI',
         profile: 'HỒ SƠ',
@@ -42,24 +44,25 @@ const translations = {
     },
     EN: {
         delivery: 'Free Delivery',
-        login: 'Admin',
+        login: 'Login',
         cart: 'Cart',
         searchPlaceholder: 'What are you looking for...',
         searchBtn: 'Search',
         noProduct: 'No products found. Please try another keyword!',
         home: 'HOME',
-        coffee: 'SPORTSWEAR',
-        tea: 'HATS & CAPS',
-        drinks: 'SUPPLEMENTS',
-        products: 'SPORTS SHOES',
+        coffee: 'COFFEE',
+        tea: 'TEA',
+        drinks: 'DRINKS',
+        products: 'PRODUCTS',
         promotions: 'PROMOTIONS',
         about: 'ABOUT US',
         profile: 'PROFILE',
         admin: 'Admin',
         logout: 'Logout',
         coffeeMenu: [
-            { text: 'Women Fashion', href: '/lalashop/thoi-trang-nu' },
-            { text: 'Men Fashion', href: '/lalashop/thoi-trang-nam' },
+            { text: 'The Rich Coffee Cup Journey', href: '/coffee/hanh-trinh-tach-ca-phe' },
+            { text: 'Phuc Long Coffee Beans', href: '/coffee/hat-ca-phe-phuc-long' },
+            { text: 'The Art of Brewing', href: '/coffee/nghe-thuat-pha-che' },
         ]
     }
 };
@@ -76,29 +79,40 @@ const Header = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [searchFocused, setSearchFocused] = useState(false);
 
+    // State quản lý ngôn ngữ (Mặc định là VN)
     const [lang, setLang] = useState('VN');
 
     const userMenuRef = useRef(null);
     const searchBoxRef = useRef(null);
 
+    // Lấy ngôn ngữ hiện tại từ bộ từ điển
     const t = translations[lang];
 
+    // ==========================================================================
+    // LOGIC TÌM KIẾM SẢN PHẨM (ĐÃ CHỈNH SỬA ĐỂ RA ĐÚNG SẢN PHẨM)
+    // ==========================================================================
     const searchMatches = useMemo(() => {
         const cleanQuery = customNormalizeText(searchQuery);
         
+        // Nếu chưa nhập gì hoặc chỉ nhập khoảng trắng, không hiển thị danh sách gợi ý
         if (!cleanQuery) return [];
 
         return products
             .filter((product) => {
                 if (!product || !product.name) return false;
                 
+                // Chuẩn hóa tên sản phẩm từ database/file json
                 const cleanProductName = customNormalizeText(product.name);
                 
+                // Kiểm tra xem tên sản phẩm có chứa từ khóa tìm kiếm hay không
                 return cleanProductName.includes(cleanQuery);
             })
-            .slice(0, 10); 
+            .slice(0, 10); // Giới hạn hiển thị tối đa 10 sản phẩm gợi ý
     }, [products, searchQuery]);
 
+    // =========================
+    // CART + USER
+    // =========================
     useEffect(() => {
         const updateCartCount = () => {
             const savedCart = localStorage.getItem('cart');
@@ -157,6 +171,9 @@ const Header = () => {
         };
     }, []);
 
+    // =========================
+    // LOAD PRODUCTS
+    // =========================
     useEffect(() => {
         let cancelled = false;
 
@@ -186,6 +203,9 @@ const Header = () => {
         };
     }, []);
 
+    // =========================
+    // CLOSE SEARCH WHEN CLICK OUTSIDE
+    // =========================
     useEffect(() => {
         if (!searchFocused) return;
 
@@ -205,6 +225,9 @@ const Header = () => {
         };
     }, [searchFocused]);
 
+    // =========================
+    // CLOSE USER MENU
+    // =========================
     useEffect(() => {
         if (!userMenuOpen) return;
 
@@ -230,6 +253,9 @@ const Header = () => {
         }
     }, [currentUser]);
 
+    // =========================
+    // HANDLERS
+    // =========================
     const handleLogout = () => {
         localStorage.removeItem('currentUser');
         setUserMenuOpen(false);
@@ -260,9 +286,22 @@ const Header = () => {
 
     return (
         <header className="phuclong-header">
+            {/* ========================= */}
+            {/* TOP HEADER */}
+            {/* ========================= */}
             <div className="header-top-bar">
                 <div className="header-top-content">
+                    {/* LEFT */}
+                    <div className="header-delivery-info">
+                        <span className="delivery-text">{t.delivery}</span>
+                        <i className="fas fa-phone delivery-icon"></i>
+                        <span className="delivery-phone">1800 6779</span>
+                        <div className="delivery-scooter">
+                            <i className="fas fa-motorcycle"></i>
+                        </div>
+                    </div>
 
+                    {/* CENTER LOGO */}
                     <div className="header-logo-container">
                         <div className="phuclong-logo">
                             <button
@@ -280,7 +319,111 @@ const Header = () => {
                         </div>
                     </div>
 
-                    <div className="header-search-strip__inner" ref={searchBoxRef}>
+                    {/* RIGHT ACTIONS */}
+                    <div className="header-user-actions">
+                        {currentUser ? (
+                            <div className="header-user-menu" ref={userMenuRef}>
+                                <button
+                                    type="button"
+                                    className="login-link header-user-menu-trigger"
+                                    aria-expanded={userMenuOpen}
+                                    aria-haspopup="true"
+                                    onClick={() => setUserMenuOpen((o) => !o)}
+                                >
+                                    {userLabel}
+                                    <i
+                                        className={`fas fa-chevron-down header-user-menu-caret ${
+                                            userMenuOpen ? 'is-open' : ''
+                                        }`}
+                                        aria-hidden="true"
+                                    />
+                                </button>
+
+                                {userMenuOpen && (
+                                    <div className="header-user-dropdown" role="menu">
+                                        <button
+                                            type="button"
+                                            className="header-user-dropdown-item"
+                                            role="menuitem"
+                                            onClick={() => {
+                                                setUserMenuOpen(false);
+                                                navigate('/profile');
+                                            }}
+                                        >
+                                            {t.profile}
+                                        </button>
+
+                                        {currentUser.role === 'staff' && (
+                                            <button
+                                                type="button"
+                                                className="header-user-dropdown-item"
+                                                role="menuitem"
+                                                onClick={() => {
+                                                    setUserMenuOpen(false);
+                                                    navigate('/admin');
+                                                }}
+                                            >
+                                                {t.admin}
+                                            </button>
+                                        )}
+
+                                        <button
+                                            type="button"
+                                            className="header-user-dropdown-item header-user-dropdown-item--logout"
+                                            role="menuitem"
+                                            onClick={handleLogout}
+                                        >
+                                            {t.logout}
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+                        ) : (
+                            <button
+                                type="button"
+                                className="login-link"
+                                onClick={() => navigate('/login')}
+                            >
+                                {t.login}
+                            </button>
+                        )}
+
+                        <span className="action-separator">|</span>
+
+                        {/* NÚT CHUYỂN ĐỔI NGÔN NGỮ ĐÃ ĐƯỢC THÊM LOGIC CLICK */}
+                        <div className="language-selector">
+                            <span 
+                                className={`lang-option ${lang === 'VN' ? 'lang-active' : ''}`}
+                                onClick={() => setLang('VN')}
+                            >
+                                VN
+                            </span>
+                            <span className="lang-separator">|</span>
+                            <span 
+                                className={`lang-option ${lang === 'EN' ? 'lang-active' : ''}`}
+                                onClick={() => setLang('EN')}
+                            >
+                                EN
+                            </span>
+                        </div>
+
+                        <button
+                            className="cart-button"
+                            onClick={() => navigate('/cart')}
+                        >
+                            <i className="fas fa-shopping-cart"></i>
+                            <span>{t.cart}</span>
+                            <span className="cart-badge">{cartCount}</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            {/* ========================= */}
+            {/* SEARCH */}
+            {/* ========================= */}
+            <div className="header-search-strip" aria-label="Tìm kiếm">
+                <div className="header-search-strip__inner" ref={searchBoxRef}>
                     <form
                         className="header-search-form"
                         onSubmit={handleSearchSubmit}
@@ -330,6 +473,7 @@ const Header = () => {
                                             role="option"
                                             onClick={() => goToProduct(p)}
                                         >
+                                            {/* Khung chứa ảnh sản phẩm */}
                                             <span className="header-search__thumb-wrap">
                                                 <img
                                                     src={p.image || 'https://via.placeholder.com/88'}
@@ -339,6 +483,7 @@ const Header = () => {
                                                 />
                                             </span>
 
+                                            {/* Thông tin sản phẩm (Tên & Giá) */}
                                             <span className="header-search__meta">
                                                 <span className="header-search__name" title={p.name}>
                                                     {p.name}
@@ -350,6 +495,7 @@ const Header = () => {
                                                 )}
                                             </span>
 
+                                            {/* Icon mũi tên nhỏ bên phải để tăng tính định hướng click */}
                                             <i className="fas fa-chevron-right header-search__arrow" style={{ marginLeft: 'auto', fontSize: '11px', opacity: 0.3 }}></i>
                                         </button>
                                     </li>
@@ -358,55 +504,18 @@ const Header = () => {
                         </ul>
                     )}
                 </div>
-
-                    <div className="header-delivery-info">
-                        <i className="fas fa-phone delivery-icon"></i>
-                        <span className="delivery-phone">1800 6779</span>
-                    </div>
-
-                    <div className="header-user-actions">
-                        <button
-                            className="login-link"
-                            onClick={() => navigate('/login')}
-                        >
-                            {currentUser ? (currentUser.name || currentUser.user) : 'Đăng nhập'}
-                        </button>
-                        <span className="action-separator">|</span>
-
-                        <div className="language-selector">
-                            <span 
-                                className={`lang-option ${lang === 'VN' ? 'lang-active' : ''}`}
-                                onClick={() => setLang('VN')}
-                            >
-                                VN
-                            </span>
-                            <span className="lang-separator">|</span>
-                            <span 
-                                className={`lang-option ${lang === 'EN' ? 'lang-active' : ''}`}
-                                onClick={() => setLang('EN')}
-                            >
-                                EN
-                            </span>
-                        </div>
-
-                        <button
-                            className="cart-button"
-                            onClick={() => navigate('/cart')}
-                        >
-                            <i className="fas fa-shopping-cart"></i>
-                            <span>Giỏ hàng</span>
-                            <span className="cart-badge">{cartCount}</span>
-                        </button>
-                    </div>
-                </div>
             </div>
 
+            {/* ========================= */}
+            {/* NAVIGATION */}
+            {/* ========================= */}
             <nav className="header-navigation" aria-label="Điều hướng chính">
                 <div className="nav-content">
                     <a href="/" className="nav-link">
                         {t.home}
                     </a>
 
+                    {/* CÀ PHÊ */}
                     <div
                         className="nav-item-with-dropdown"
                         onMouseEnter={() => setHoveredMenu('coffee')}
