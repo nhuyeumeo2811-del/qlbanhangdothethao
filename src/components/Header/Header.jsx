@@ -262,6 +262,11 @@ const Header = () => {
         <header className="phuclong-header">
             <div className="header-top-bar">
                 <div className="header-top-content">
+                    <div className="header-delivery-info">
+                        <i className="fas fa-phone delivery-icon"></i>
+                        <span className="delivery-phone">1800 6779</span>
+                    </div>
+
                     <div className="header-logo-container">
                         <div className="phuclong-logo">
                             <button
@@ -277,11 +282,6 @@ const Header = () => {
                                 />
                             </button>
                         </div>
-                    </div>
-                    
-                    <div className="header-delivery-info">
-                        <i className="fas fa-phone delivery-icon"></i>
-                        <span className="delivery-phone">1800 6779</span>
                     </div>
 
                     <div className="header-user-actions">
