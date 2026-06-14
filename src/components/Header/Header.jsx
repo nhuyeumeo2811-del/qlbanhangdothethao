@@ -120,7 +120,6 @@ const Header = () => {
             .catch((err) => console.error('Lỗi fetch products trong Header:', err));
     }, []);
 
-    // Xử lý tìm kiếm gõ phím live-search
     useEffect(() => {
         if (!searchQuery.trim()) {
             setFilteredProducts([]);
@@ -147,7 +146,7 @@ const Header = () => {
             );
         });
 
-        setFilteredProducts(matches.slice(0, 6)); // Giới hạn 6 gợi ý nhanh
+        setFilteredProducts(matches.slice(0, 6));
     }, [searchQuery, allProducts]);
 
     useEffect(() => {
@@ -195,20 +194,23 @@ const Header = () => {
             <div className="header-top-bar">
                 <div className="header-top-content">
                     
-                    <div className="header-left-group">
-                        <div className="header-logo-container">
-                            <div className="phuclong-logo">
-                                <button className="header-logo-btn" onClick={() => navigate('/')}>
-                                    <img src={logoImg} alt="LaLaShop Logo" className="header-logo-image" />
-                                </button>
-                            </div>
-                        </div>
-                        <div className="header-delivery-info">
-                            <i className="fas fa-phone delivery-icon"></i>
-                            <span className="delivery-phone">0294.3855.225</span>
+                    {/* 1. BÊN TRÁI: LOGO ĐÃ ĐƯỢC ĐƯA LÊN ĐẦU VÀ THÔNG TIN GIAO HÀNG */}
+                    <div className="header-logo-container">
+                        <div className="phuclong-logo">
+                            <button className="header-logo-btn" onClick={() => navigate('/')}>
+                                <img src={logoImg} alt="LaLaShop Logo" className="header-logo-image" />
+                            </button>
                         </div>
                     </div>
 
+                    <div className="header-delivery-info">
+                        <i className="fas fa-shipping-fast delivery-icon"></i>
+                        <span className="delivery-text">{t.delivery}:</span>
+                        <span className="delivery-phone">0294.3855.225</span>
+                        <i className="fas fa-motorcycle delivery-scooter"></i>
+                    </div>
+
+                    {/* 2. Ở GIỮA: THANH TÌM KIẾM CHUYỂN VÀO ĐÂY */}
                     <div className="header-search-strip" ref={dropdownRef}>
                         <div className="header-search-strip__inner">
                             <form className="header-search__form" onSubmit={handleSearchSubmit}>
@@ -266,6 +268,7 @@ const Header = () => {
                         </div>
                     </div>
 
+                    {/* 3. BÊN PHẢI: CÁC NÚT CHỨC NĂNG VÀ GIỎ HÀNG */}
                     <div className="header-user-actions">
                         {isLoggedIn ? (
                             <div className="header-user-menu" ref={userMenuRef}>
