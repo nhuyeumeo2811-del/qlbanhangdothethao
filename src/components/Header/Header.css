@@ -1,6 +1,3 @@
-/* ==========================================================================
-   PHẦN ĐỈNH HEADER (TOP BAR) - ĐỒNG BỘ THEO LALASHOP VÀ ĐỊNH VỊ 3 CỘT
-   ========================================================================== */
 .phuclong-header {
     background-color: white;
     width: 100%;
@@ -15,26 +12,18 @@
     border-bottom: 1px solid #e9ecef;
 }
 
-/* Áp dụng CSS Grid chia 3 cột cố định */
+/* Chuyển sang hàng ngang xếp tự nhiên theo thứ tự trong file JSX */
 .header-top-content {
     max-width: 1300px;
     margin: 0 auto;
-    display: grid;
-    grid-template-columns: 240px 1fr auto; 
+    display: flex;
     align-items: center;
-    gap: 20px;
+    justify-content: space-between;
+    gap: 15px;
     position: relative;
 }
 
-/* Khối nhóm trái bọc chung Logo và text giao hàng */
-.header-left-group {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 4px;
-}
-
-/* Gỡ bỏ position absolute cũ để định hình khối tự do */
+/* Loại bỏ thuộc tính absolute cũ để logo tự đứng bên trái */
 .header-logo-container {
     position: relative;
     left: auto;
@@ -45,7 +34,7 @@
 .phuclong-logo {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: center;
 }
 
 .header-logo-btn {
@@ -58,7 +47,7 @@
 }
 
 .header-logo-image {
-    height: 48px;  /* Co nhẹ chiều cao giúp cân bằng thanh tìm kiếm ở giữa */
+    height: 55px; 
     width: auto;
     object-fit: contain;
     transition: transform 0.2s ease;
@@ -68,41 +57,41 @@
     transform: scale(1.05);
 }
 
-/* Thông tin giao hàng đặt gọn dưới logo */
 .header-delivery-info {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
+    flex: 0 0 auto;
 }
 
 .delivery-text {
     font-weight: 700;
     color: #111111;
-    font-size: 11px;
+    font-size: 14px;
 }
 
 .delivery-icon {
     color: #111111;
-    font-size: 11px;
+    font-size: 14px;
 }
 
 .delivery-phone {
     font-weight: 700;
     color: #111111;
-    font-size: 11px;
-}
-
-.delivery-scooter {
-    margin-left: 4px;
-    color: #115bb6; 
     font-size: 14px;
 }
 
-/* CỤM ĐƯỢC CHUYỂN LÊN GIỮA */
+.delivery-scooter {
+    margin-left: 10px;
+    color: #115bb6; 
+    font-size: 20px;
+}
+
 .header-user-actions {
     display: flex;
     align-items: center;
     gap: 15px;
+    flex: 0 0 auto;
     justify-content: flex-end;
     font-size: 14px;
     color: #333333;
@@ -112,7 +101,6 @@
     color: #333333;
     text-decoration: none;
     font-weight: 500;
-    white-space: nowrap;
 }
 
 .login-link:hover {
@@ -137,7 +125,6 @@ button.login-link {
     gap: 6px;
     cursor: pointer;
     color: #333333;
-    white-space: nowrap;
 }
 
 .header-user-menu-caret {
@@ -219,7 +206,6 @@ button.login-link {
     color: #115bb6;
 }
 
-/* Nút Giỏ hàng hình viên thuốc bo tròn viền xanh chữ xanh theo đúng bản vẽ */
 .cart-button {
     display: flex;
     align-items: center;
@@ -245,7 +231,6 @@ button.login-link {
     font-size: 16px;
 }
 
-/* Badge số lượng sản phẩm hình tròn màu xanh lam */
 .cart-badge {
     position: absolute;
     top: -6px;
@@ -264,18 +249,18 @@ button.login-link {
 
 
 /* ==========================================================================
-   PHẦN THANH TÌM KIẾM (SEARCH STRIP) - BIẾN THÀNH KHỐI TRUNG TÂM CỦA GRID
+   PHẦN THANH TÌM KIẾM (SEARCH STRIP) - BIẾN THÀNH KHỐI NẰM GIỮA
    ========================================================================== */
 .header-search-strip {
     position: relative;
     z-index: 1150;
-    background: transparent; /* Loại bỏ background xanh cũ để tiệp màu trắng thanh tao */
+    background: transparent; /* Gỡ nền xanh để ăn khớp vào thanh top bar trắng */
     border-bottom: none;
     padding: 0;
     height: auto;
-    width: 100%;
-    max-width: 520px; /* Khống chế bề rộng tìm kiếm vừa vặn trung tâm */
-    justify-self: center; /* Đẩy khối tìm kiếm đứng yên giữa cột 2 */
+    flex: 1; /* Cho phép co giãn tự do để chiếm không gian ở giữa */
+    max-width: 500px; /* Định giới hạn chiều rộng tối đa */
+    margin: 0 15px;
 }
 
 .header-search-strip__inner {
@@ -283,7 +268,6 @@ button.login-link {
     position: relative;
 }
 
-/* Khung form tìm kiếm bo tròn ôm sát dẹt ngang hiện đại */
 .header-search__form,
 .header-search-form {
     display: flex;
@@ -329,7 +313,6 @@ button.login-link {
      color: #a0b3cc;
 }
 
-/* Nút tìm kiếm đồng bộ màu xanh đậm bo tròn */
 .header-search__submit,
 .header-search-submit {
     flex-shrink: 0;
@@ -355,7 +338,6 @@ button.login-link {
     transform: scale(0.97);
 }
 
-/* DROPDOWN KẾT QUẢ GỢI Ý */
 .header-search__dropdown {
     position: absolute;
     top: calc(100% + 8px);
@@ -450,7 +432,7 @@ button.login-link {
 
 
 /* ==========================================================================
-   DANH MỤC MENU ĐIỀU HƯỚNG (NAVIGATION BAR) - GIỮ NGUYÊN KHÔNG ĐỔI
+   DANH MỤC MENU ĐIỀU HƯỚNG (NAVIGATION BAR)
    ========================================================================== */
 .header-navigation {
     background-color: white;
@@ -561,13 +543,28 @@ button.login-link {
     display: none;
 }
 
-/* ==========================================================================
-   PHẦN ĐÁP ỨNG GIAO DIỆN (RESPONSIVE SCREEN)
-   ========================================================================== */
 @media (max-width: 1024px) {
-    .header-top-content {
-        grid-template-columns: 200px 1fr auto;
-        gap: 15px;
+    .header-delivery-info {
+        font-size: 13px;
+    }
+
+    .delivery-scooter {
+        font-size: 18px;
+    }
+
+    .header-search-strip {
+        padding: 0;
+        margin: 0 10px;
+    }
+
+    .header-search__form,
+    .header-search-form {
+        padding: 3px 4px 3px 16px;
+    }
+
+    .header-search__submit,
+    .header-search-submit {
+        padding: 7px 20px;
     }
 
     .nav-content {
@@ -582,19 +579,25 @@ button.login-link {
 
 @media (max-width: 768px) {
     .header-top-content {
-        display: flex;
         flex-direction: column;
         gap: 12px;
         padding-bottom: 5px;
     }
 
-    .header-left-group {
-        align-items: center;
+    .header-logo-container {
+        position: relative;
+        left: auto;
+        transform: none;
     }
 
     .header-user-actions {
         justify-content: center;
         width: 100%;
+    }
+
+    .header-search-strip {
+        max-width: 100%;
+        margin: 5px 0;
     }
 
     .nav-content {
