@@ -3,21 +3,21 @@
     "id": 1,
     "user": "admin@gmail.com",
     "pass": "123",
-    "name": "Quản trị viên",
+    "name": "Đàm Tuyết Nhi",
     "role": "staff"
   },
   {
     "id": 2,
-    "user": "nganle@gmail.com",
+    "user": "admin2@gmail.com",
     "pass": "123456",
     "name": "Nguyễn Lê Ngân",
     "role": "staff",
   },
   {
     "id": 3,
-    "user": "user2@gmail.com",
+    "user": "admin3@gmail.com",
     "pass": "password",
-    "name": "Trần Thị B",
+    "name": "Trần Văn Hùng",
     "role": "staff",
   },
   {
