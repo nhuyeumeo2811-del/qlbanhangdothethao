@@ -7,6 +7,85 @@ import { normalizeSearchText, rankProductsBySearch,} from '../../utils/productSe
 
 const jsonBase = import.meta.env.BASE_URL || '/';
 
+const Header = () => {
+    const navigate = useNavigate();
+
+    const [hoveredMenu, setHoveredMenu] = useState(null);
+    const [cartCount, setCartCount] = useState(0);
+    const [currentUser, setCurrentUser] = useState(null);
+    const [userMenuOpen, setUserMenuOpen] = useState(false);
+
+    const [products, setProducts] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [searchFocused, setSearchFocused] = useState(false);
+
+    const userMenuRef = useRef(null);
+    const searchBoxRef = useRef(null);
+
+    // Search matches
+    const searchMatches = useMemo(() => {
+        return rankProductsBySearch(products, searchQuery, 10);
+    }, [products, searchQuery]);
+
+    useEffect(() => {
+        const updateCartCount = () => {
+            const savedCart = localStorage.getItem('cart');
+
+            if (!savedCart) {
+                setCartCount(0);
+                return;
+            }
+
+            try {
+                const cart = JSON.parse(savedCart);
+
+                const totalItems = cart.reduce(
+                    (sum, item) => sum + (item.quantity || 0),
+                    0
+                );
+
+                setCartCount(totalItems);
+            } catch (error) {
+                console.error('Lỗi đọc giỏ hàng:', error);
+                setCartCount(0);
+            }
+        };
+
+        const updateCurrentUser = () => {
+            const savedUser = localStorage.getItem('currentUser');
+
+            if (!savedUser) {
+                setCurrentUser(null);
+                return;
+            }
+
+            try {
+                const user = JSON.parse(savedUser);
+                setCurrentUser(user);
+            } catch (error) {
+                console.error('Lỗi đọc thông tin người dùng:', error);
+                setCurrentUser(null);
+            }
+        };
+
+        updateCartCount();
+        updateCurrentUser();
+
+        const onStorageSync = () => {
+            updateCartCount();
+            updateCurrentUser();
+        };
+
+        window.addEventListener('cartUpdated', updateCartCount);
+        window.addEventListener('userUpdated', updateCurrentUser);
+        window.addEventListener('storage', onStorageSync);
+
+        return () => {
+            window.removeEventListener('cartUpdated', updateCartCount);
+            window.removeEventListener('userUpdated', updateCurrentUser);
+            window.removeEventListener('storage', onStorageSync);
+        };
+    }, []);
 const customNormalizeText = (text) => {
     if (!text) return '';
     return text
