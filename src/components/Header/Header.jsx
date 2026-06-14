@@ -292,11 +292,23 @@ const Header = () => {
                             {currentUser ? (currentUser.name || currentUser.user) : 'Đăng nhập'}
                         </button>
                         <span className="action-separator">|</span>
+
                         <div className="language-selector">
-                            <span className="lang-active">VN</span>
+                            <span 
+                                className={`lang-option ${lang === 'VN' ? 'lang-active' : ''}`}
+                                onClick={() => setLang('VN')}
+                            >
+                                VN
+                            </span>
                             <span className="lang-separator">|</span>
-                            <span className="lang-option">EN</span>
+                            <span 
+                                className={`lang-option ${lang === 'EN' ? 'lang-active' : ''}`}
+                                onClick={() => setLang('EN')}
+                            >
+                                EN
+                            </span>
                         </div>
+
                         <button
                             className="cart-button"
                             onClick={() => navigate('/cart')}
