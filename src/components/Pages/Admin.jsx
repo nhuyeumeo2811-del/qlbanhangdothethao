@@ -423,7 +423,7 @@ const Admin = () => {
                           {customers.length}
                         </div>
                         
-                        <div style={{ fontSize: '13px', textAlign: 'right', lineHeight: '2' }}>
+                        <div style={{ fontSize: '16px', textAlign: 'right', lineHeight: '2' }}>
                           <div style={{ textDecoration: 'underline', color: '#000' }}>Xem chi tiết khách hàng</div>
                         </div>
                       </div>
