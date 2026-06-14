@@ -36,434 +36,314 @@ const translations = {
         admin: 'Quản trị',
         logout: 'Đăng xuất',
         coffeeMenu: [
-            { text: 'Thời Trang Nữ', href: '/lalashop/thoi-trang-nu' },
-            { text: 'Thời Trang Nam', href: '/lalashop/thoi-trang-nam' },
+            { text: 'Áo thể thao', href: '/products?category=ao' },
+            { text: 'Quần thể thao', href: '/products?category=quan' },
+            { text: 'Bộ quần áo thể thao', href: '/products?category=bo-quan-ao' }
         ]
     },
     EN: {
-        delivery: 'Free Delivery',
+        delivery: 'Free delivery',
         login: 'Admin',
         cart: 'Cart',
-        searchPlaceholder: 'What are you looking for...',
+        searchPlaceholder: 'What do you want to buy...',
         searchBtn: 'Search',
-        noProduct: 'No products found. Please try another keyword!',
+        noProduct: 'No matching products found. Try another keyword!',
         home: 'HOME',
         coffee: 'SPORTSWEAR',
         tea: 'HATS & CAPS',
         drinks: 'SUPPLEMENTS',
-        products: 'SPORTS SHOES',
+        products: 'SNEAKERS',
         promotions: 'PROMOTIONS',
         about: 'ABOUT US',
         profile: 'PROFILE',
-        admin: 'Admin',
+        admin: 'Admin panel',
         logout: 'Logout',
         coffeeMenu: [
-            { text: 'Women Fashion', href: '/lalashop/thoi-trang-nu' },
-            { text: 'Men Fashion', href: '/lalashop/thoi-trang-nam' },
+            { text: 'Sport Shirts', href: '/products?category=ao' },
+            { text: 'Sport Pants', href: '/products?category=quan' },
+            { text: 'Sportswear Sets', href: '/products?category=bo-quan-ao' }
         ]
     }
 };
 
 const Header = () => {
-    const navigate = useNavigate();
+    const [lang, setLang] = useState('VN');
+    const [searchQuery, setSearchQuery] = useState('');
+    const [allProducts, setAllProducts] = useState([]);
+    const [filteredProducts, setFilteredProducts] = useState([]);
+    const [showDropdown, setShowDropdown] = useState(false);
+    
+    // Auth state giả định hoặc kết nối từ LocalStorage nếu có
+    const [isLoggedIn, setIsLoggedIn] = useState(() => {
+        return localStorage.getItem('isLoggedIn') === 'true';
+    });
+    const [userRole, setUserRole] = useState(() => {
+        return localStorage.getItem('userRole') || 'customer';
+    });
 
+    const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
     const [hoveredMenu, setHoveredMenu] = useState(null);
     const [cartCount, setCartCount] = useState(0);
-    const [currentUser, setCurrentUser] = useState(null);
-    const [userMenuOpen, setUserMenuOpen] = useState(false);
 
-    const [products, setProducts] = useState([]);
-    const [searchQuery, setSearchQuery] = useState('');
-    const [searchFocused, setSearchFocused] = useState(false);
-
-    const [lang, setLang] = useState('VN');
-
+    const navigate = useNavigate();
+    const dropdownRef = useRef(null);
     const userMenuRef = useRef(null);
-    const searchBoxRef = useRef(null);
 
     const t = translations[lang];
 
-    const searchMatches = useMemo(() => {
-        const cleanQuery = customNormalizeText(searchQuery);
-        
-        if (!cleanQuery) return [];
-
-        return products
-            .filter((product) => {
-                if (!product || !product.name) return false;
-                
-                const cleanProductName = customNormalizeText(product.name);
-                
-                return cleanProductName.includes(cleanQuery);
-            })
-            .slice(0, 10); 
-    }, [products, searchQuery]);
-
+    // Đọc số lượng giỏ hàng
     useEffect(() => {
         const updateCartCount = () => {
-            const savedCart = localStorage.getItem('cart');
-
-            if (!savedCart) {
-                setCartCount(0);
-                return;
-            }
-
-            try {
-                const cart = JSON.parse(savedCart);
-                const totalItems = cart.reduce(
-                    (sum, item) => sum + (item.quantity || 0),
-                    0
-                );
-                setCartCount(totalItems);
-            } catch (error) {
-                console.error('Lỗi đọc giỏ hàng:', error);
-                setCartCount(0);
-            }
-        };
-
-        const updateCurrentUser = () => {
-            const savedUser = localStorage.getItem('currentUser');
-
-            if (!savedUser) {
-                setCurrentUser(null);
-                return;
-            }
-
-            try {
-                const user = JSON.parse(savedUser);
-                setCurrentUser(user);
-            } catch (error) {
-                console.error('Lỗi đọc thông tin người dùng:', error);
-                setCurrentUser(null);
-            }
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+            setCartCount(totalItems);
         };
 
         updateCartCount();
-        updateCurrentUser();
-
-        const onStorageSync = () => {
-            updateCartCount();
-            updateCurrentUser();
-        };
-
+        window.addEventListener('storage', updateCartCount);
         window.addEventListener('cartUpdated', updateCartCount);
-        window.addEventListener('userUpdated', updateCurrentUser);
-        window.addEventListener('storage', onStorageSync);
 
         return () => {
+            window.removeEventListener('storage', updateCartCount);
             window.removeEventListener('cartUpdated', updateCartCount);
-            window.removeEventListener('userUpdated', updateCurrentUser);
-            window.removeEventListener('storage', onStorageSync);
         };
     }, []);
 
+    // Fetch danh sách sản phẩm để tìm kiếm nâng cao
     useEffect(() => {
-        let cancelled = false;
-
-        const loadProducts = async () => {
-            try {
-                const res = await fetch(`${jsonBase}products.json`);
-                if (!res.ok) return;
-
-                const data = await res.json();
-                if (cancelled) return;
-
-                const mapped = data.map((item) => ({
-                    ...item,
-                    image: imageMap[item.imageKey],
-                }));
-
-                setProducts(mapped);
-            } catch (err) {
-                console.error('Lỗi tải sản phẩm cho tìm kiếm:', err);
-            }
-        };
-
-        loadProducts();
-
-        return () => {
-            cancelled = true;
-        };
+        fetch(`${jsonBase}products.json`)
+            .then((res) => {
+                if (!res.ok) throw new Error('Không thể tải dữ liệu sản phẩm');
+                return res.json();
+            })
+            .then((data) => {
+                if (Array.isArray(data)) setAllProducts(data);
+                else if (data && Array.isArray(data.products)) setAllProducts(data.products);
+            })
+            .catch((err) => console.error('Lỗi fetch products trong Header:', err));
     }, []);
 
+    // Xử lý tìm kiếm gõ phím live-search
     useEffect(() => {
-        if (!searchFocused) return;
-
-        const onPointerDown = (e) => {
-            if (
-                searchBoxRef.current &&
-                !searchBoxRef.current.contains(e.target)
-            ) {
-                setSearchFocused(false);
-            }
-        };
-
-        document.addEventListener('mousedown', onPointerDown);
-
-        return () => {
-            document.removeEventListener('mousedown', onPointerDown);
-        };
-    }, [searchFocused]);
-
-    useEffect(() => {
-        if (!userMenuOpen) return;
-
-        const onPointerDown = (e) => {
-            if (
-                userMenuRef.current &&
-                !userMenuRef.current.contains(e.target)
-            ) {
-                setUserMenuOpen(false);
-            }
-        };
-
-        document.addEventListener('mousedown', onPointerDown);
-
-        return () => {
-            document.removeEventListener('mousedown', onPointerDown);
-        };
-    }, [userMenuOpen]);
-
-    useEffect(() => {
-        if (!currentUser) {
-            setUserMenuOpen(false);
+        if (!searchQuery.trim()) {
+            setFilteredProducts([]);
+            return;
         }
-    }, [currentUser]);
 
-    const handleLogout = () => {
-        localStorage.removeItem('currentUser');
-        setUserMenuOpen(false);
-        window.dispatchEvent(new Event('userUpdated'));
-        navigate('/');
-    };
+        const normalizedQuery = customNormalizeText(searchQuery);
+        const tokens = normalizedQuery.split(' ').filter(t => t.length > 0);
 
-    const goToProduct = (product) => {
-        setSearchQuery('');
-        setSearchFocused(false);
-        navigate(`/product/${product.id}`, {
-            state: { product },
+        if (tokens.length === 0) {
+            setFilteredProducts([]);
+            return;
+        }
+
+        const matches = allProducts.filter((product) => {
+            const nameNorm = customNormalizeText(product.name);
+            const idNorm = customNormalizeText(product.id);
+            const catNorm = customNormalizeText(product.category);
+
+            return tokens.every(token => 
+                nameNorm.includes(token) || 
+                idNorm.includes(token) || 
+                catNorm.includes(token)
+            );
         });
-    };
+
+        setFilteredProducts(matches.slice(0, 6)); // Giới hạn 6 gợi ý nhanh
+    }, [searchQuery, allProducts]);
+
+    // Đóng dropdown khi click ra ngoài
+    useEffect(() => {
+        const handleClickOutside = (e) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+                setShowDropdown(false);
+            }
+            if (userMenuRef.current && !userMenuRef.current.contains(e.target)) {
+                setIsUserMenuOpen(false);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
 
     const handleSearchSubmit = (e) => {
         e.preventDefault();
-        const q = customNormalizeText(searchQuery);
-        if (!q) return;
-
-        navigate(`/products?q=${encodeURIComponent(searchQuery.trim())}`);
-        setSearchFocused(false);
+        if (searchQuery.trim()) {
+            navigate(`/products?search=${encodeURIComponent(searchQuery.trim())}`);
+            setShowDropdown(false);
+        }
     };
 
-    const userLabel = currentUser
-        ? currentUser.name || currentUser.user
-        : t.login;
+    const handleOptionClick = (productName) => {
+        setSearchQuery(productName);
+        setShowDropdown(false);
+        navigate(`/products?search=${encodeURIComponent(productName)}`);
+    };
+
+    const handleLogout = () => {
+        localStorage.removeItem('isLoggedIn');
+        localStorage.removeItem('userRole');
+        setIsLoggedIn(false);
+        setUserRole('customer');
+        setIsUserMenuOpen(false);
+        navigate('/');
+    };
+
+    const toggleLang = () => {
+        setLang((prev) => (prev === 'VN' ? 'EN' : 'VN'));
+    };
 
     return (
         <header className="phuclong-header">
+            {/* THANH TOP BAR BAO GỒM CẢ LOGO, SEARCH VÀ CHỨC NĂNG */}
             <div className="header-top-bar">
                 <div className="header-top-content">
-                    <div className="header-delivery-info">
-                        <i className="fas fa-phone delivery-icon"></i>
-                        <span className="delivery-phone">1800 6779</span>
-                    </div>
-
-                    <div className="header-logo-container">
-                        <div className="phuclong-logo">
-                            <button
-                                type="button"
-                                className="header-logo-btn"
-                                onClick={() => navigate('/')}
-                                aria-label="Về trang chủ"
-                            >
-                                <img
-                                    src={logoImg}
-                                    alt="Logo"
-                                    className="header-logo-image"
-                                />
-                            </button>
+                    
+                    {/* CỤM TRÁI: LOGO VÀ THÔNG TIN GIAO HÀNG */}
+                    <div className="header-left-group">
+                        <div className="header-logo-container">
+                            <div className="phuclong-logo">
+                                <button className="header-logo-btn" onClick={() => navigate('/')}>
+                                    <img src={logoImg} alt="LaLaShop Logo" className="header-logo-image" />
+                                </button>
+                            </div>
+                        </div>
+                        <div className="header-delivery-info">
+                            <i className="fas fa-shipping-fast delivery-icon"></i>
+                            <span className="delivery-text">{t.delivery}:</span>
+                            <span className="delivery-phone">0294.3855.225</span>
+                            <i className="fas fa-motorcycle delivery-scooter"></i>
                         </div>
                     </div>
 
-                    <div className="header-user-actions">
-                        {currentUser ? (
-                            <div className="header-user-menu" ref={userMenuRef}>
-                                <button
-                                    type="button"
-                                    className="login-link header-user-menu-trigger"
-                                    aria-expanded={userMenuOpen}
-                                    aria-haspopup="true"
-                                    onClick={() => setUserMenuOpen((o) => !o)}
-                                >
-                                    {userLabel}
-                                    <i
-                                        className={`fas fa-chevron-down header-user-menu-caret ${
-                                            userMenuOpen ? 'is-open' : ''
-                                        }`}
-                                        aria-hidden="true"
-                                    />
+                    {/* CỤM GIỮA: THANH TÌM KIẾM ĐƯỢC CHUYỂN LÊN ĐÂY */}
+                    <div className="header-search-strip" ref={dropdownRef}>
+                        <div className="header-search-strip__inner">
+                            <form className="header-search__form" onSubmit={handleSearchSubmit}>
+                                <i className="fas fa-search header-search__icon"></i>
+                                <input
+                                    type="text"
+                                    className="header-search__input"
+                                    placeholder={t.searchPlaceholder}
+                                    value={searchQuery}
+                                    onChange={(e) => {
+                                        setSearchQuery(e.target.value);
+                                        setShowDropdown(true);
+                                    }}
+                                    onFocus={() => setShowDropdown(true)}
+                                />
+                                <button type="submit" className="header-search__submit">
+                                    {t.searchBtn}
                                 </button>
+                            </form>
 
-                                {userMenuOpen && (
-                                    <div className="header-user-dropdown" role="menu">
-                                        <button
-                                            type="button"
-                                            className="header-user-dropdown-item"
-                                            role="menuitem"
-                                            onClick={() => {
-                                                setUserMenuOpen(false);
-                                                navigate('/profile');
-                                            }}
-                                        >
-                                            {t.profile}
-                                        </button>
+                            {/* DROPDOWN GỢI Ý KẾT QUẢ TÌM KIẾM */}
+                            {showDropdown && searchQuery.trim() && (
+                                <ul className="header-search__dropdown">
+                                    {filteredProducts.length > 0 ? (
+                                        filteredProducts.map((product) => {
+                                            const finalImgSrc = imageMap[product.image] || product.image;
+                                            return (
+                                                <li key={product.id}>
+                                                    <button
+                                                        type="button"
+                                                        className="header-search__option"
+                                                        onClick={() => handleOptionClick(product.name)}
+                                                    >
+                                                        <div className="header-search__thumb-wrap">
+                                                            <img
+                                                                src={finalImgSrc}
+                                                                alt={product.name}
+                                                                className="header-search__thumb"
+                                                            />
+                                                        </div>
+                                                        <div className="header-search__meta">
+                                                            <span className="header-search__name">{product.name}</span>
+                                                            <span className="header-search__price">
+                                                                {Number(product.price).toLocaleString('vi-VN')} đ
+                                                            </span>
+                                                        </div>
+                                                    </button>
+                                                </li>
+                                            );
+                                        })
+                                    ) : (
+                                        <div className="header-search__empty">{t.noProduct}</div>
+                                    )}
+                                </ul>
+                            )}
+                        </div>
+                    </div>
 
-                                        {currentUser.role === 'staff' && (
+                    {/* CỤM PHẢI: USER ACTIONS & GIỎ HÀNG */}
+                    <div className="header-user-actions">
+                        {isLoggedIn ? (
+                            <div className="header-user-menu" ref={userMenuRef}>
+                                <div
+                                    className="header-user-menu-trigger"
+                                    onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                                >
+                                    <i className="fas fa-user-circle"></i>
+                                    <span>{userRole === 'admin' ? t.admin : t.profile}</span>
+                                    <i className={`fas fa-caret-down header-user-menu-caret ${isUserMenuOpen ? 'is-open' : ''}`}></i>
+                                </div>
+
+                                {isUserMenuOpen && (
+                                    <div className="header-user-dropdown">
+                                        {userRole === 'admin' && (
                                             <button
-                                                type="button"
-                                                className="header-user-dropdown-item"
-                                                role="menuitem"
+                                                className="header-user-dropdown__item"
                                                 onClick={() => {
-                                                    setUserMenuOpen(false);
+                                                    setIsUserMenuOpen(false);
                                                     navigate('/admin');
                                                 }}
                                             >
-                                                {t.admin}
+                                                <i className="fas fa-th-large" style={{ marginRight: '8px' }}></i>
+                                                Trang quản trị
                                             </button>
                                         )}
-
                                         <button
-                                            type="button"
-                                            className="header-user-dropdown-item header-user-dropdown-item--logout"
-                                            role="menuitem"
+                                            className="header-user-dropdown__item header-user-dropdown__item--logout"
                                             onClick={handleLogout}
                                         >
+                                            <i className="fas fa-sign-out-alt" style={{ marginRight: '8px' }}></i>
                                             {t.logout}
                                         </button>
                                     </div>
                                 )}
                             </div>
                         ) : (
-                            <button
-                                type="button"
-                                className="login-link"
-                                onClick={() => navigate('/login')}
-                            >
+                            <button className="login-link" onClick={() => navigate('/login')}>
+                                <i className="fas fa-user" style={{ marginRight: '5px' }}></i>
                                 {t.login}
                             </button>
                         )}
 
                         <span className="action-separator">|</span>
 
-                        <div className="language-selector">
-                            <span 
-                                className={`lang-option ${lang === 'VN' ? 'lang-active' : ''}`}
-                                onClick={() => setLang('VN')}
-                            >
-                                VN
-                            </span>
+                        {/* Đổi ngôn ngữ */}
+                        <div className="language-selector" onClick={toggleLang}>
+                            <span className={lang === 'VN' ? 'lang-active' : 'lang-option'}>VN</span>
                             <span className="lang-separator">|</span>
-                            <span 
-                                className={`lang-option ${lang === 'EN' ? 'lang-active' : ''}`}
-                                onClick={() => setLang('EN')}
-                            >
-                                EN
-                            </span>
+                            <span className={lang === 'EN' ? 'lang-active' : 'lang-option'}>EN</span>
                         </div>
 
-                        <button
-                            className="cart-button"
-                            onClick={() => navigate('/cart')}
-                        >
+                        <span className="action-separator">|</span>
+
+                        {/* Nút Giỏ Hàng */}
+                        <button className="cart-button" onClick={() => navigate('/cart')}>
                             <i className="fas fa-shopping-cart"></i>
                             <span>{t.cart}</span>
-                            <span className="cart-badge">{cartCount}</span>
+                            {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
                         </button>
                     </div>
+
                 </div>
             </div>
 
-            <div className="header-search-strip" aria-label="Tìm kiếm">
-                <div className="header-search-strip__inner" ref={searchBoxRef}>
-                    <form
-                        className="header-search-form"
-                        onSubmit={handleSearchSubmit}
-                        role="search"
-                    >
-                        <i
-                            className="fas fa-search header-search-icon"
-                            aria-hidden="true"
-                        />
-
-                        <input
-                            type="search"
-                            className="header-search-input"
-                            placeholder={t.searchPlaceholder}
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                            onFocus={() => setSearchFocused(true)}
-                            aria-label="Tìm kiếm sản phẩm"
-                            aria-autocomplete="list"
-                            aria-controls="header-search-suggestions"
-                            autoComplete="off"
-                        />
-
-                        <button type="submit" className="header-search-submit">
-                            {t.searchBtn}
-                        </button>
-                    </form>
-
-                    {searchFocused && searchQuery.trim().length > 0 && (
-                        <ul
-                            id="header-search-suggestions"
-                            className="header-search__dropdown"
-                            role="listbox"
-                            aria-label="Gợi ý sản phẩm"
-                        >
-                            {searchMatches.length === 0 ? (
-                                <li className="header-search__empty" role="status">
-                                    <i className="fas fa-search-minus" style={{ marginRight: '8px', opacity: 0.6 }}></i>
-                                    {t.noProduct}
-                                </li>
-                            ) : (
-                                searchMatches.map((p) => (
-                                    <li key={p.id} role="presentation">
-                                        <button
-                                            type="button"
-                                            className="header-search__option"
-                                            role="option"
-                                            onClick={() => goToProduct(p)}
-                                        >
-                                            <span className="header-search__thumb-wrap">
-                                                <img
-                                                    src={p.image || 'https://via.placeholder.com/88'}
-                                                    alt={p.name}
-                                                    className="header-search__thumb"
-                                                    loading="lazy"
-                                                />
-                                            </span>
-
-                                            <span className="header-search__meta">
-                                                <span className="header-search__name" title={p.name}>
-                                                    {p.name}
-                                                </span>
-                                                {p.currentPrice && (
-                                                    <span className="header-search__price">
-                                                        {p.currentPrice}
-                                                    </span>
-                                                )}
-                                            </span>
-
-                                            <i className="fas fa-chevron-right header-search__arrow" style={{ marginLeft: 'auto', fontSize: '11px', opacity: 0.3 }}></i>
-                                        </button>
-                                    </li>
-                                ))
-                            )}
-                        </ul>
-                    )}
-                </div>
-            </div>
-
-            <nav className="header-navigation" aria-label="Điều hướng chính">
+            {/* DANH MỤC MENU ĐIỀU HƯỚNG CHÍNH */}
+            <nav className="header-navigation">
                 <div className="nav-content">
                     <a href="/" className="nav-link">
                         {t.home}
@@ -475,9 +355,9 @@ const Header = () => {
                         onMouseLeave={() => setHoveredMenu(null)}
                     >
                         <a
-                            href="/coffee"
+                            href="/products"
                             className={`nav-link ${
-                                hoveredMenu === 'coffee' ? 'active' : ''
+                                window.location.pathname.includes('/products') ? 'active' : ''
                             }`}
                         >
                             {t.coffee}
