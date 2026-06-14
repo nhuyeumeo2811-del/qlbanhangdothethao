@@ -11,14 +11,14 @@
     "user": "admin2@gmail.com",
     "pass": "123456",
     "name": "Nguyễn Lê Ngân",
-    "role": "staff",
+    "role": "staff"
   },
   {
     "id": 3,
     "user": "admin3@gmail.com",
     "pass": "password",
     "name": "Trần Văn Hùng",
-    "role": "staff",
+    "role": "staff"
   },
   {
     "id": 4,
