@@ -2,11 +2,12 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Header.css';
 
-import logoImg from "../../img/logo.png";
+import logoImg from '../../img/logo.png';
 import { imageMap } from '../../utils/productImages';
-import { normalizeSearchText, rankProductsBySearch, } from '../../utils/productSearch';
+import { normalizeSearchText, rankProductsBySearch,} from '../../utils/productSearch';
 
 const jsonBase = import.meta.env.BASE_URL || '/';
+
 
 const Header = () => {
     const navigate = useNavigate();
@@ -23,10 +24,14 @@ const Header = () => {
     const userMenuRef = useRef(null);
     const searchBoxRef = useRef(null);
 
+    // Search matches
     const searchMatches = useMemo(() => {
         return rankProductsBySearch(products, searchQuery, 10);
     }, [products, searchQuery]);
 
+    // =========================
+    // CART + USER
+    // =========================
     useEffect(() => {
         const updateCartCount = () => {
             const savedCart = localStorage.getItem('cart');
@@ -87,12 +92,15 @@ const Header = () => {
         };
     }, []);
 
+    // =========================
+    // LOAD PRODUCTS
+    // =========================
     useEffect(() => {
         let cancelled = false;
 
         const loadProducts = async () => {
             try {
-const res = await fetch(`${jsonBase}products.json`);
+                const res = await fetch(`${jsonBase}products.json`);
 
                 if (!res.ok) return;
 
@@ -118,6 +126,9 @@ const res = await fetch(`${jsonBase}products.json`);
         };
     }, []);
 
+    // =========================
+    // CLOSE SEARCH WHEN CLICK OUTSIDE
+    // =========================
     useEffect(() => {
         if (!searchFocused) return;
 
@@ -137,6 +148,9 @@ const res = await fetch(`${jsonBase}products.json`);
         };
     }, [searchFocused]);
 
+    // =========================
+    // CLOSE USER MENU
+    // =========================
     useEffect(() => {
         if (!userMenuOpen) return;
 
@@ -162,6 +176,9 @@ const res = await fetch(`${jsonBase}products.json`);
         }
     }, [currentUser]);
 
+    // =========================
+    // HANDLERS
+    // =========================
     const handleLogout = () => {
         localStorage.removeItem('currentUser');
 
@@ -199,6 +216,9 @@ const res = await fetch(`${jsonBase}products.json`);
         ? currentUser.name || currentUser.user
         : 'Đăng nhập';
 
+    // =========================
+    // MENU ITEMS
+    // =========================
     const coffeeMenuItems = [
         {
             text: 'Hành trình tách cà phê đậm',
@@ -216,8 +236,12 @@ const res = await fetch(`${jsonBase}products.json`);
 
     return (
         <header className="phuclong-header">
+            {/* ========================= */}
+            {/* TOP HEADER */}
+            {/* ========================= */}
             <div className="header-top-bar">
-<div className="header-top-content">
+                <div className="header-top-content">
+                    {/* LEFT */}
                     <div className="header-delivery-info">
                         <span className="delivery-text">
                             Free Delivery
@@ -234,6 +258,7 @@ const res = await fetch(`${jsonBase}products.json`);
                         </div>
                     </div>
 
+                    {/* CENTER LOGO */}
                     <div className="header-logo-container">
                         <div className="phuclong-logo">
                             <button
@@ -242,10 +267,16 @@ const res = await fetch(`${jsonBase}products.json`);
                                 onClick={() => navigate('/')}
                                 aria-label="Về trang chủ"
                             >
-                                <img src={logoImg} alt="Logo" className="header-logo-image" onClick={() => navigate('/')} style={{ cursor: 'pointer' }} />                            </button>
+                                <img
+                                    src={logoImg}
+                                    alt="Logo"
+                                    className="header-logo-image"
+                                />
+                            </button>
                         </div>
                     </div>
 
+                    {/* RIGHT ACTIONS */}
                     <div className="header-user-actions">
                         {currentUser ? (
                             <div
@@ -279,7 +310,7 @@ const res = await fetch(`${jsonBase}products.json`);
                                             type="button"
                                             className="header-user-dropdown-item"
                                             role="menuitem"
-onClick={() => {
+                                            onClick={() => {
                                                 setUserMenuOpen(false);
                                                 navigate('/profile');
                                             }}
@@ -344,7 +375,7 @@ onClick={() => {
                                 {cartCount}
                             </span>
                         </button>
-</div>
+                    </div>
                 </div>
             </div>
 
@@ -415,7 +446,7 @@ onClick={() => {
                                             role="presentation"
                                         >
                                             <button
-type="button"
+                                                type="button"
                                                 className="header-search-option"
                                                 role="option"
                                                 onClick={() => goToProduct(p)}
@@ -476,9 +507,9 @@ type="button"
                     >
                         <a
                             href="/coffee"
-className={`nav-link ${hoveredMenu === 'coffee'
-                                ? 'active'
-                                : ''
+                            className={`nav-link ${hoveredMenu === 'coffee'
+                                    ? 'active'
+                                    : ''
                                 }`}
                         >
                             CÀ PHÊ
@@ -528,5 +559,6 @@ className={`nav-link ${hoveredMenu === 'coffee'
         </header>
     );
 };
+
 
 export default Header;
