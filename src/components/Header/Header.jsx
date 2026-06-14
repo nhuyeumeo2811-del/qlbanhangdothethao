@@ -265,68 +265,106 @@ const Header = () => {
                     </div>
 
                     <div className="header-user-actions">
-                        {isLoggedIn ? (
-                            <div className="header-user-menu" ref={userMenuRef}>
-                                <div
-                                    className="header-user-menu-trigger"
-                                    onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                        {currentUser ? (
+                            <div
+                                className="header-user-menu"
+                                ref={userMenuRef}
+                            >
+                                <button
+                                    type="button"
+                                    className="login-link header-user-menu-trigger"
+                                    aria-expanded={userMenuOpen}
+                                    aria-haspopup="true"
+                                    onClick={() =>
+                                        setUserMenuOpen((o) => !o)
+                                    }
                                 >
-                                    <i className="fas fa-user-circle"></i>
-                                    <span>{userRole === 'admin' ? t.admin : t.profile}</span>
-                                    <i className={`fas fa-caret-down header-user-menu-caret ${isUserMenuOpen ? 'is-open' : ''}`}></i>
-                                </div>
+                                    {userLabel}
 
-                                {isUserMenuOpen && (
-                                    <div className="header-user-dropdown">
-                                        {userRole === 'admin' && (
+                                    <i
+                                        className={`fas fa-chevron-down header-user-menu-caret ${userMenuOpen ? 'is-open' : ''
+                                            }`}
+                                        aria-hidden="true"
+                                    />
+                                </button>
+
+                                {userMenuOpen && (
+                                    <div
+                                        className="header-user-dropdown"
+                                        role="menu"
+                                    >
+                                        <button
+                                            type="button"
+                                            className="header-user-dropdown-item"
+                                            role="menuitem"
+                                            onClick={() => {
+                                                setUserMenuOpen(false);
+                                                navigate('/profile');
+                                            }}
+                                        >
+                                            HỒ SƠ
+                                        </button>
+
+                                        {currentUser.role === 'staff' && (
                                             <button
-                                                className="header-user-dropdown__item"
+                                                type="button"
+                                                className="header-user-dropdown-item"
+                                                role="menuitem"
                                                 onClick={() => {
-                                                    setIsUserMenuOpen(false);
+                                                    setUserMenuOpen(false);
                                                     navigate('/admin');
                                                 }}
                                             >
-                                                <i className="fas fa-th-large" style={{ marginRight: '8px' }}></i>
-                                                Trang quản trị
+                                                Quản trị
                                             </button>
                                         )}
+
                                         <button
-                                            className="header-user-dropdown__item header-user-dropdown__item--logout"
+                                            type="button"
+                                            className="header-user-dropdown-item header-user-dropdown-item--logout"
+                                            role="menuitem"
                                             onClick={handleLogout}
                                         >
-                                            <i className="fas fa-sign-out-alt" style={{ marginRight: '8px' }}></i>
-                                            {t.logout}
+                                            Đăng xuất
                                         </button>
                                     </div>
                                 )}
                             </div>
                         ) : (
-                            <button className="login-link" onClick={() => navigate('/login')}>
-                                <i className="fas fa-user" style={{ marginRight: '5px' }}></i>
-                                {t.login}
+                            <button
+                                type="button"
+                                className="login-link"
+                                onClick={() => navigate('/login')}
+                            >
+                                Đăng nhập
                             </button>
                         )}
 
                         <span className="action-separator">|</span>
 
-                        <div className="language-selector" onClick={toggleLang}>
-                            <span className={lang === 'VN' ? 'lang-active' : 'lang-option'}>VN</span>
+                        <div className="language-selector">
+                            <span className="lang-active">VN</span>
+
                             <span className="lang-separator">|</span>
-                            <span className={lang === 'EN' ? 'lang-active' : 'lang-option'}>EN</span>
+
+                            <span className="lang-option">EN</span>
                         </div>
 
-                        <span className="action-separator">|</span>
-
-                        <button className="cart-button" onClick={() => navigate('/cart')}>
+                        <button
+                            className="cart-button"
+                            onClick={() => navigate('/cart')}
+                        >
                             <i className="fas fa-shopping-cart"></i>
-                            <span>{t.cart}</span>
-                            {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
+
+                            <span>Giỏ hàng</span>
+
+                            <span className="cart-badge">
+                                {cartCount}
+                            </span>
                         </button>
                     </div>
-
                 </div>
             </div>
-
             <nav className="header-navigation">
                 <div className="nav-content">
                     <a href="/" className="nav-link">
