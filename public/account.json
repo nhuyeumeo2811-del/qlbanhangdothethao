@@ -11,14 +11,14 @@
     "user": "nganle@gmail.com",
     "pass": "123456",
     "name": "Nguyễn Lê Ngân",
-    "role": "customer"
+    "role": "staff",
   },
   {
     "id": 3,
     "user": "user2@gmail.com",
     "pass": "password",
     "name": "Trần Thị B",
-    "role": "customer"
+    "role": "staff",
   },
   {
     "id": 4,
