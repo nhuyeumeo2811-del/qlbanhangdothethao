@@ -44,8 +44,7 @@ const Login = () => {
                 throw new Error('Không thể tải dữ liệu tài khoản');
             }
 
-            const accounts = await response.json();
-            const matchedAccount = accounts.find((acc) => {
+            const response = await fetch('account.json');
                 const accUser = String(acc.user || '').trim().toLowerCase();
                 const accPass = String(acc.pass || '').trim();
                 return accUser === normalizedUsername && accPass === normalizedPassword;
