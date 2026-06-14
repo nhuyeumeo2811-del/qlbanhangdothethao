@@ -63,7 +63,7 @@ const Login = () => {
             if (matchedAccount.role === 'staff') {
                 navigate('/admin');
             } else {
-                navigate('/admin');
+                navigate('/');
             }
         } catch (err) {
             console.error(err);
