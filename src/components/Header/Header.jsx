@@ -359,12 +359,11 @@ const Header = () => {
                     )}
                 </div>
 
-                    <div className="header-delivery-info">
-                        <i className="fas fa-phone delivery-icon"></i>
-                        <span className="delivery-phone">1800 6779</span>
-                    </div>
-
                     <div className="header-user-actions">
+                        <div className="header-delivery-info">
+                            <i className="fas fa-phone delivery-icon"></i>
+                            <span className="delivery-phone">1800 6779</span>
+                        </div>
                         <button
                             className="login-link"
                             onClick={() => navigate('/login')}
