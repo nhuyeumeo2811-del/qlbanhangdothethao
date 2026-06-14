@@ -365,12 +365,82 @@ const Header = () => {
                             <i className="fas fa-phone delivery-icon"></i>
                             <span className="delivery-phone">1800 6779</span>
                         </div>
-                        <button
-                            className="login-link"
-                            onClick={() => navigate('/login')}
-                        >
-                            {currentUser ? (currentUser.name || currentUser.user) : 'Đăng nhập'}
-                        </button>
+                        
+                        {currentUser ? (
+                            <div
+                                className="header-user-menu"
+                                ref={userMenuRef}
+                            >
+                                <button
+                                    type="button"
+                                    className="login-link header-user-menu-trigger"
+                                    aria-expanded={userMenuOpen}
+                                    aria-haspopup="true"
+                                    onClick={() =>
+                                        setUserMenuOpen((o) => !o)
+                                    }
+                                >
+                                    {userLabel}
+
+                                    <i
+                                        className={`fas fa-chevron-down header-user-menu-caret ${userMenuOpen ? 'is-open' : ''
+                                            }`}
+                                        aria-hidden="true"
+                                    />
+                                </button>
+
+                                {userMenuOpen && (
+                                    <div
+                                        className="header-user-dropdown"
+                                        role="menu"
+                                    >
+                                        <button
+                                            type="button"
+                                            className="header-user-dropdown-item"
+                                            role="menuitem"
+                                            onClick={() => {
+                                                setUserMenuOpen(false);
+                                                navigate('/profile');
+                                            }}
+                                        >
+                                            HỒ SƠ
+                                        </button>
+
+                                        {currentUser.role === 'staff' && (
+                                            <button
+                                                type="button"
+                                                className="header-user-dropdown-item"
+                                                role="menuitem"
+                                                onClick={() => {
+                                                    setUserMenuOpen(false);
+                                                    navigate('/admin');
+                                                }}
+                                            >
+                                                Quản trị
+                                            </button>
+                                        )}
+
+                                        <button
+                                            type="button"
+                                            className="header-user-dropdown-item header-user-dropdown-item--logout"
+                                            role="menuitem"
+                                            onClick={handleLogout}
+                                        >
+                                            Đăng xuất
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+                        ) : (
+                            <button
+                                type="button"
+                                className="login-link"
+                                onClick={() => navigate('/login')}
+                            >
+                                Đăng nhập
+                            </button>
+                        )}
+                        
                         <span className="action-separator">|</span>
 
                         <div className="language-selector">
