@@ -262,10 +262,6 @@ const Header = () => {
         <header className="phuclong-header">
             <div className="header-top-bar">
                 <div className="header-top-content">
-                    <div className="header-delivery-info">
-                        <i className="fas fa-phone delivery-icon"></i>
-                        <span className="delivery-phone">1800 6779</span>
-                    </div>
 
                     <div className="header-logo-container">
                         <div className="phuclong-logo">
@@ -284,45 +280,7 @@ const Header = () => {
                         </div>
                     </div>
 
-                    <div className="header-user-actions">
-                        <button
-                            className="login-link"
-                            onClick={() => navigate('/login')}
-                        >
-                            {currentUser ? (currentUser.name || currentUser.user) : 'Đăng nhập'}
-                        </button>
-                        <span className="action-separator">|</span>
-
-                        <div className="language-selector">
-                            <span 
-                                className={`lang-option ${lang === 'VN' ? 'lang-active' : ''}`}
-                                onClick={() => setLang('VN')}
-                            >
-                                VN
-                            </span>
-                            <span className="lang-separator">|</span>
-                            <span 
-                                className={`lang-option ${lang === 'EN' ? 'lang-active' : ''}`}
-                                onClick={() => setLang('EN')}
-                            >
-                                EN
-                            </span>
-                        </div>
-
-                        <button
-                            className="cart-button"
-                            onClick={() => navigate('/cart')}
-                        >
-                            <i className="fas fa-shopping-cart"></i>
-                            <span>Giỏ hàng</span>
-                            <span className="cart-badge">{cartCount}</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <div className="header-search-strip" aria-label="Tìm kiếm">
-                <div className="header-search-strip__inner" ref={searchBoxRef}>
+                    <div className="header-search-strip__inner" ref={searchBoxRef}>
                     <form
                         className="header-search-form"
                         onSubmit={handleSearchSubmit}
@@ -399,6 +357,47 @@ const Header = () => {
                             )}
                         </ul>
                     )}
+                </div>
+
+                    <div className="header-delivery-info">
+                        <i className="fas fa-phone delivery-icon"></i>
+                        <span className="delivery-phone">1800 6779</span>
+                    </div>
+
+                    <div className="header-user-actions">
+                        <button
+                            className="login-link"
+                            onClick={() => navigate('/login')}
+                        >
+                            {currentUser ? (currentUser.name || currentUser.user) : 'Đăng nhập'}
+                        </button>
+                        <span className="action-separator">|</span>
+
+                        <div className="language-selector">
+                            <span 
+                                className={`lang-option ${lang === 'VN' ? 'lang-active' : ''}`}
+                                onClick={() => setLang('VN')}
+                            >
+                                VN
+                            </span>
+                            <span className="lang-separator">|</span>
+                            <span 
+                                className={`lang-option ${lang === 'EN' ? 'lang-active' : ''}`}
+                                onClick={() => setLang('EN')}
+                            >
+                                EN
+                            </span>
+                        </div>
+
+                        <button
+                            className="cart-button"
+                            onClick={() => navigate('/cart')}
+                        >
+                            <i className="fas fa-shopping-cart"></i>
+                            <span>Giỏ hàng</span>
+                            <span className="cart-badge">{cartCount}</span>
+                        </button>
+                    </div>
                 </div>
             </div>
 
