@@ -9,11 +9,11 @@ const jsonBase = import.meta.env.BASE_URL || '/';
 const customNormalizeText = (text) => {
     if (!text) return '';
     return text
-        .toLowerCase()
-        .normalize('NFD') 
-        .replace(/[\u0300-\u036f]/g, '') 
-        .replace(/đ/g, 'd')
-        .trim()
+        .toLowerCase();
+        .normalize('NFD') ;
+        .replace(/[\u0300-\u036f]/g, '') ;
+        .replace(/đ/g, 'd');
+        .trim();
         .replace(/\s+/g, ' ');
 
 const translations = {
@@ -265,7 +265,7 @@ const Header = () => {
             {}
             <div className="header-top-bar">
                 <div className="header-top-content">
-                    {/* LEFT */}
+                    {}
                     <div className="header-delivery-info">
                         <span className="delivery-text">{t.delivery}</span>
                         <i className="fas fa-phone delivery-icon"></i>
@@ -486,7 +486,7 @@ const Header = () => {
                         {t.home}
                     </a>
 
-                    {/* CÀ PHÊ */}
+                    {}
                     <div
                         className="nav-item-with-dropdown"
                         onMouseEnter={() => setHoveredMenu('coffee')}
