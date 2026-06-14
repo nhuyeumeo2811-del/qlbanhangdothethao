@@ -1,22 +1,23 @@
 /* ==========================================================================
-   PHẦN ĐỈNH HEADER (TOP BAR) - ĐỒNG BỘ THEO LALASHOP
+   LALASHOP GLOBAL HEADER STYLE - OPTIMIZED FROM MOCKUP
    ========================================================================== */
-.phuclong-header {
-    background-color: white;
+.phuclong-header { /* Bạn có thể đổi class này thành .lalashop-header ở HTML nhé */
+    background-color: #ffffff;
     width: 100%;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
+/* --- TOP BAR (Thanh tiện ích trên cùng) --- */
 .header-top-bar {
     position: relative;
     z-index: 1200;
-    background-color: white;
-    padding: 10px 20px; /* Thu gọn padding dọc để thanh mảnh như bản thiết kế */
-    border-bottom: 1px solid #e9ecef;
+    background-color: #ffffff;
+    padding: 10px 20px; /* Thu nhỏ padding cho thanh thoát đúng hình */
+    border-bottom: 1px solid #eef2f5;
 }
 
 .header-top-content {
-    max-width: 1300px;
+    max-width: 1200px;
     margin: 0 auto;
     display: flex;
     align-items: center;
@@ -24,38 +25,33 @@
     position: relative;
 }
 
-/* Thông tin giao hàng - Giao hàng miễn phí & Hotline */
+/* Giao hàng miễn phí & Hotline */
 .header-delivery-info {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     flex: 1;
 }
 
 .delivery-text {
-    font-weight: 700;
-    color: #111111;
-    font-size: 14px;
-}
-
-.delivery-icon {
-    color: #111111;
+    font-weight: 600;
+    color: #212529;
     font-size: 14px;
 }
 
 .delivery-phone {
     font-weight: 700;
-    color: #111111;
+    color: #212529;
     font-size: 14px;
 }
 
 .delivery-scooter {
-    margin-left: 10px;
-    color: #115bb6; /* Đổi sang tông xanh dương năng động của LaLaShop */
-    font-size: 20px;
+    margin-left: 5px;
+    color: #f15a24; /* Màu cam năng động từ Logo LaLaShop */
+    font-size: 18px;
 }
 
-/* Định vị Logo LaLaShop nằm chính giữa trung tâm */
+/* Căn giữa LOGO chuẩn */
 .header-logo-container {
     position: absolute;
     left: 50%;
@@ -63,63 +59,26 @@
     flex: 0 0 auto;
 }
 
-.phuclong-logo {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.header-logo-btn {
-    border: none;
-    background: none;
-    padding: 0;
-    cursor: pointer;
-    display: block;
-    line-height: 0;
-}
-
 .header-logo-image {
-    height: 55px; /* Điều chỉnh lại độ cao logo cân đối, không bị quá to */
+    height: 55px; /* Thu nhỏ chiều cao logo vừa vặn với top-bar */
     width: auto;
     object-fit: contain;
     transition: transform 0.2s ease;
 }
 
 .header-logo-btn:hover .header-logo-image {
-    transform: scale(1.05);
+    transform: scale(1.03);
 }
 
-/* Các tương tác người dùng phía bên phải (Quản trị viên, Giỏ hàng) */
+/* Khu vực chức năng (Quản trị viên, Ngôn ngữ, Giỏ hàng) */
 .header-user-actions {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 20px;
     flex: 1;
     justify-content: flex-end;
     font-size: 14px;
-    color: #333333;
-}
-
-.login-link {
-    color: #333333;
-    text-decoration: none;
-    font-weight: 500;
-}
-
-.login-link:hover {
-    color: #115bb6;
-}
-
-button.login-link {
-    background: none;
-    border: none;
-    padding: 0;
-    font: inherit;
-    cursor: pointer;
-}
-
-.header-user-menu {
-    position: relative;
+    color: #495057;
 }
 
 .header-user-menu-trigger {
@@ -127,123 +86,57 @@ button.login-link {
     align-items: center;
     gap: 6px;
     cursor: pointer;
-    color: #333333;
+    color: #495057;
+    font-weight: 500;
 }
 
-.header-user-menu-caret {
-    font-size: 10px;
-    opacity: 0.75;
-    transition: transform 0.2s;
+.header-user-menu-trigger:hover {
+    color: #f15a24; /* Hover đổi sang cam thể thao */
 }
 
-.header-user-menu-caret.is-open {
-    transform: rotate(180deg);
-}
-
-.header-user-dropdown {
-    position: absolute;
-    top: calc(100% + 8px);
-    right: 0;
-    min-width: 180px;
-    background: #ffffff;
-    border-radius: 6px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-    padding: 6px 0;
-    z-index: 1100;
-    animation: fadeIn 0.2s ease-in;
-}
-
-.header-user-dropdown__item {
-    display: block;
-    width: 100%;
-    padding: 10px 18px;
-    border: none;
-    background: none;
-    text-align: left;
-    font-size: 14px;
-    color: #333333;
-    cursor: pointer;
-    transition: background 0.15s, color 0.15s;
-}
-
-.header-user-dropdown__item:hover {
-    background: #f8f9fa;
-    color: #115bb6;
-}
-
-.header-user-dropdown__item--logout {
-    color: #115bb6;
-}
-
-.header-user-dropdown__item--logout:hover {
-    background: #eef4fc;
-    color: #0d468b;
-}
-
-.action-separator {
-    color: #dddddd;
-}
-
+/* Ngôn ngữ VN | EN */
 .language-selector {
     display: flex;
     align-items: center;
-    gap: 5px;
-    color: #333333;
-    cursor: pointer;
+    gap: 4px;
+    color: #6c757d;
 }
 
 .lang-active {
     font-weight: bold;
-    color: #333333;
+    color: #212529;
 }
 
-.lang-separator {
-    color: #dddddd;
-}
-
-.lang-option {
-    color: #666666;
-}
-
-.lang-option:hover {
-    color: #115bb6;
-}
-
-/* Nút Giỏ hàng hình viên thuốc bo tròn viền xanh chữ xanh theo đúng bản vẽ */
+/* Nút Giỏ Hàng bo góc vuông mềm theo Mockup */
 .cart-button {
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 6px 18px;
-    border: 1.5px solid #115bb6;
-    border-radius: 20px; /* Bo tròn viền dạng hình viên thuốc giống thiết kế */
-    background-color: white;
-    color: #115bb6;
+    padding: 6px 16px;
+    border: 1.5px solid #1d4ed8; /* Viền xanh tương ứng màu giỏ hàng */
+    border-radius: 6px;
+    background-color: #ffffff;
+    color: #1d4ed8;
     font-weight: 600;
     cursor: pointer;
     position: relative;
-    font-size: 14px;
+    font-size: 13px;
     transition: all 0.2s ease;
 }
 
 .cart-button:hover {
-    background-color: #115bb6;
-    color: white;
+    background-color: #1d4ed8;
+    color: #ffffff;
 }
 
-.cart-button i {
-    font-size: 16px;
-}
-
-/* Badge số lượng sản phẩm hình tròn màu xanh lam */
 .cart-badge {
     position: absolute;
-    top: -6px;
-    right: -4px;
+    top: -7px;
+    right: -7px;
     width: 18px;
     height: 18px;
-    background-color: #115bb6;
-    color: white;
+    background-color: #f15a24; /* Badge màu cam rực rỡ nổi bật số lượng */
+    color: #ffffff;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -252,17 +145,15 @@ button.login-link {
     font-weight: bold;
 }
 
-
 /* ==========================================================================
-   PHẦN THANH TÌM KIẾM (SEARCH STRIP) - CHUẨN MÀU NỀN TRẮNG XANH NHẸ LALASHOP
+   SEARCH BAR (Thanh tìm kiếm dạng Input Pill)
    ========================================================================== */
 .header-search-strip {
     position: relative;
     z-index: 1150;
-    background: #f1f6fc; /* Màu nền xanh dương nhạt cực mượt làm nền cho thanh tìm kiếm */
-    border-bottom: 1px solid #e2ebf5;
+    background: #f8f9fa; /* Đổi từ gradient xanh cũ sang màu nền xám sáng thanh lịch */
+    border-bottom: 1px solid #e9ecef;
     padding: 12px 20px;
-    height: auto;
 }
 
 .header-search-strip__inner {
@@ -271,32 +162,29 @@ button.login-link {
     position: relative;
 }
 
-/* Khung form tìm kiếm bo tròn ôm sát dẹt ngang hiện đại */
 .header-search__form,
 .header-search-form {
     display: flex;
     align-items: center;
-    gap: 12px;
-    border: 1px solid #cbdcf2;
+    gap: 10px;
+    border: 1.5px solid #ced4da;
     border-radius: 30px;
     background: #ffffff;
-    padding: 3px 4px 3px 20px;
-    box-shadow: 0 2px 10px rgba(17, 91, 182, 0.04);
-    transition: all 0.3s ease;
+    padding: 2px 4px 2px 16px;
+    box-shadow: none;
+    transition: all 0.2s ease;
 }
 
 .header-search__form:focus-within,
 .header-search-form:focus-within {
-    border-color: #115bb6;
-    box-shadow: 0 0 0 3px rgba(17, 91, 182, 0.1), 
-                0 4px 20px rgba(17, 91, 182, 0.06);
+    border-color: #0f5132; /* Đổi sang xanh lá đậm theo phong cách sân cỏ thể thao */
+    box-shadow: 0 0 0 3px rgba(15, 81, 50, 0.1);
 }
 
 .header-search__icon,
 .header-search-icon {
-    color: #115bb6;
-    font-size: 16px;
-    opacity: 0.8;
+    color: #6c757d;
+    font-size: 15px;
     flex-shrink: 0;
 }
 
@@ -308,242 +196,152 @@ button.login-link {
     background: transparent;
     padding: 8px 0;
     font-size: 14px;
-    color: #222222;
+    color: #212529;
     outline: none;
 }
 
 .header-search__input::placeholder,
 .header-search-input::placeholder {
-     color: #a0b3cc;
+     color: #adb5bd;
 }
 
-/* Nút tìm kiếm đồng bộ màu xanh đậm bo tròn */
+/* Nút Tìm Kiếm (Bo tròn ôm sát form) */
 .header-search__submit,
 .header-search-submit {
     flex-shrink: 0;
     border: none;
-    border-radius: 25px;
-    padding: 8px 26px;
+    border-radius: 20px;
+    padding: 8px 24px;
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
-    background: #115bb6;
+    background: #1d4ed8; /* Màu xanh nước biển đồng bộ với nút giỏ hàng và button mock */
     color: #ffffff;
-    transition: all 0.2s ease;
+    transition: background-color 0.2s ease;
 }
 
 .header-search__submit:hover,
 .header-search-submit:hover {
-    background: #0d468b;
-    box-shadow: 0 2px 8px rgba(17, 91, 182, 0.2);
+    background-color: #1e40af;
 }
 
-.header-search__submit:active,
-.header-search-submit:active {
-    transform: scale(0.97);
-}
-
-/* DROPDOWN KẾT QUẢ GỢI Ý */
+/* DROPDOWN KẾT QUẢ TÌM KIẾM */
 .header-search__dropdown {
     position: absolute;
-    top: calc(100% + 8px);
+    top: calc(100% + 6px);
     left: 0;
     right: 0;
-    margin: 0;
-    padding: 8px 0;
-    list-style: none;
     background: #ffffff;
     border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-    border: 1px solid #e1eaf5;
-    max-height: 350px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e9ecef;
+    max-height: 320px;
     overflow-y: auto;
-    z-index: 1200;
-}
-
-.header-search__dropdown::-webkit-scrollbar {
-    width: 6px;
-}
-.header-search__dropdown::-webkit-scrollbar-thumb {
-    background: #cbdcf2;
-    border-radius: 4px;
+    z-index: 1250;
 }
 
 .header-search__option {
     display: flex;
     align-items: center;
-    gap: 14px;
-    width: 100%;
+    gap: 12px;
     padding: 10px 16px;
     border: none;
     background: none;
     text-align: left;
+    width: 100%;
     cursor: pointer;
-    transition: background 0.2s ease;
+    transition: background-color 0.15s ease;
 }
 
-.header-search__option:hover,
-.header-search__option:focus-visible {
-    background: #f4f8fc;
-    outline: none;
+.header-search__option:hover {
+    background-color: #f8f9fa;
 }
 
 .header-search__thumb-wrap {
-    flex-shrink: 0;
-    width: 46px;
-    height: 46px;
+    width: 44px;
+    height: 44px;
     border-radius: 6px;
     overflow: hidden;
-    background: #f5f5f5;
-    border: 1px solid #eeeeee;
-}
-
-.header-search__thumb {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.header-search__meta {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 2px;
-    min-width: 0;
+    border: 1px solid #f1f3f5;
 }
 
 .header-search__name {
     font-size: 14px;
     font-weight: 500;
-    color: #222222;
-    line-height: 1.4;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    width: 100%;
+    color: #212529;
 }
 
-/* Điểm nhấn giá tiền màu xanh thể thao đặc trưng */
 .header-search__price {
     font-size: 13px;
     font-weight: 600;
-    color: #115bb6;
+    color: #f15a24; /* Giá tiền đổi sang màu cam nổi bật, kích thích chuyển đổi */
 }
-
-.header-search__empty {
-    padding: 24px 16px;
-    font-size: 14px;
-    color: #7a828a;
-    text-align: center;
-}
-
 
 /* ==========================================================================
-   DANH MỤC MENU ĐIỀU HƯỚNG (NAVIGATION BAR) - CHỮ IN HOA, VIỀN XÁM NHẸ MẢNH
+   NAVIGATION BAR (Thanh menu chính - Quần áo, Giày thể thao...)
    ========================================================================== */
 .header-navigation {
-    background-color: white;
-    border-bottom: 1px solid #eaeaea;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e9ecef;
 }
 
 .nav-content {
-    max-width: 1300px;
+    max-width: 1200px;
     margin: 0 auto;
     display: flex;
     align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 0;
-    padding: 0 20px; /* Bỏ padding dọc bao ngoài, chuyển dồn vào nav-link để hover phủ kín chiều cao */
+    justify-content: space-between; /* Trải đều menu theo hàng ngang */
+    padding: 0 10px;
 }
 
-/* Định dạng text in hoa, bold đậm chất thể thao đúng theo layout LaLaShop */
 .nav-link {
-    color: #222222;
+    color: #495057;
     text-decoration: none;
-    font-weight: 700; /* Đậm nét khỏe khoắn */
+    font-weight: 600;
     font-size: 13px;
-    text-transform: uppercase; /* Bắt buộc viết hoa toàn bộ */
-    letter-spacing: 0.3px;
-    transition: all 0.2s ease;
-    position: relative;
-    padding: 16px 18px; /* Tăng padding để menu rộng rãi, dễ click */
+    text-transform: none; /* Trả về text thường như phác thảo */
+    letter-spacing: 0;
+    padding: 14px 10px;
     display: inline-block;
+    transition: color 0.15s ease;
 }
 
 .nav-link:hover {
-    color: #115bb6;
-    background-color: #f8f9fa; /* Tạo hiệu ứng highlight nền khi hover */
+    color: #0f5132; /* Hover lên đổi sang màu xanh thể thao */
 }
 
-/* Trạng thái danh mục đang được lựa chọn (Active) đổi hẳn màu nền xanh chữ trắng viên thuốc */
+/* Active State - Khi ở trang hiện tại */
 .nav-link.active {
-    background-color: #115bb6;
-    color: white;
+    background-color: transparent;
+    color: #0f5132;
+    font-weight: 700;
+    border-bottom: 2px solid #0f5132; /* Đường gạch chân mảnh tinh tế */
 }
 
-.nav-link.active:hover {
-    color: white;
-    background-color: #115bb6;
-}
-
-.nav-link.active::after {
-    display: none;
-}
-
-/* Menu Dropdown đổ xuống */
-.nav-item-with-dropdown {
-    position: relative;
-}
-
-.nav-item-with-dropdown:hover .nav-link {
-    background-color: #115bb6;
-    color: white;
-}
-
-.nav-item-with-dropdown:hover .nav-link::after {
-    display: none;
-}
-
-.dropdown-menu {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background-color: white;
-    min-width: 240px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    border-radius: 0 0 4px 4px;
-    z-index: 1000;
-    padding: 6px 0;
-    margin-top: 0;
-    border-top: 2px solid #115bb6; /* Thanh màu xanh định vị thương hiệu ở mép trên dropdown */
-    animation: fadeIn 0.18s ease-out;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-4px);
+/* ==========================================================================
+   RESPONSIVE (Tương thích thiết bị di động)
+   ========================================================================== */
+@media (max-width: 992px) {
+    .header-top-content {
+        flex-direction: column;
+        gap: 12px;
+        padding: 10px 0;
     }
-    to {
-        opacity: 1;
-        transform: translateY(0);
+    .header-logo-container {
+        position: relative;
+        left: auto;
+        transform: none;
+    }
+    .header-user-actions {
+        justify-content: center;
+        width: 100%;
+    }
+    .nav-content {
+        justify-content: center;
+        gap: 10px;
+    }
+    .nav-link {
+        padding: 10px 8px;
+        font-size: 12px;
     }
 }
-
-.dropdown-item {
-    display: block;
-    padding: 11px 20px;
-    color: #333333;
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 500;
-    text-transform: none; /* Dropdown con giữ nguyên kiểu chữ thường thanh lịch */
-    transition: all 0.15s ease;
-    letter-spacing: normal;
-}
-
-.dropdown-item:hover {
-    background-color: #f5f9ff;
-    color: #115bb6;
-    padding-left: 24
