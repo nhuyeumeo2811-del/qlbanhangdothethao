@@ -425,7 +425,6 @@ const Admin = () => {
                         
                         <div style={{ fontSize: '13px', textAlign: 'right', lineHeight: '2' }}>
                           <div style={{ textDecoration: 'underline', color: '#000' }}>Xem chi tiết khách hàng</div>
-                          <div style={{ color: '#777', fontSize: '11px' }}>Quản lý thông tin thành viên</div>
                         </div>
                       </div>
                     </div>
