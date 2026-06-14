@@ -1,745 +1,347 @@
-.phuclong-header {
-    background-color: white;
-    width: 100%;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+/* ==========================================================================
+   LALASHOP GLOBAL HEADER STYLE - OPTIMIZED FROM MOCKUP
+   ========================================================================== */
+.phuclong-header { /* Bạn có thể đổi class này thành .lalashop-header ở HTML nhé */
+    background-color: #ffffff;
+    width: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
+/* --- TOP BAR (Thanh tiện ích trên cùng) --- */
 .header-top-bar {
-    position: relative;
-    z-index: 1200;
-    background-color: white;
-    padding: 15px 20px;
-    border-bottom: 1px solid #f0f0f0;
+    position: relative;
+    z-index: 1200;
+    background-color: #ffffff;
+    padding: 10px 20px; /* Thu nhỏ padding cho thanh thoát đúng hình */
+    border-bottom: 1px solid #eef2f5;
 }
 
 .header-top-content {
-    max-width: 1300px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
 }
 
+/* Giao hàng miễn phí & Hotline */
 .header-delivery-info {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
 }
 
 .delivery-text {
-    font-weight: bold;
-    color: #312829;
-    font-size: 14px;
-}
-
-.delivery-icon {
-    color: #312829;
-    font-size: 14px;
+    font-weight: 600;
+    color: #212529;
+    font-size: 14px;
 }
 
 .delivery-phone {
-    font-weight: bold;
-    color: #312829;
-    font-size: 14px;
+    font-weight: 700;
+    color: #212529;
+    font-size: 14px;
 }
 
 .delivery-scooter {
-    margin-left: 10px;
-    color: #1a5ca7;
-    font-size: 20px;
+    margin-left: 5px;
+    color: #f15a24; /* Màu cam năng động từ Logo LaLaShop */
+    font-size: 18px;
 }
 
+/* Căn giữa LOGO chuẩn */
 .header-logo-container {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    flex: 0 0 auto;
-}
-
-.phuclong-logo {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.header-logo-btn {
-    border: none;
-    background: none;
-    padding: 0;
-    cursor: pointer;
-    display: block;
-    line-height: 0;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    flex: 0 0 auto;
 }
 
 .header-logo-image {
-    height: 75px;
-    width: auto;
-    object-fit: contain;
-    transition: transform 0.2s;
+    height: 55px; /* Thu nhỏ chiều cao logo vừa vặn với top-bar */
+    width: auto;
+    object-fit: contain;
+    transition: transform 0.2s ease;
 }
 
 .header-logo-btn:hover .header-logo-image {
-    transform: scale(1.05);
+    transform: scale(1.03);
 }
 
+/* Khu vực chức năng (Quản trị viên, Ngôn ngữ, Giỏ hàng) */
 .header-user-actions {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    flex: 1;
-    justify-content: flex-end;
-    font-size: 14px;
-}
-
-.login-link {
-    color: #333;
-    text-decoration: none;
-    font-weight: 500;
-}
-
-.login-link:hover {
-    color: #1a5ca7;
-}
-
-button.login-link {
-    background: none;
-    border: none;
-    padding: 0;
-    font: inherit;
-    cursor: pointer;
-}
-
-.header-user-menu {
-    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex: 1;
+    justify-content: flex-end;
+    font-size: 14px;
+    color: #495057;
 }
 
 .header-user-menu-trigger {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    color: #495057;
+    font-weight: 500;
 }
 
-.header-user-menu-caret {
-    font-size: 10px;
-    opacity: 0.75;
-    transition: transform 0.2s;
+.header-user-menu-trigger:hover {
+    color: #f15a24; /* Hover đổi sang cam thể thao */
 }
 
-.header-user-menu-caret.is-open {
-    transform: rotate(180deg);
-}
-
-.header-user-dropdown {
-    position: absolute;
-    top: calc(100% + 8px);
-    right: 0;
-    min-width: 180px;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
-    padding: 6px 0;
-    z-index: 1100;
-    animation: fadeIn 0.2s ease-in;
-}
-
-.header-user-dropdown__item {
-    display: block;
-    width: 100%;
-    padding: 10px 18px;
-    border: none;
-    background: none;
-    text-align: left;
-    font-size: 14px;
-    color: #333;
-    cursor: pointer;
-    transition: background 0.15s, color 0.15s;
-}
-
-.header-user-dropdown__item:hover {
-    background: #f5f5f5;
-    color: #1a5ca7;
-}
-
-.header-user-dropdown__item--logout {
-    color: #0066cc;
-}
-
-.header-user-dropdown__item--logout:hover {
-    background: #f0f6fc;
-    color: #0052a3;
-}
-
-.action-separator {
-    color: #ccc;
-}
-
+/* Ngôn ngữ VN | EN */
 .language-selector {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    color: #333;
-    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: #6c757d;
 }
 
 .lang-active {
-    font-weight: bold;
-    color: #333;
+    font-weight: bold;
+    color: #212529;
 }
 
-.lang-separator {
-    color: #ccc;
-}
-
-.lang-option {
-    color: #666;
-}
-
-.lang-option:hover {
-    color: #1a5ca7;
-}
-
+/* Nút Giỏ Hàng bo góc vuông mềm theo Mockup */
 .cart-button {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 16px;
-    border: 2px solid #1a5ca7;
-    border-radius: 8px;
-    background-color: white;
-    color: #1a5ca7;
-    font-weight: 500;
-    cursor: pointer;
-    position: relative;
-    font-size: 14px;
-    transition: background-color 0.2s, color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 16px;
+    border: 1.5px solid #1d4ed8; /* Viền xanh tương ứng màu giỏ hàng */
+    border-radius: 6px;
+    background-color: #ffffff;
+    color: #1d4ed8;
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+    font-size: 13px;
+    transition: all 0.2s ease;
 }
 
 .cart-button:hover {
-    background-color: #1a5ca7;
-    color: white;
-}
-
-.cart-button i {
-    font-size: 16px;
+    background-color: #1d4ed8;
+    color: #ffffff;
 }
 
 .cart-badge {
-    position: absolute;
-    top: -8px;
-    right: -8px;
-    width: 20px;
-    height: 20px;
-    background-color: #0066cc;
-    color: white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 11px;
-    font-weight: bold;
+    position: absolute;
+    top: -7px;
+    right: -7px;
+    width: 18px;
+    height: 18px;
+    background-color: #f15a24; /* Badge màu cam rực rỡ nổi bật số lượng */
+    color: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: bold;
 }
 
+/* ==========================================================================
+   SEARCH BAR (Thanh tìm kiếm dạng Input Pill)
+   ========================================================================== */
 .header-search-strip {
-    position: relative;
-    z-index: 1150;
-    background: linear-gradient(180deg, #f5f9fc 0%, #e6effa 100%);
-    border: none;
-    padding: 14px 20px 16px;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
-    height: 50px;
-    
+    position: relative;
+    z-index: 1150;
+    background: #f8f9fa; /* Đổi từ gradient xanh cũ sang màu nền xám sáng thanh lịch */
+    border-bottom: 1px solid #e9ecef;
+    padding: 12px 20px;
 }
 
 .header-search-strip__inner {
-    max-width: 720px;
-    margin: 0 auto;
-    position: relative;
-}
-
-.header-search__form {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    border: 1px solid #cbdcf2;
-    border-radius: 999px;
-    background: #fff;
-    padding: 4px 6px 4px 18px;
-    box-shadow: 0 2px 12px rgba(26, 92, 167, 0.08);
-    transition: border-color 0.2s, box-shadow 0.2s;
-}
-
-.header-search__form:focus-within {
-    border-color: #1a5ca7;
-    box-shadow:
-        0 0 0 3px rgba(26, 92, 167, 0.15),
-        0 4px 16px rgba(26, 92, 167, 0.1);
-}
-
-.header-search__icon {
-    color: #1a5ca7;
-    font-size: 15px;
-    opacity: 0.85;
-    flex-shrink: 0;
-}
-
-.header-search__input {
-    flex: 1;
-    min-width: 0;
-    border: none;
-    background: transparent;
-    padding: 10px 0;
-    font-size: 15px;
-    color: #333;
-    outline: none;
-}
-
-.header-search__input::placeholder {
-    color: #9cb1cc;
-}
-
-.header-search__submit {
-    flex-shrink: 0;
-    border: none;
-    border-radius: 999px;
-    padding: 10px 22px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    background: linear-gradient(180deg, #226fca 0%, #1a5ca7 100%);
-    color: #fff;
-    transition: filter 0.2s, transform 0.15s;
-}
-
-.header-search__submit:hover {
-    filter: brightness(1.08);
-}
-
-.header-search__submit:active {
-    transform: scale(0.98);
-}
-
-.header-search__dropdown {
-    position: absolute;
-    top: calc(100% + 10px);
-    left: 0;
-    right: 0;
-    margin: 0;
-    padding: 8px 0;
-    list-style: none;
-    background: #fff;
-    border-radius: 14px;
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
-    border: 1px solid #e1eaf5;
-    max-height: min(380px, 65vh);
-    overflow-y: auto;
-}
-
-.header-search__option {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    width: 100%;
-    padding: 10px 16px;
-    border: none;
-    background: none;
-    text-align: left;
-    cursor: pointer;
-    transition: background 0.15s;
-}
-
-.header-search__option:hover,
-.header-search__option:focus-visible {
-    background: #f4f8fc;
-    outline: none;
-}
-
-.header-search__thumb-wrap {
-    flex-shrink: 0;
-    width: 52px;
-    height: 52px;
-    border-radius: 10px;
-    overflow: hidden;
-    background: #f0f0f0;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
-}
-
-.header-search__thumb {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.header-search__meta {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 4px;
-    min-width: 0;
-}
-
-.header-search__name {
-    font-size: 14px;
-    font-weight: 600;
-    color: #222;
-    line-height: 1.35;
-}
-
-.header-search__price {
-    font-size: 13px;
-    font-weight: 600;
-    color: #1a5ca7;
-}
-
-.header-search__empty {
-    padding: 20px 18px;
-    font-size: 14px;
-    color: #6b7275;
-    line-height: 1.45;
-    text-align: center;
-}
-
-.header-navigation {
-    background-color: white;
-    border-bottom: 1px solid #e0e0e0;
-}
-
-.nav-content {
-    max-width: 1300px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 0;
-    padding: 12px 20px;
-}
-
-.nav-link {
-    color: #333;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 14px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    transition: all 0.2s;
-    position: relative;
-    padding: 12px 15px;
-    display: inline-block;
-}
-
-.nav-link:hover {
-    color: #1a5ca7;
-}
-
-.nav-link.active {
-    background-color: #1a5ca7;
-    color: white;
-}
-
-.nav-link.active:hover {
-    color: white;
-}
-
-.nav-link.active::after {
-    display: none;
-}
-
-.nav-item-with-dropdown {
-    position: relative;
-}
-
-.nav-item-with-dropdown:hover .nav-link {
-    background-color: #1a5ca7;
-    color: white;
-    border-radius: 4px 4px 0 0;
-}
-
-.nav-item-with-dropdown:hover .nav-link::after {
-    display: none;
-}
-
-.dropdown-menu {
-    position: absolute;
-    top: calc(100% - 1px);
-    left: 0;
-    background-color: white;
-    min-width: 250px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    border-radius: 0 0 4px 4px;
-    z-index: 1000;
-    padding: 8px 0;
-    margin-top: 0;
-    animation: fadeIn 0.2s ease-in;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-5px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.dropdown-item {
-    display: block;
-    padding: 12px 20px;
-    color: #333;
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: normal;
-    text-transform: none;
-    transition: background-color 0.2s, color 0.2s;
-    letter-spacing: normal;
-}
-
-.dropdown-item:hover {
-    background-color: #f5f5f5;
-    color: #1a5ca7;
-}
-
-.dropdown-item::after {
-    display: none;
-}
-
-@media (max-width: 1024px) {
-    .header-delivery-info {
-        font-size: 12px;
-    }
-
-    .delivery-scooter {
-        font-size: 18px;
-    }
-
-    .header-search-strip {
-        padding: 12px 16px 14px;
-    }
-
-    .header-search__form {
-        border-radius: 12px;
-        padding: 4px 4px 4px 14px;
-    }
-
-    .header-search__submit {
-        padding: 10px 16px;
-    }
-
-    .nav-content {
-        gap: 20px;
-        flex-wrap: wrap;
-    }
-
-    .nav-link {
-        font-size: 12px;
-    }
-}
-
-@media (max-width: 768px) {
-    .header-top-content {
-        flex-direction: column;
-        gap: 15px;
-    }
-
-    .header-logo-container {
-        position: relative;
-        left: auto;
-        transform: none;
-    }
-
-    .header-user-actions {
-        justify-content: center;
-    }
-
-    .header-search__input {
-        font-size: 16px;
-    }
-
-    .nav-content {
-        gap: 15px;
-    }
-
-    .nav-link {
-        font-size: 11px;
-    }
-}
-
-.header-search-strip {
-    position: relative;
-    z-index: 1150;
-    background: linear-gradient(180deg, #f5f9fc 0%, #e6effa 100%);
-    border-bottom: 1px solid #d2e0f2;
-    padding: 10px 20px; /* Thu nhỏ padding cho thanh tìm kiếm thanh thoát hơn */
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
-}
-
-.header-search-strip__inner {
-    max-width: 600px; /* Thu hẹp lại một chút nhìn sẽ sang hơn */
-    margin: 0 auto;
-    position: relative;
+    max-width: 650px;
+    margin: 0 auto;
+    position: relative;
 }
 
 .header-search__form,
 .header-search-form {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    border: 1px solid #cbdcf2;
-    border-radius: 30px; 
-    background: #fff;
-    padding: 4px 6px 4px 18px;
-    box-shadow: 0 2px 10px rgba(26, 92, 167, 0.05);
-    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1.5px solid #ced4da;
+    border-radius: 30px;
+    background: #ffffff;
+    padding: 2px 4px 2px 16px;
+    box-shadow: none;
+    transition: all 0.2s ease;
 }
 
 .header-search__form:focus-within,
 .header-search-form:focus-within {
-    border-color: #1a5ca7;
-    box-shadow: 0 0 0 3px rgba(26, 92, 167, 0.12), 
-                0 4px 20px rgba(26, 92, 167, 0.08);
+    border-color: #0f5132; /* Đổi sang xanh lá đậm theo phong cách sân cỏ thể thao */
+    box-shadow: 0 0 0 3px rgba(15, 81, 50, 0.1);
 }
 
 .header-search__icon,
 .header-search-icon {
-    color: #1a5ca7;
-    font-size: 15px;
-    opacity: 0.7;
-    flex-shrink: 0;
+    color: #6c757d;
+    font-size: 15px;
+    flex-shrink: 0;
 }
 
 .header-search__input,
 .header-search-input {
-    flex: 1;
-    min-width: 0;
-    border: none;
-    background: transparent;
-    padding: 8px 0; 
-    font-size: 14px;
-    color: #333;
-    outline: none;
+    flex: 1;
+    min-width: 0;
+    border: none;
+    background: transparent;
+    padding: 8px 0;
+    font-size: 14px;
+    color: #212529;
+    outline: none;
 }
 
 .header-search__input::placeholder,
 .header-search-input::placeholder {
-     color: #cedcf0;
+     color: #adb5bd;
 }
 
+/* Nút Tìm Kiếm (Bo tròn ôm sát form) */
 .header-search__submit,
 .header-search-submit {
-    flex-shrink: 0;
-    border: none;
-    border-radius: 20px;
-    padding: 8px 24px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    background: linear-gradient(180deg, #226fca 0%, #1a5ca7 100%);
-    color: #fff;
-    transition: all 0.2s ease;
+    flex-shrink: 0;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 24px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    background: #1d4ed8; /* Màu xanh nước biển đồng bộ với nút giỏ hàng và button mock */
+    color: #ffffff;
+    transition: background-color 0.2s ease;
 }
 
 .header-search__submit:hover,
 .header-search-submit:hover {
-    filter: brightness(1.1);
-    box-shadow: 0 2px 8px rgba(26, 92, 167, 0.2);
+    background-color: #1e40af;
 }
 
-.header-search__submit:active,
-.header-search-submit:active {
-    transform: scale(0.96);
-}
-
+/* DROPDOWN KẾT QUẢ TÌM KIẾM */
 .header-search__dropdown {
-    position: absolute;
-    top: calc(100% + 8px);
-    left: 0;
-    right: 0;
-    margin: 0;
-    padding: 8px 0;
-    list-style: none;
-    background: #fff;
-    border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    border: 1px solid #e1eaf5;
-    max-height: 350px;
-    overflow-y: auto;
-    z-index: 1200;
-}
-
-.header-search__dropdown::-webkit-scrollbar {
-    width: 6px;
-}
-.header-search__dropdown::-webkit-scrollbar-thumb {
-    background: #cbdcf2;
-    border-radius: 4px;
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    right: 0;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e9ecef;
+    max-height: 320px;
+    overflow-y: auto;
+    z-index: 1250;
 }
 
 .header-search__option {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    width: 100%;
-    padding: 10px 16px;
-    border: none;
-    background: none;
-    text-align: left;
-    cursor: pointer;
-    transition: background 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    border: none;
+    background: none;
+    text-align: left;
+    width: 100%;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
 }
 
-.header-search__option:hover,
-.header-search__option:focus-visible {
-    background: #f4f8fc;
-    outline: none;
+.header-search__option:hover {
+    background-color: #f8f9fa;
 }
 
 .header-search__thumb-wrap {
-    flex-shrink: 0;
-    width: 48px;
-    height: 48px;
-    border-radius: 8px;
-    overflow: hidden;
-    background: #f5f5f5;
-    border: 1px solid #eaeaea;
-}
-
-.header-search__thumb {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.header-search__meta {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 2px;
-    min-width: 0;
+    width: 44px;
+    height: 44px;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid #f1f3f5;
 }
 
 .header-search__name {
-    font-size: 14px;
-    font-weight: 500;
-    color: #333;
-    line-height: 1.4;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    width: 100%;
+    font-size: 14px;
+    font-weight: 500;
+    color: #212529;
 }
 
 .header-search__price {
-    font-size: 13px;
-    font-weight: 600;
-    color: #0066cc;
+    font-size: 13px;
+    font-weight: 600;
+    color: #f15a24; /* Giá tiền đổi sang màu cam nổi bật, kích thích chuyển đổi */
+}
 
-.header-search__empty {
-    padding: 24px 16px;
-    font-size: 14px;
-    color: #7a828a;
-    text-align: center;
+/* ==========================================================================
+   NAVIGATION BAR (Thanh menu chính - Quần áo, Giày thể thao...)
+   ========================================================================== */
+.header-navigation {
+    background-color: #ffffff;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.nav-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Trải đều menu theo hàng ngang */
+    padding: 0 10px;
+}
+
+.nav-link {
+    color: #495057;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 13px;
+    text-transform: none; /* Trả về text thường như phác thảo */
+    letter-spacing: 0;
+    padding: 14px 10px;
+    display: inline-block;
+    transition: color 0.15s ease;
+}
+
+.nav-link:hover {
+    color: #0f5132; /* Hover lên đổi sang màu xanh thể thao */
+}
+
+/* Active State - Khi ở trang hiện tại */
+.nav-link.active {
+    background-color: transparent;
+    color: #0f5132;
+    font-weight: 700;
+    border-bottom: 2px solid #0f5132; /* Đường gạch chân mảnh tinh tế */
+}
+
+/* ==========================================================================
+   RESPONSIVE (Tương thích thiết bị di động)
+   ========================================================================== */
+@media (max-width: 992px) {
+    .header-top-content {
+        flex-direction: column;
+        gap: 12px;
+        padding: 10px 0;
+    }
+    .header-logo-container {
+        position: relative;
+        left: auto;
+        transform: none;
+    }
+    .header-user-actions {
+        justify-content: center;
+        width: 100%;
+    }
+    .nav-content {
+        justify-content: center;
+        gap: 10px;
+    }
+    .nav-link {
+        padding: 10px 8px;
+        font-size: 12px;
+    }
 }
