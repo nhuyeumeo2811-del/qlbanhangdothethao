@@ -330,7 +330,7 @@ const Header = () => {
                     <div className="header-user-actions">
                         <div className="header-delivery-info">
                             <i className="fas fa-phone delivery-icon"></i>
-                            <span className="delivery-phone">1800 6779</span>
+                            <span className="delivery-phone"> 1800 6779 </span>
                         </div>
                         
                         {currentUser ? (
