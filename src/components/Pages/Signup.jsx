@@ -49,7 +49,7 @@ const Signup = () => {
     return (
         <div className="login-page">
             <div className="login-card">
-                <h2 className="login-title">Đăng ký</h2>
+                <h2 className="login-title">ĐĂNG KÝ</h2>
 
                 <form className="login-form" onSubmit={handleSubmit}>
                     <div className="form-group">
@@ -88,7 +88,7 @@ const Signup = () => {
                     {error && <div className="login-error">{error}</div>}
 
                     <button type="submit" className="login-button">
-                        Đăng ký
+                        ĐĂNG KÝ
                     </button>
                 </form>
 
