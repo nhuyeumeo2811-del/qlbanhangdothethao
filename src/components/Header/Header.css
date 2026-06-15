@@ -70,13 +70,13 @@
 }
 
 .delivery-icon {
-    color: #2e2e2e;
+    color: #111111;
     font-size: 14px;
 }
 
 .delivery-phone {
     font-weight: 700;
-    color: #2e2e2e;
+    color: #111111;
     font-size: 14px;
 }
 
@@ -205,9 +205,9 @@ button.login-link {
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 6px 18px;
+    padding: 8px 18px;
     border: 1.5px solid #115bb6;
-    border-radius: 20px; 
+    border-radius: 10px; 
     background-color: white;
     color: #115bb6;
     font-weight: 600;
@@ -246,6 +246,8 @@ button.login-link {
     width: 40%;
     margin: 0 auto;
     position: relative;
+    border: 1px solid #3b7ed0;
+    border-radius: 30px;
 }
 
 .header-search__form,
