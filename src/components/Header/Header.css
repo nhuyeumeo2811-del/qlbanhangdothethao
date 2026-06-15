@@ -136,7 +136,7 @@ button.login-link {
     position: absolute;
     top: calc(100% + 8px);
     right: 0;
-    min-width: 180px;
+    min-width: 125px;
     background: #ffffff;
     border-radius: 6px;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
