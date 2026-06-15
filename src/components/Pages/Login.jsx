@@ -136,7 +136,7 @@ const Login = () => {
                                 <input
                                     type="text"
                                     className="form-input"
-                                    placeholder="Tên đăng nhập"
+                                    placeholder="Email đăng nhập"
                                     value={fpUser}
                                     onChange={(e) => setFpUser(e.target.value)}
                                     autoComplete="username"
