@@ -130,7 +130,7 @@ const Login = () => {
             <div className="login-card">
                 {forgotMode ? (
                     <>
-                        <h2 className="login-title">Quên mật khẩu</h2>
+                        <h2 className="login-title">QUÊN MẬT KHẨU</h2>
                         <form className="login-form" onSubmit={handleForgotSubmit}>
                             <div className="form-group">
                                 <input
@@ -164,7 +164,7 @@ const Login = () => {
                             </div>
                             {fpError && <div className="login-error">{fpError}</div>}
                             {fpSuccess && <div className="login-success">{fpSuccess}</div>}
-                            <button type="submit" className="login-button">Đổi mật khẩu</button>
+                            <button type="submit" className="login-button">ĐỔI MẬT KHẨU</button>
                         </form>
                         <div className="login-footer login-footer--spaced">
                             <button type="button" className="link-button" onClick={closeForgot}>
@@ -174,7 +174,7 @@ const Login = () => {
                     </>
                 ) : (
                     <>
-                        <h2 className="login-title">Login Form</h2>
+                        <h2 className="login-title">ĐĂNG NHẬP</h2>
                         <form className="login-form" onSubmit={handleSubmit}>
                             <div className="form-group">
                                 <input
@@ -196,24 +196,15 @@ const Login = () => {
                             </div>
                             <div className="forgot-row">
                                 <button type="button" className="forgot-link" onClick={openForgot}>
-                                    Forgot password?
+                                    Quên mật khẩu?
                                 </button>
                             </div>
                             {error && <div className="login-error">{error}</div>}
-                            <button type="submit" className="login-button">LOGIN</button>
+                            <button type="submit" className="login-button">ĐĂNG NHẬP</button>
                         </form>
-                        <div className="login-divider">Or login with</div>
-                        <div className="social-login">
-                            <button type="button" className="social-btn facebook">
-                                <i className="fab fa-facebook-f"></i> <span>Facebook</span>
-                            </button>
-                            <button type="button" className="social-btn google">
-                                <i className="fab fa-google"></i> <span>Google</span>
-                            </button>
-                        </div>
                         <div className="login-footer">
-                            <span>Not a member?</span>
-                            <Link to="/signup" className="signup-link">Signup now</Link>
+                            <span>Không phải là thành viên?</span>
+                            <Link to="/signup" className="signup-link">Đăng ký ngay bây giờ</Link>
                         </div>
                     </>
                 )}
