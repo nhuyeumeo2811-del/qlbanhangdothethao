@@ -52,7 +52,7 @@
 
 .detail-price .current-price{
   font-size: 26px;
-  color: #d35400;
+  color: #124c97;
   font-weight: 700;
 }
 
@@ -63,7 +63,7 @@
 
 .detail-price .discount{
   background: #ffe2cc;
-  color:#d35400 ;
+  color:#f88133 ;
   padding: 4px 10px;
   border-radius: 12px;
   font-weight: 600;
@@ -95,7 +95,7 @@
 
 .buy-now-button {
   width: 100%;
-  background: linear-gradient(135deg, #d35400 0%, #e67e22 100%);
+  background: linear-gradient(135deg, #256ed4 0%, #3399ff 100%);
   color: white;
   border: none;
   border-radius: 10px;
@@ -104,14 +104,14 @@
   font-weight: 700;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(211, 84, 0, 0.3);
+  box-shadow: 0 4px 15px rgba(0, 84, 211, 0.4);
   margin-top: 8px;
 }
 
 .buy-now-button:hover {
-  background: linear-gradient(135deg, #c0392b 0%, #d35400 100%);
+  background: linear-gradient(135deg, #347adb 0%, #43a0fe 100%);
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(211, 84, 0, 0.4);
+  box-shadow: 0 6px 20px rgba(0, 84, 211, 0.4);
 }
 
 .buy-now-button:active{
