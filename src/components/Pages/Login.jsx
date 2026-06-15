@@ -180,7 +180,7 @@ const Login = () => {
                                 <input
                                     type="text"
                                     className="form-input"
-                                    placeholder="Email or Username"
+                                    placeholder="Email"
                                     value={username}
                                     onChange={(e) => setUsername(e.target.value)}
                                 />
@@ -189,7 +189,7 @@ const Login = () => {
                                 <input
                                     type="password"
                                     className="form-input"
-                                    placeholder="Password"
+                                    placeholder="Mật Khẩu"
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                 />
