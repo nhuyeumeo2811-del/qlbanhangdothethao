@@ -153,18 +153,18 @@
   padding: 10px 20px;
   font-size: 0.95rem;
   font-weight: 600;
-  color: #3d2b1f;
+  color: #1f253d;
   background: #fff;
-  border: 2px solid #c4a574;
+  border: 2px solid #74a9c4;
   border-radius: 8px;
   cursor: pointer;
   transition: background 0.2s, color 0.2s, border-color 0.2s;
 }
 
 .product-list-pagination__btn:hover:not(:disabled) {
-  background: #3d2b1f;
+  background: #1f2c3d;
   color: #fff;
-  border-color: #3d2b1f;
+  border-color: #1f1f3d;
 }
 
 .product-list-pagination__btn:disabled {
