@@ -7,7 +7,6 @@ import { normalizeSearchText, rankProductsBySearch } from '../../utils/productSe
 
 const jsonBase = import.meta.env.BASE_URL || '/';
 
-// Gộp các hàm bổ trợ ra ngoài component để tránh khởi tạo lại mỗi lần re-render
 const customNormalizeText = (text) => {
     if (!text) return '';
     return text
@@ -69,7 +68,6 @@ const translations = {
 const Header = () => {
     const navigate = useNavigate();
 
-    // Toàn bộ State từ code gốc của bạn
     const [hoveredMenu, setHoveredMenu] = useState(null);
     const [cartCount, setCartCount] = useState(0);
     const [currentUser, setCurrentUser] = useState(null);
@@ -82,10 +80,8 @@ const Header = () => {
     const userMenuRef = useRef(null);
     const searchBoxRef = useRef(null);
 
-    // Từ điển đa ngôn ngữ dựa trên state `lang`
     const t = translations[lang];
 
-    // Logic tìm kiếm sản phẩm của bản 2 (Sử dụng hàm customNormalizeText nội bộ)
     const searchMatches = useMemo(() => {
         const cleanQuery = customNormalizeText(searchQuery);
         
@@ -100,7 +96,6 @@ const Header = () => {
             .slice(0, 10); 
     }, [products, searchQuery]);
 
-    // useEffect 1: Đồng bộ Giỏ hàng & User từ LocalStorage + Lắng nghe sự kiện hệ thống
     useEffect(() => {
         const updateCartCount = () => {
             const savedCart = localStorage.getItem('cart');
@@ -152,7 +147,6 @@ const Header = () => {
         };
     }, []);
 
-    // useEffect 2: Tải dữ liệu từ file products.json sang bộ lọc Tìm kiếm
     useEffect(() => {
         let cancelled = false;
 
@@ -182,7 +176,6 @@ const Header = () => {
         };
     }, []);
 
-    // useEffect 3: Click ra ngoài đóng ô gợi ý Tìm kiếm
     useEffect(() => {
         if (!searchFocused) return;
 
@@ -196,7 +189,6 @@ const Header = () => {
         return () => document.removeEventListener('mousedown', onPointerDown);
     }, [searchFocused]);
 
-    // useEffect 4: Click ra ngoài đóng Dropdown User
     useEffect(() => {
         if (!userMenuOpen) return;
 
@@ -210,14 +202,12 @@ const Header = () => {
         return () => document.removeEventListener('mousedown', onPointerDown);
     }, [userMenuOpen]);
 
-    // useEffect 5: Tự động đóng Menu User khi Đăng xuất
     useEffect(() => {
         if (!currentUser) {
             setUserMenuOpen(false);
         }
     }, [currentUser]);
 
-    // Các hàm điều hướng và thao tác từ code gốc
     const handleLogout = () => {
         localStorage.removeItem('currentUser');
         setUserMenuOpen(false);
@@ -265,7 +255,6 @@ const Header = () => {
                         </div>
                     </div>
 
-                    {/* SEARCH BOX */}
                     <div className="header-search-strip__inner" ref={searchBoxRef}>
                         <form
                             className="header-search-form"
@@ -290,7 +279,6 @@ const Header = () => {
                             </button>
                         </form>
 
-                        {/* SEARCH DROPDOWN MATCHES */}
                         {searchFocused && searchQuery.trim().length > 0 && (
                             <ul
                                 id="header-search-suggestions"
@@ -339,14 +327,12 @@ const Header = () => {
                         )}
                     </div>
 
-                    {/* USER ACTIONS (PHONE, ACCOUNTS, LANG, CART) */}
                     <div className="header-user-actions">
                         <div className="header-delivery-info">
                             <i className="fas fa-phone delivery-icon"></i>
                             <span className="delivery-phone">1800 6779</span>
                         </div>
                         
-                        {/* USER MENU */}
                         {currentUser ? (
                             <div className="header-user-menu" ref={userMenuRef}>
                                 <button
@@ -414,7 +400,6 @@ const Header = () => {
                         
                         <span className="action-separator">|</span>
 
-                        {/* LANGUAGE SELECTOR */}
                         <div className="language-selector">
                             <span 
                                 className={`lang-option ${lang === 'VN' ? 'lang-active' : ''}`}
@@ -431,7 +416,6 @@ const Header = () => {
                             </span>
                         </div>
 
-                        {/* CART BUTTON */}
                         <button
                             className="cart-button"
                             onClick={() => navigate('/cart')}
@@ -444,14 +428,12 @@ const Header = () => {
                 </div>
             </div>
 
-            {/* NAVIGATION MENU */}
             <nav className="header-navigation" aria-label="Điều hướng chính">
                 <div className="nav-content">
                     <a href="/" className="nav-link">
                         {t.home}
                     </a>
 
-                    {/* DROPDOWN MENU */}
                     <div
                         className="nav-item-with-dropdown"
                         onMouseEnter={() => setHoveredMenu('coffee')}
