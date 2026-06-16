@@ -45,9 +45,9 @@
   width: 224px;
   min-height: 100vh;
   background: linear-gradient(180deg,
-      #6777ef 0%,
-      #5568dd 48%,
-      #4c5dce 100%);
+      #85a7ff 0%,
+      #8799ff 48%,
+      #7a95ff 100%);
   color: #fff;
   display: flex;
   flex-direction: column;
@@ -384,7 +384,7 @@
 }
 
 .admin-table th {
-  background: #f8f9fc;
+  background: #d4dcff;
   font-weight: 800;
   color: #858796;
   text-transform: uppercase;
@@ -394,7 +394,7 @@
 }
 
 .admin-table tbody tr:hover {
-  background: #fcfcfe;
+  background: #f3f3f3;
 }
 
 .admin-table tr:last-child td {
@@ -413,7 +413,7 @@
   font-weight: 700;
   border-radius: 8px;
   border: none;
-  background: linear-gradient(180deg, #6777ef 0%, #5568dc 100%);
+  background: linear-gradient(180deg, #909dff 0%, #8ca7ff 100%);
   color: #fff;
   cursor: pointer;
   box-shadow: 0 2px 10px rgba(103, 119, 239, 0.35);
@@ -848,7 +848,7 @@
   width: 6.5rem;
   padding: 0.5rem 0.65rem;
   font-size: 0.875rem;
-  border: 1px solid #d1d3e2;
+  border: 1px solid hsl(233, 23%, 85%);
   border-radius: 6px;
   background: #fff;
   color: #5a5c69;
@@ -1147,12 +1147,12 @@
 
 .dashboard .stats-grid > div:hover {
   transform: translateY(-5px);
-  border-color: #add8e6 !important; 
-  box-shadow: 0 10px 25px rgba(52, 152, 219, 0.15) !important; 
+  border-color: #add8e6 !important; /* Viền xanh dương nhạt hơn khi hover */
+  box-shadow: 0 10px 25px rgba(52, 152, 219, 0.15) !important; /* Đổ bóng sâu hơn */
 }
 
 .dashboard .stats-grid > div > div:first-child {
-  border-bottom: 1px solid #eef4fa !important; 
+  border-bottom: 1px solid #eef4fa !important; /* Thay gạch đen bằng gạch xanh nhạt */
   color: #34495e !important;
   font-family: 'Segoe UI', sans-serif;
 }
